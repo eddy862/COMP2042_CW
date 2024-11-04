@@ -1,5 +1,8 @@
 package com.example.demo;
 
+/**
+ * Represents fighter planes including user, enemy, and boss planes. Fighter planes can fire projectiles, take damage and be destroyed.
+ */
 public abstract class FighterPlane extends ActiveActorDestructible {
 
 	private int health;

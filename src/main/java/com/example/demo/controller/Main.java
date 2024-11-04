@@ -12,6 +12,17 @@ public class Main extends Application {
 	private static final String TITLE = "Sky Battle";
 	private Controller myController;
 
+	/**
+	 * Start the application by launching the game
+	 * @param stage the primary stage for this application
+	 * @throws ClassNotFoundException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
 	@Override
 	public void start(Stage stage) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {

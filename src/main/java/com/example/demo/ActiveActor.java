@@ -2,6 +2,9 @@ package com.example.demo;
 
 import javafx.scene.image.*;
 
+/**
+ * Represents actors that can move including planes and projectiles.
+ */
 public abstract class ActiveActor extends ImageView {
 	
 	private static final String IMAGE_LOCATION = "/com/example/demo/images/";
@@ -9,9 +12,9 @@ public abstract class ActiveActor extends ImageView {
 	public ActiveActor(String imageName, int imageHeight, double initialXPos, double initialYPos) {
 		//this.setImage(new Image(IMAGE_LOCATION + imageName));
 		this.setImage(new Image(getClass().getResource(IMAGE_LOCATION + imageName).toExternalForm()));
-		this.setLayoutX(initialXPos);
-		this.setLayoutY(initialYPos);
-		this.setFitHeight(imageHeight);
+		this.setLayoutX(initialXPos); // set initial x position
+		this.setLayoutY(initialYPos); // set initial y position
+		this.setFitHeight(imageHeight); // set image height
 		this.setPreserveRatio(true);
 	}
 

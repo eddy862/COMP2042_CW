@@ -19,6 +19,10 @@ public class EnemyPlane extends FighterPlane {
 		moveHorizontally(HORIZONTAL_VELOCITY);
 	}
 
+	/**
+	 * Fires a projectile with a certain probability
+	 * @return the projectile if it is fired, null otherwise
+	 */
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {

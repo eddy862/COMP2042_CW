@@ -2,7 +2,6 @@ package com.example.demo;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -76,6 +75,7 @@ public abstract class LevelParent extends Observable {
 	public void goToNextLevel(String levelName) {
 		setChanged();
 		notifyObservers(levelName);
+		//timeline.stop();
 	}
 
 	private void updateScene() {

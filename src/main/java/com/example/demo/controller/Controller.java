@@ -20,13 +20,33 @@ public class Controller implements Observer {
 		this.stage = stage;
 	}
 
+	/**
+	 * Launch the game by showing the stage and loading the first level
+	 * @throws ClassNotFoundException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
 	public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
-
 			stage.show();
 			goToLevel(LEVEL_ONE_CLASS_NAME);
 	}
 
+	/**
+	 * Load the level with the given class name
+	 * @param className the name of the class to load
+	 * @throws ClassNotFoundException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
 	private void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 			Class<?> myClass = Class.forName(className);
@@ -36,9 +56,13 @@ public class Controller implements Observer {
 			Scene scene = myLevel.initializeScene();
 			stage.setScene(scene);
 			myLevel.startGame();
-
 	}
 
+	/**
+	 * This method is called whenever the observed object is changed. An
+	 * @param arg0   the observable object.
+	 * @param arg1   an argument passed to the {@code notifyObservers} method.
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		try {

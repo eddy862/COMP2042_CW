@@ -11,7 +11,7 @@ public class UserPlane extends FighterPlane {
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
-	private int velocityMultiplier;
+	private int velocityMultiplier; // -1 for up, 0 for stationary, 1 for down
 	private int numberOfKills;
 
 	public UserPlane(int initialHealth) {
