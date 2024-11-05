@@ -16,7 +16,7 @@ import javafx.util.Duration;
 
 public abstract class LevelParent extends Observable {
 
-	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150; // Adjusts for the height of the user plane
+	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 50;
 	private final double screenHeight;
 	private final double screenWidth;
@@ -77,11 +77,25 @@ public abstract class LevelParent extends Observable {
 	}
 
 	public void goToNextLevel(String levelName) {
+		timeline.stop();
 		setChanged();
 		notifyObservers(levelName);
-		//timeline.stop();
 	}
 
+	/**
+	 * Update the scene by spawning enemy units,
+	 * updating actors,
+	 * generating enemy fire,
+	 * updating the number of enemies,
+	 * handling enemy penetration of defenses,
+	 * handling user projectile collisions with enemies,
+	 * handling enemy projectile collisions with friendly units,
+	 * handling plane collisions with each other,
+	 * removing all destroyed actors,
+	 * updating the kill count,
+	 * updating the level view,
+	 * and checking if the game is over.
+	 */
 	private void updateScene() {
 		spawnEnemyUnits();
 		updateActors();
@@ -99,8 +113,8 @@ public abstract class LevelParent extends Observable {
 
 	private void initializeTimeline() {
 		timeline.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
-		timeline.getKeyFrames().add(gameLoop);
+		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene()); // define how much delay between each frame, and what to do in each frame
+		timeline.getKeyFrames().add(gameLoop); // add the frame to the timeline
 	}
 
 	private void initializeBackground() {
@@ -129,6 +143,7 @@ public abstract class LevelParent extends Observable {
 		root.getChildren().add(projectile);
 		userProjectiles.add(projectile);
 	}
+
 
 	private void generateEnemyFire() {
 		enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
@@ -186,6 +201,9 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
+	/**
+	 * Check if any enemy has penetrated the defenses and if so, destroy the user
+	 */
 	private void handleEnemyPenetration() {
 		for (ActiveActorDestructible enemy : enemyUnits) {
 			if (enemyHasPenetratedDefenses(enemy)) {

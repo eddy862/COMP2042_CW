@@ -5,6 +5,9 @@ import com.example.demo.ui.HeartDisplay;
 import com.example.demo.ui.WinImage;
 import javafx.scene.Group;
 
+/**
+ * Responsible for displaying the UI elements in the level.
+ */
 public class LevelView {
 	
 	private static final double HEART_DISPLAY_X_POSITION = 5;
