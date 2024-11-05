@@ -1,6 +1,10 @@
-package com.example.demo;
+package com.example.demo.actor.plane;
+
+import com.example.demo.actor.ActiveActorDestructible;
+import com.example.demo.actor.projectile.BossProjectile;
 
 import java.util.*;
+
 
 /**
  * Represents the boss in level 2. The boss has a unique move pattern and can activate a shield

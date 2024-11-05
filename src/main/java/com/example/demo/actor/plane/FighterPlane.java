@@ -1,4 +1,6 @@
-package com.example.demo;
+package com.example.demo.actor.plane;
+
+import com.example.demo.actor.ActiveActorDestructible;
 
 /**
  * Represents fighter planes including user, enemy, and boss planes. Fighter planes can fire projectiles, take damage and be destroyed.
