@@ -64,6 +64,8 @@ public abstract class LevelParent extends Observable {
 
 	protected abstract LevelView instantiateLevelView();
 
+	protected abstract void updateShield();
+
 	public Scene initializeScene() {
 		initializeBackground();
 		initializeFriendlyUnits();
@@ -104,11 +106,13 @@ public abstract class LevelParent extends Observable {
 		handleEnemyPenetration();
 		handleUserProjectileCollisions();
 		handleEnemyProjectileCollisions();
+		handleUserAndEnemyProjectileCollisions();
 		handlePlaneCollisions();
 		removeAllDestroyedActors();
 		updateKillCount();
 		updateLevelView();
 		checkIfGameOver();
+		updateShield();
 	}
 
 	private void initializeTimeline() {
@@ -187,6 +191,10 @@ public abstract class LevelParent extends Observable {
 
 	private void handleEnemyProjectileCollisions() {
 		handleCollisions(enemyProjectiles, friendlyUnits);
+	}
+
+	private void handleUserAndEnemyProjectileCollisions() {
+		handleCollisions(userProjectiles, enemyProjectiles);
 	}
 
 	private void handleCollisions(List<ActiveActorDestructible> actors1,
@@ -269,5 +277,4 @@ public abstract class LevelParent extends Observable {
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies = enemyUnits.size();
 	}
-
 }

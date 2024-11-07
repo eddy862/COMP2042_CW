@@ -2,6 +2,7 @@ package com.example.demo.actor.plane;
 
 import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.projectile.BossProjectile;
+import com.example.demo.ui.ShieldImage;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ public class Boss extends FighterPlane {
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
 	private static final double BOSS_FIRE_RATE = .04;
-	private static final double BOSS_SHIELD_PROBABILITY = .002;
+	private static final double BOSS_SHIELD_PROBABILITY = .004;
 	private static final int IMAGE_HEIGHT = 300;
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HEALTH = 100;
@@ -82,6 +83,7 @@ public class Boss extends FighterPlane {
 		if (!isShielded) {
 			super.takeDamage();
 		}
+		System.out.println("Boss health: " + getHealth());
 	}
 
 	/**
@@ -151,11 +153,16 @@ public class Boss extends FighterPlane {
 
 	private void activateShield() {
 		isShielded = true;
+		System.out.println("Boss shield activated");
 	}
 
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
+		System.out.println("Boss shield deactivated");
 	}
 
+	public boolean isShielded() {
+		return isShielded;
+	}
 }
