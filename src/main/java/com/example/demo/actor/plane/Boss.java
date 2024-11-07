@@ -144,7 +144,7 @@ public class Boss extends FighterPlane {
 	}
 
 	private boolean shieldShouldBeActivated() {
-		return Math.random() < BOSS_SHIELD_PROBABILITY;
+		return Math.random() < 1;
 	}
 
 	private boolean shieldExhausted() {

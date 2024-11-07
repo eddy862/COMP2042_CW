@@ -37,7 +37,7 @@ public class LevelViewLevelTwo extends LevelView {
 			root.getChildren().add(shieldImage);
 		}
 
-		shieldImage.setLayoutX(bossPositionX);
-		shieldImage.setLayoutY(bossPositionY);
+		shieldImage.setLayoutX(bossPositionX - ShieldImage.SHIELD_SIZE / 3);
+		shieldImage.setLayoutY(bossPositionY + ShieldImage.SHIELD_SIZE / 4);
 	}
 }

@@ -41,6 +41,9 @@ public class LevelTwo extends LevelParent {
         return levelView;
     }
 
+    /**
+     * Updates the shield position and visibility
+     */
     @Override
     protected void updateShield() {
         levelView.updateShieldPosition(boss.getLayoutX() + boss.getTranslateX(), boss.getLayoutY() + boss.getTranslateY());

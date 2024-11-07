@@ -64,6 +64,9 @@ public abstract class LevelParent extends Observable {
 
 	protected abstract LevelView instantiateLevelView();
 
+	/**
+	 * Updates the shield position and visibility
+	 */
 	protected abstract void updateShield();
 
 	public Scene initializeScene() {
