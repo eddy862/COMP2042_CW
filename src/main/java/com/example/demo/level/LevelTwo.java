@@ -48,6 +48,7 @@ public class LevelTwo extends LevelParent {
     protected void updateShield() {
         levelView.updateShieldPosition(boss.getLayoutX() + boss.getTranslateX(), boss.getLayoutY() + boss.getTranslateY());
 
+
         if (boss.isShielded()) {
             levelView.showShield();
         } else {

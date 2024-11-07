@@ -2,6 +2,7 @@ package com.example.demo.actor.plane;
 
 import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.projectile.BossProjectile;
+import com.example.demo.level.LevelAudio;
 import com.example.demo.ui.ShieldImage;
 
 import java.util.*;
@@ -33,6 +34,7 @@ public class Boss extends FighterPlane {
 	private int consecutiveMovesInSameDirection; // Number of frames with the same move
 	private int indexOfCurrentMove; // Index of the current move in the move pattern
 	private int framesWithShieldActivated; // Number of frames with the shield activated
+	private LevelAudio levelAudio;
 
 	public Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
@@ -42,6 +44,7 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 		isShielded = false;
 		initializeMovePattern();
+		levelAudio = new LevelAudio();
 	}
 
 	/**
@@ -144,7 +147,7 @@ public class Boss extends FighterPlane {
 	}
 
 	private boolean shieldShouldBeActivated() {
-		return Math.random() < 1;
+		return Math.random() < BOSS_SHIELD_PROBABILITY;
 	}
 
 	private boolean shieldExhausted() {
@@ -154,12 +157,14 @@ public class Boss extends FighterPlane {
 	private void activateShield() {
 		isShielded = true;
 		System.out.println("Boss shield activated");
+		levelAudio.playActivateShield();
 	}
 
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
 		System.out.println("Boss shield deactivated");
+		levelAudio.playShieldDeactivate();
 	}
 
 	public boolean isShielded() {
