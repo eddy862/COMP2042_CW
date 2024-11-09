@@ -1,7 +1,6 @@
 package com.example.demo.level;
 
 import com.example.demo.actor.plane.Boss;
-import javafx.scene.Group;
 
 public class LevelTwo extends LevelParent {
 

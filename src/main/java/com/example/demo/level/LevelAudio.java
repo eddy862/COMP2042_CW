@@ -15,6 +15,7 @@ public class LevelAudio {
     private static final String SHIELD_HIT = "/com/example/demo/audio/shieldHit.mp3";
     private static final String SHIELD_DEACTIVATE = "/com/example/demo/audio/deactivateShield.mp3";
     private static final String BACKGROUND_MUSIC = "/com/example/demo/audio/backgroundMusic.mp3";
+    private static final String WARNING = "/com/example/demo/audio/warning.mp3";
 
     private final Media enemyProjectileDestroyed;
     private final Media activateShield;
@@ -27,6 +28,8 @@ public class LevelAudio {
     private final Media shieldHit;
     private final Media shieldDeactivate;
     private final MediaPlayer backgroundMusicPlayer;
+    private final Media warning;
+    private final MediaPlayer warningPlayer;
 
     public LevelAudio() {
         enemyProjectileDestroyed = new Media(getClass().getResource(ENEMY_PROJECTILE_DESTROYED).toExternalForm());
@@ -44,6 +47,10 @@ public class LevelAudio {
         backgroundMusicPlayer = new MediaPlayer(backgroundMusic);
         backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         backgroundMusicPlayer.setVolume(0.6);
+
+        warning = new Media(getClass().getResource(WARNING).toExternalForm());
+        warningPlayer = new MediaPlayer(warning);
+        warningPlayer.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
     public void playEnemyProjectileDestroyed() {
@@ -105,5 +112,13 @@ public class LevelAudio {
 
     public void stopBackgroundMusic() {
         backgroundMusicPlayer.stop();
+    }
+
+    public void playWarning() {
+        warningPlayer.play();
+    }
+
+    public void pauseWarning() {
+        warningPlayer.pause();
     }
 }

@@ -40,5 +40,4 @@ public class EnemyPlane extends FighterPlane {
 	public void updateActor() {
 		updatePosition();
 	}
-
 }

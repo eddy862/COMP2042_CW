@@ -60,6 +60,7 @@ public class UserPlane extends FighterPlane {
 	private boolean isMovingVertically() {
 		return verticalVelocityMultiplier != 0;
 	}
+
 	private boolean isMovingHorizontally() {
 		return horizontalVelocityMultiplier != 0;
 	}
@@ -71,6 +72,7 @@ public class UserPlane extends FighterPlane {
 	public void moveDown() {
 		verticalVelocityMultiplier = 1;
 	}
+
 	public void moveLeft() {
 		horizontalVelocityMultiplier = -1;
 	}

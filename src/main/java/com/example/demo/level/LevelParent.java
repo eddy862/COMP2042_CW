@@ -16,6 +16,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public abstract class LevelParent extends Observable {
@@ -25,6 +26,7 @@ public abstract class LevelParent extends Observable {
     private final double screenHeight;
     private final double screenWidth;
     private final double enemyMaximumYPosition;
+    private final double warningAreaXBoundary = 300;
 
     private final Group root;
     private final Timeline timeline;
@@ -121,6 +123,7 @@ public abstract class LevelParent extends Observable {
         updateKillCount();
         updateLevelView();
         checkIfGameOver();
+        checkIfEnemyEnterWarningArea();
     }
 
     private void initializeTimeline() {
@@ -160,6 +163,16 @@ public abstract class LevelParent extends Observable {
         levelAudio.playUserFire();
     }
 
+    private void checkIfEnemyEnterWarningArea() {
+    boolean enemyInWarningArea = enemyUnits.stream()
+        .anyMatch(enemy -> enemy instanceof EnemyPlane && enemy.getTranslateX() + enemy.getLayoutX() < warningAreaXBoundary);
+
+    if (enemyInWarningArea) {
+        levelAudio.playWarning();
+    } else {
+        levelAudio.pauseWarning();
+    }
+}
 
     private void generateEnemyFire() {
         enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
@@ -211,6 +224,10 @@ public abstract class LevelParent extends Observable {
             } else {
                 levelAudio.playEnemyHit();
             }
+
+            if (enemyHit instanceof EnemyPlane) {
+                user.incrementKillCount();
+            }
         }
     }
 
@@ -248,6 +265,7 @@ public abstract class LevelParent extends Observable {
             if (enemyHasPenetratedDefenses(enemy)) {
                 user.takeDamage();
                 enemy.destroy();
+                levelAudio.playUserHit();
             }
         }
     }
@@ -260,9 +278,9 @@ public abstract class LevelParent extends Observable {
     }
 
     private void updateKillCount() {
-        for (int i = 0; i < currentNumberOfEnemies - enemyUnits.size(); i++) {
-            user.incrementKillCount();
-        }
+//        for (int i = 0; i < currentNumberOfEnemies - enemyUnits.size(); i++) {
+//            user.incrementKillCount();
+//        }
     }
 
     private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
