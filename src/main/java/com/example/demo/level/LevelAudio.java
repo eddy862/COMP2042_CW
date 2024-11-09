@@ -1,9 +1,7 @@
 package com.example.demo.level;
 
-import javafx.animation.PauseTransition;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 
 public class LevelAudio {
     private static final String ENEMY_PROJECTILE_DESTROYED = "/com/example/demo/audio/enemyProjectileDestroyed.mp3";
@@ -16,6 +14,7 @@ public class LevelAudio {
     private static final String USER_HIT = "/com/example/demo/audio/userHit.mp3";
     private static final String SHIELD_HIT = "/com/example/demo/audio/shieldHit.mp3";
     private static final String SHIELD_DEACTIVATE = "/com/example/demo/audio/deactivateShield.mp3";
+    private static final String BACKGROUND_MUSIC = "/com/example/demo/audio/backgroundMusic.mp3";
 
     private Media enemyProjectileDestroyed;
     private Media activateShield;
@@ -27,6 +26,8 @@ public class LevelAudio {
     private Media userHit;
     private Media shieldHit;
     private Media shieldDeactivate;
+    private Media backgroundMusic;
+    private MediaPlayer backgroundMusicPlayer;
 
     public LevelAudio() {
         enemyProjectileDestroyed = new Media(getClass().getResource(ENEMY_PROJECTILE_DESTROYED).toExternalForm());
@@ -39,6 +40,11 @@ public class LevelAudio {
         userHit = new Media(getClass().getResource(USER_HIT).toExternalForm());
         shieldHit = new Media(getClass().getResource(SHIELD_HIT).toExternalForm());
         shieldDeactivate = new Media(getClass().getResource(SHIELD_DEACTIVATE).toExternalForm());
+
+        backgroundMusic = new Media(getClass().getResource(BACKGROUND_MUSIC).toExternalForm());
+        backgroundMusicPlayer = new MediaPlayer(backgroundMusic);
+        backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        backgroundMusicPlayer.setVolume(0.6);
     }
 
     public void playEnemyProjectileDestroyed() {
@@ -48,6 +54,7 @@ public class LevelAudio {
 
     public void playActivateShield() {
         MediaPlayer activateShieldPlayer = new MediaPlayer(activateShield);
+        activateShieldPlayer.setVolume(1.2);
         activateShieldPlayer.play();
     }
 
@@ -58,6 +65,7 @@ public class LevelAudio {
 
     public void playUserFire() {
         MediaPlayer userFirePlayer = new MediaPlayer(userFire);
+        userFirePlayer.setVolume(0.5);
         userFirePlayer.play();
     }
 
@@ -88,6 +96,15 @@ public class LevelAudio {
 
     public void playShieldDeactivate() {
         MediaPlayer shieldDeactivatePlayer = new MediaPlayer(shieldDeactivate);
+        shieldDeactivatePlayer.setVolume(1.2);
         shieldDeactivatePlayer.play();
+    }
+
+    public void playBackgroundMusic() {
+        backgroundMusicPlayer.play();
+    }
+
+    public void stopBackgroundMusic() {
+        backgroundMusicPlayer.stop();
     }
 }
