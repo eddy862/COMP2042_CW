@@ -235,9 +235,7 @@ public abstract class LevelParent extends Observable {
             }
         }
         return null;
-    }
-
-    ;
+    };
 
     /**
      * Check if any enemy has penetrated the defenses and if so, destroy the user
