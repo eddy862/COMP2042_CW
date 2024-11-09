@@ -3,7 +3,6 @@ package com.example.demo.actor.plane;
 import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.projectile.BossProjectile;
 import com.example.demo.level.LevelAudio;
-import com.example.demo.ui.ShieldImage;
 
 import java.util.*;
 

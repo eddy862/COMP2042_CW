@@ -16,18 +16,17 @@ public class LevelAudio {
     private static final String SHIELD_DEACTIVATE = "/com/example/demo/audio/deactivateShield.mp3";
     private static final String BACKGROUND_MUSIC = "/com/example/demo/audio/backgroundMusic.mp3";
 
-    private Media enemyProjectileDestroyed;
-    private Media activateShield;
-    private Media enemyHit;
-    private Media userFire;
-    private Media gameOver;
-    private Media nextLevel;
-    private Media win;
-    private Media userHit;
-    private Media shieldHit;
-    private Media shieldDeactivate;
-    private Media backgroundMusic;
-    private MediaPlayer backgroundMusicPlayer;
+    private final Media enemyProjectileDestroyed;
+    private final Media activateShield;
+    private final Media enemyHit;
+    private final Media userFire;
+    private final Media gameOver;
+    private final Media nextLevel;
+    private final Media win;
+    private final Media userHit;
+    private final Media shieldHit;
+    private final Media shieldDeactivate;
+    private final MediaPlayer backgroundMusicPlayer;
 
     public LevelAudio() {
         enemyProjectileDestroyed = new Media(getClass().getResource(ENEMY_PROJECTILE_DESTROYED).toExternalForm());
@@ -41,7 +40,7 @@ public class LevelAudio {
         shieldHit = new Media(getClass().getResource(SHIELD_HIT).toExternalForm());
         shieldDeactivate = new Media(getClass().getResource(SHIELD_DEACTIVATE).toExternalForm());
 
-        backgroundMusic = new Media(getClass().getResource(BACKGROUND_MUSIC).toExternalForm());
+        Media backgroundMusic = new Media(getClass().getResource(BACKGROUND_MUSIC).toExternalForm());
         backgroundMusicPlayer = new MediaPlayer(backgroundMusic);
         backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         backgroundMusicPlayer.setVolume(0.6);

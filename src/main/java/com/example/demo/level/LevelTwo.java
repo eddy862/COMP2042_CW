@@ -1,6 +1,7 @@
 package com.example.demo.level;
 
 import com.example.demo.actor.plane.Boss;
+import javafx.scene.Group;
 
 public class LevelTwo extends LevelParent {
 
@@ -41,13 +42,14 @@ public class LevelTwo extends LevelParent {
         return levelView;
     }
 
-    /**
-     * Updates the shield position and visibility
-     */
     @Override
-    protected void updateShield() {
-        levelView.updateShieldPosition(boss.getLayoutX() + boss.getTranslateX(), boss.getLayoutY() + boss.getTranslateY());
+    protected void initialiseLevelScene() {
+        levelView.displayShield();
+    }
 
+    @Override
+    protected void updateSpecificLevelView() {
+        levelView.updateShieldPosition(boss.getLayoutX() + boss.getTranslateX(), boss.getLayoutY() + boss.getTranslateY());
 
         if (boss.isShielded()) {
             levelView.showShield();

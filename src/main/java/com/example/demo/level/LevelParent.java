@@ -69,16 +69,13 @@ public abstract class LevelParent extends Observable {
     protected abstract void spawnEnemyUnits();
 
     protected abstract LevelView instantiateLevelView();
-
-    /**
-     * Updates the shield position and visibility
-     */
-    protected abstract void updateShield();
+    protected abstract void initialiseLevelScene();
 
     public Scene initializeScene() {
         initializeBackground();
         initializeFriendlyUnits();
         levelView.showHeartDisplay();
+        initialiseLevelScene();
         return scene;
     }
 
@@ -124,7 +121,6 @@ public abstract class LevelParent extends Observable {
         updateKillCount();
         updateLevelView();
         checkIfGameOver();
-        updateShield();
     }
 
     private void initializeTimeline() {
@@ -255,8 +251,11 @@ public abstract class LevelParent extends Observable {
         }
     }
 
+    protected abstract void updateSpecificLevelView();
+
     private void updateLevelView() {
         levelView.removeHearts(user.getHealth());
+        updateSpecificLevelView();
     }
 
     private void updateKillCount() {

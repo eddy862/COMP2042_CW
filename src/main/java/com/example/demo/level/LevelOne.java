@@ -2,6 +2,7 @@ package com.example.demo.level;
 
 import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.plane.EnemyPlane;
+import javafx.scene.Group;
 
 public class LevelOne extends LevelParent {
 	
@@ -11,6 +12,7 @@ public class LevelOne extends LevelParent {
 	private static final int KILLS_TO_ADVANCE = 10;
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final int PLAYER_INITIAL_HEALTH = 10;
+	private LevelViewLevelOne levelView;
 
 	public LevelOne(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
@@ -44,12 +46,18 @@ public class LevelOne extends LevelParent {
 
 	@Override
 	protected LevelView instantiateLevelView() {
-		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+		this.levelView = new LevelViewLevelOne(getRoot(), PLAYER_INITIAL_HEALTH, KILLS_TO_ADVANCE);
+		return levelView;
 	}
 
 	@Override
-	protected void updateShield() {
-		// no shield in this level
+	protected void initialiseLevelScene() {
+		levelView.showNumberOfKills();
+	}
+
+	@Override
+	protected void updateSpecificLevelView() {
+		levelView.updateKills(getUser().getNumberOfKills());
 	}
 
 	private boolean userHasReachedKillTarget() {
