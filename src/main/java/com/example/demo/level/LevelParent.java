@@ -8,7 +8,6 @@ import com.example.demo.actor.plane.Boss;
 import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.actor.plane.FighterPlane;
 import com.example.demo.actor.plane.UserPlane;
-import com.example.demo.ui.WarningImage;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -38,6 +37,7 @@ public abstract class LevelParent extends Observable {
     private final List<ActiveActorDestructible> enemyUnits;
     private final List<ActiveActorDestructible> userProjectiles;
     private final List<ActiveActorDestructible> enemyProjectiles;
+    private final List<Double> warningAreaEnemiesYPositions;
 
     private int currentNumberOfEnemies;
     private LevelView levelView;
@@ -52,6 +52,7 @@ public abstract class LevelParent extends Observable {
         this.enemyUnits = new ArrayList<>();
         this.userProjectiles = new ArrayList<>();
         this.enemyProjectiles = new ArrayList<>();
+        this.warningAreaEnemiesYPositions = new ArrayList<>();
 
         this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
         this.screenHeight = screenHeight;
@@ -91,6 +92,7 @@ public abstract class LevelParent extends Observable {
     public void goToNextLevel(String levelName) {
         levelAudio.stopBackgroundMusic();
         levelAudio.playNextLevel();
+        levelAudio.pauseWarning();
         timeline.stop();
         setChanged();
         notifyObservers(levelName);
@@ -171,11 +173,18 @@ public abstract class LevelParent extends Observable {
     private void checkIfEnemyEnterWarningArea() {
         for (ActiveActorDestructible enemy : enemyUnits) {
             if (enemy instanceof EnemyPlane && enemy.getTranslateX() + enemy.getLayoutX() < warningAreaXBoundary) {
-                levelAudio.playWarning();
-                return;
+                double enemyYPosition = enemy.getLayoutY();
+                if (!warningAreaEnemiesYPositions.contains(enemyYPosition)) {
+                    warningAreaEnemiesYPositions.add(enemyYPosition);
+                }
             }
         }
-        levelAudio.pauseWarning();
+
+        if (warningAreaEnemiesYPositions.isEmpty()) {
+            levelAudio.pauseWarning();
+        } else {
+            levelAudio.playWarning();
+        }
     }
 
     private void generateEnemyFire() {
@@ -200,7 +209,7 @@ public abstract class LevelParent extends Observable {
         removeDestroyedActors(friendlyUnits);
         removeDestroyedActors(userProjectiles);
         removeDestroyedActors(enemyProjectiles);
-        removeDestroyedActors(enemyUnits);
+        removeDestroyedEnemiesAndWarnings();
     }
 
     private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
@@ -208,6 +217,22 @@ public abstract class LevelParent extends Observable {
                 .collect(Collectors.toList());
         root.getChildren().removeAll(destroyedActors);
         actors.removeAll(destroyedActors);
+    }
+
+    private void removeDestroyedEnemiesAndWarnings() {
+        List<Integer> destroyedIndices = new ArrayList<>();
+        for (int i = 0; i < enemyUnits.size(); i++) {
+            if (enemyUnits.get(i).isDestroyed()) {
+                destroyedIndices.add(i);
+            }
+        }
+
+        for (int index : destroyedIndices) {
+            ActiveActorDestructible destroyedEnemy = enemyUnits.get(index);
+            root.getChildren().remove(destroyedEnemy);
+            enemyUnits.remove(destroyedEnemy);
+            warningAreaEnemiesYPositions.remove(destroyedEnemy.getLayoutY());
+        }
     }
 
     private void handlePlaneCollisions() {
@@ -286,6 +311,7 @@ public abstract class LevelParent extends Observable {
     }
 
     protected void winGame() {
+        levelAudio.pauseWarning();
         levelAudio.stopBackgroundMusic();
         timeline.stop();
         levelView.showWinImage();
@@ -293,6 +319,7 @@ public abstract class LevelParent extends Observable {
     }
 
     protected void loseGame() {
+        levelAudio.pauseWarning();
         levelAudio.stopBackgroundMusic();
         timeline.stop();
         levelView.showGameOverImage();
@@ -330,5 +357,13 @@ public abstract class LevelParent extends Observable {
 
     private void updateNumberOfEnemies() {
         currentNumberOfEnemies = enemyUnits.size();
+    }
+
+    protected int getNumberOfEnemiesInWarningAres() {
+        return warningAreaEnemiesYPositions.size();
+    }
+
+    protected List<Double> getWarningAreaEnemiesYPositions() {
+        return warningAreaEnemiesYPositions;
     }
 }
