@@ -3,7 +3,11 @@ package com.example.demo.level;
 import com.example.demo.controller.Main;
 import com.example.demo.ui.BossHealthLabel;
 import com.example.demo.ui.ShieldImage;
+import com.example.demo.ui.WarningImage;
 import javafx.scene.Group;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LevelViewLevelTwo extends LevelView {
 	private static final int BOSS_HEALTH_X_POSITION = Main.SCREEN_WIDTH - 350;
@@ -11,16 +15,18 @@ public class LevelViewLevelTwo extends LevelView {
 	private final Group root;
 	private final ShieldImage shieldImage;
 	private final BossHealthLabel bossHealthLabel;
+
 	
 	public LevelViewLevelTwo(Group root, int heartsToDisplay, int bossHealth) {
 		super(root, heartsToDisplay);
 		this.root = root;
 		this.shieldImage = new ShieldImage();
 		this.bossHealthLabel = new BossHealthLabel(BOSS_HEALTH_X_POSITION, BOSS_HEALTH_Y_POSITION, bossHealth);
+
 	}
 
 	public void showBossHealth() {
-		root.getChildren().add(bossHealthLabel.getLabel());
+		root.getChildren().add(bossHealthLabel);
 	}
 
 	public void updateBossHealth(int bossHealth) {

@@ -6,7 +6,7 @@ import com.example.demo.actor.projectile.EnemyProjectile;
 public class EnemyPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "enemyplane.png";
-	private static final int IMAGE_HEIGHT = 120;
+	public static final int IMAGE_HEIGHT = 120;
 	private static final int HORIZONTAL_VELOCITY = -6;
 	private static final double PROJECTILE_X_POSITION_OFFSET = -100.0;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50.0;

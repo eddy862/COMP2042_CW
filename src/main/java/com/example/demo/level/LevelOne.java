@@ -2,13 +2,20 @@ package com.example.demo.level;
 
 import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.plane.EnemyPlane;
+import com.example.demo.ui.WarningImage;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LevelOne extends LevelParent {
 	
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
 	private static final String NEXT_LEVEL = "com.example.demo.level.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
-	private static final int KILLS_TO_ADVANCE = 1000;
+	private static final int KILLS_TO_ADVANCE = 20;
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final int PLAYER_INITIAL_HEALTH = 10;
 	private LevelViewLevelOne levelView;
@@ -45,13 +52,14 @@ public class LevelOne extends LevelParent {
 
 	@Override
 	protected LevelView instantiateLevelView() {
-		this.levelView = new LevelViewLevelOne(getRoot(), PLAYER_INITIAL_HEALTH, KILLS_TO_ADVANCE);
+		this.levelView = new LevelViewLevelOne(getRoot(), PLAYER_INITIAL_HEALTH, KILLS_TO_ADVANCE, TOTAL_ENEMIES);
 		return levelView;
 	}
 
 	@Override
 	protected void initialiseLevelScene() {
 		levelView.showNumberOfKills();
+		levelView.showWarningImages();
 	}
 
 	@Override

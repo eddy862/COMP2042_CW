@@ -2,21 +2,16 @@ package com.example.demo.ui;
 
 import javafx.scene.control.Label;
 
-public class BossHealthLabel {
-    private final Label bossHealthLabel;
+public class BossHealthLabel extends Label {
 
     public BossHealthLabel(double xPosition, double yPosition, int bossHealth) {
-        bossHealthLabel = new Label("Boss Health: " + bossHealth);
-        bossHealthLabel.setLayoutX(xPosition);
-        bossHealthLabel.setLayoutY(yPosition);
-        bossHealthLabel.setStyle("-fx-font-size: 40; -fx-text-fill: black;");
+        this.setText("Boss Health: " + bossHealth);
+        this.setLayoutX(xPosition);
+        this.setLayoutY(yPosition);
+        this.setStyle("-fx-font-size: 40; -fx-text-fill: black;");
     }
 
     public void updateBossHealth(int bossHealth) {
-        bossHealthLabel.setText("Boss Health: " + bossHealth);
-    }
-
-    public Label getLabel() {
-        return bossHealthLabel;
+        this.setText("Boss Health: " + bossHealth);
     }
 }
