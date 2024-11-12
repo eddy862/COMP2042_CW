@@ -284,8 +284,10 @@ public abstract class LevelParent extends Observable {
         if (!warningEnemies.isEmpty()) {
             EnemyPlane lastEnemy = warningEnemies.get(warningEnemies.size() - 1);
             levelView.showWarning(lastEnemy.getLayoutY());
+            levelAudio.playWarning();
         } else {
             levelView.hideWarning();
+            levelAudio.pauseWarning();
         }
     }
 

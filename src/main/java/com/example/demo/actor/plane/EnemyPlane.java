@@ -15,7 +15,6 @@ public class EnemyPlane extends FighterPlane {
 	private static final double FIRE_RATE = .01;
 	private final double warningAreaXBoundary = 300;
 	private boolean inWarningArea = false;
-	private LevelOne levelParent;
 
 	public EnemyPlane(double initialXPos, double initialYPos) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
@@ -34,8 +33,8 @@ public class EnemyPlane extends FighterPlane {
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {
 			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
-			double projectileYPostion = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			return new EnemyProjectile(projectileXPosition, projectileYPostion);
+			double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
+			return new EnemyProjectile(projectileXPosition, projectileYPosition);
 		}
 		return null;
 	}
