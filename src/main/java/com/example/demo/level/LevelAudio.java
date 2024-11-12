@@ -14,7 +14,7 @@ public class LevelAudio {
     private static final String USER_HIT = "/com/example/demo/audio/userHit.mp3";
     private static final String SHIELD_HIT = "/com/example/demo/audio/shieldHit.mp3";
     private static final String SHIELD_DEACTIVATE = "/com/example/demo/audio/deactivateShield.mp3";
-    private static final String BACKGROUND_MUSIC = "/com/example/demo/audio/backgroundMusic.mp3";
+    private static final String BACKGROUND_MUSIC = "/com/example/demo/audio/gameBackgroundMusic.mp3";
     private static final String WARNING = "/com/example/demo/audio/warning.mp3";
 
     private final Media enemyProjectileDestroyed;
