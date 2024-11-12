@@ -24,7 +24,6 @@ public abstract class LevelParent extends Observable {
     private final double screenHeight;
     private final double screenWidth;
     private final double enemyMaximumYPosition;
-    private final double warningAreaXBoundary = 300;
     private static final int FIRE_COOLDOWN_MILLIS = 200; // time between each fire in milliseconds
     private long lastFireTime; // time of last fire in milliseconds
 
@@ -38,6 +37,7 @@ public abstract class LevelParent extends Observable {
     private final List<ActiveActorDestructible> enemyUnits;
     private final List<ActiveActorDestructible> userProjectiles;
     private final List<ActiveActorDestructible> enemyProjectiles;
+    private final List<EnemyPlane> warningAreaEnemies;
 
     private int currentNumberOfEnemies;
     private LevelView levelView;
@@ -52,6 +52,7 @@ public abstract class LevelParent extends Observable {
         this.enemyUnits = new ArrayList<>();
         this.userProjectiles = new ArrayList<>();
         this.enemyProjectiles = new ArrayList<>();
+        this.warningAreaEnemies = new ArrayList<>();
 
         this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
         this.screenHeight = screenHeight;
@@ -150,7 +151,8 @@ public abstract class LevelParent extends Observable {
             public void handle(KeyEvent e) {
                 KeyCode kc = e.getCode();
                 if (kc == KeyCode.UP || kc == KeyCode.DOWN || kc == KeyCode.W || kc == KeyCode.S) user.stopVertically();
-                if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT || kc == KeyCode.A || kc == KeyCode.D) user.stopHorizontally();
+                if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT || kc == KeyCode.A || kc == KeyCode.D)
+                    user.stopHorizontally();
             }
         });
         root.getChildren().add(background);
@@ -170,12 +172,10 @@ public abstract class LevelParent extends Observable {
 
     private void checkIfEnemyEnterWarningArea() {
         for (ActiveActorDestructible enemy : enemyUnits) {
-            if (enemy instanceof EnemyPlane && enemy.getTranslateX() + enemy.getLayoutX() < warningAreaXBoundary) {
-                levelAudio.playWarning();
-                return;
+            if (((EnemyPlane) enemy).getInWarningArea()) {
+                addWarningAreaEnemy((EnemyPlane) enemy);
             }
         }
-        levelAudio.pauseWarning();
     }
 
     private void generateEnemyFire() {
@@ -201,6 +201,7 @@ public abstract class LevelParent extends Observable {
         removeDestroyedActors(userProjectiles);
         removeDestroyedActors(enemyProjectiles);
         removeDestroyedActors(enemyUnits);
+        removeDestroyedWarningAreaEnemies();
     }
 
     private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
@@ -208,6 +209,15 @@ public abstract class LevelParent extends Observable {
                 .collect(Collectors.toList());
         root.getChildren().removeAll(destroyedActors);
         actors.removeAll(destroyedActors);
+    }
+
+    private void removeDestroyedWarningAreaEnemies() {
+        List<EnemyPlane> destroyedEnemies = warningAreaEnemies.stream()
+                .filter(ActiveActorDestructible::isDestroyed)
+                .collect(Collectors.toList());
+        warningAreaEnemies.removeAll(destroyedEnemies);
+
+
     }
 
     private void handlePlaneCollisions() {
@@ -259,7 +269,9 @@ public abstract class LevelParent extends Observable {
             }
         }
         return null;
-    };
+    }
+
+    ;
 
     /**
      * Check if any enemy has penetrated the defenses and if so, destroy the user
@@ -330,5 +342,12 @@ public abstract class LevelParent extends Observable {
 
     private void updateNumberOfEnemies() {
         currentNumberOfEnemies = enemyUnits.size();
+    }
+
+    private void addWarningAreaEnemy(EnemyPlane enemy) {
+        if (!warningAreaEnemies.contains(enemy)) {
+            warningAreaEnemies.add(enemy);
+            root.getChildren().add(new WarningImage(enemy.getLayoutY()));
+        }
     }
 }

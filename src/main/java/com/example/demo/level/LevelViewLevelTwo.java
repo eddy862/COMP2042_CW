@@ -22,7 +22,6 @@ public class LevelViewLevelTwo extends LevelView {
 		this.root = root;
 		this.shieldImage = new ShieldImage();
 		this.bossHealthLabel = new BossHealthLabel(BOSS_HEALTH_X_POSITION, BOSS_HEALTH_Y_POSITION, bossHealth);
-
 	}
 
 	public void showBossHealth() {

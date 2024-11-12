@@ -59,7 +59,6 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected void initialiseLevelScene() {
 		levelView.showNumberOfKills();
-		levelView.showWarningImages();
 	}
 
 	@Override
@@ -70,5 +69,4 @@ public class LevelOne extends LevelParent {
 	private boolean userHasReachedKillTarget() {
 		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
 	}
-
 }

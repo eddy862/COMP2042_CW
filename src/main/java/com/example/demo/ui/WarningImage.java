@@ -16,10 +16,9 @@ public class WarningImage extends ImageView {
     public WarningImage(double yPosition) {
         this.setImage(new Image(getClass().getResource(IMAGE_NAME).toExternalForm()));
         this.setFitHeight(WARNING_SIZE);
-        this.setFitWidth(WARNING_SIZE);
+        this.setPreserveRatio(true);
         this.setFitHeight(X_POSITION);
         this.setLayoutY(yPosition);
-        this.setVisible(false);
 
 //        flashTimeline = new Timeline(
 //                new KeyFrame(Duration.seconds(0.5), e -> this.setVisible(!this.isVisible()))

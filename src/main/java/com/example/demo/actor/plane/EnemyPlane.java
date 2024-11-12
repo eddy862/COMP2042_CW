@@ -2,6 +2,7 @@ package com.example.demo.actor.plane;
 
 import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.projectile.EnemyProjectile;
+import com.example.demo.level.LevelOne;
 
 public class EnemyPlane extends FighterPlane {
 
@@ -12,6 +13,9 @@ public class EnemyPlane extends FighterPlane {
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50.0;
 	private static final int INITIAL_HEALTH = 1;
 	private static final double FIRE_RATE = .01;
+	private final double warningAreaXBoundary = 300;
+	private boolean inWarningArea = false;
+	private LevelOne levelParent;
 
 	public EnemyPlane(double initialXPos, double initialYPos) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
@@ -39,5 +43,14 @@ public class EnemyPlane extends FighterPlane {
 	@Override
 	public void updateActor() {
 		updatePosition();
+		updateWarningState();
+	}
+
+	public void updateWarningState() {
+		inWarningArea = getLayoutX() + getTranslateX() < warningAreaXBoundary;
+	}
+
+	public boolean getInWarningArea() {
+		return inWarningArea;
 	}
 }
