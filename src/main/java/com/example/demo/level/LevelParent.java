@@ -26,6 +26,7 @@ public abstract class LevelParent extends Observable {
     private final double enemyMaximumYPosition;
     private static final int FIRE_COOLDOWN_MILLIS = 200; // time between each fire in milliseconds
     private long lastFireTime; // time of last fire in milliseconds
+    private double warningLastYPosition = 0;
 
     private final Group root;
     private final Timeline timeline;
@@ -37,7 +38,6 @@ public abstract class LevelParent extends Observable {
     private final List<ActiveActorDestructible> enemyUnits;
     private final List<ActiveActorDestructible> userProjectiles;
     private final List<ActiveActorDestructible> enemyProjectiles;
-    private final List<EnemyPlane> warningAreaEnemies;
 
     private int currentNumberOfEnemies;
     private LevelView levelView;
@@ -52,7 +52,6 @@ public abstract class LevelParent extends Observable {
         this.enemyUnits = new ArrayList<>();
         this.userProjectiles = new ArrayList<>();
         this.enemyProjectiles = new ArrayList<>();
-        this.warningAreaEnemies = new ArrayList<>();
 
         this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
         this.screenHeight = screenHeight;
@@ -79,6 +78,7 @@ public abstract class LevelParent extends Observable {
         initializeBackground();
         initializeFriendlyUnits();
         levelView.showHeartDisplay();
+        levelView.displayWarningImage();
         initialiseLevelScene();
         return scene;
     }
@@ -124,7 +124,6 @@ public abstract class LevelParent extends Observable {
         removeAllDestroyedActors();
         updateLevelView();
         checkIfGameOver();
-        checkIfEnemyEnterWarningArea();
     }
 
     private void initializeTimeline() {
@@ -170,14 +169,6 @@ public abstract class LevelParent extends Observable {
         }
     }
 
-    private void checkIfEnemyEnterWarningArea() {
-        for (ActiveActorDestructible enemy : enemyUnits) {
-            if (((EnemyPlane) enemy).getInWarningArea()) {
-                addWarningAreaEnemy((EnemyPlane) enemy);
-            }
-        }
-    }
-
     private void generateEnemyFire() {
         enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
     }
@@ -201,7 +192,6 @@ public abstract class LevelParent extends Observable {
         removeDestroyedActors(userProjectiles);
         removeDestroyedActors(enemyProjectiles);
         removeDestroyedActors(enemyUnits);
-        removeDestroyedWarningAreaEnemies();
     }
 
     private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
@@ -209,15 +199,6 @@ public abstract class LevelParent extends Observable {
                 .collect(Collectors.toList());
         root.getChildren().removeAll(destroyedActors);
         actors.removeAll(destroyedActors);
-    }
-
-    private void removeDestroyedWarningAreaEnemies() {
-        List<EnemyPlane> destroyedEnemies = warningAreaEnemies.stream()
-                .filter(ActiveActorDestructible::isDestroyed)
-                .collect(Collectors.toList());
-        warningAreaEnemies.removeAll(destroyedEnemies);
-
-
     }
 
     private void handlePlaneCollisions() {
@@ -290,7 +271,22 @@ public abstract class LevelParent extends Observable {
 
     private void updateLevelView() {
         levelView.removeHearts(user.getHealth());
+        updateWarningImage();
         updateSpecificLevelView();
+    }
+
+    private void updateWarningImage() {
+        List<EnemyPlane> warningEnemies = enemyUnits.stream()
+                .filter(enemy -> enemy instanceof EnemyPlane && ((EnemyPlane) enemy).getInWarningArea())
+                .map(enemy -> (EnemyPlane) enemy)
+                .collect(Collectors.toList());
+
+        if (!warningEnemies.isEmpty()) {
+            EnemyPlane lastEnemy = warningEnemies.get(warningEnemies.size() - 1);
+            levelView.showWarning(lastEnemy.getLayoutY());
+        } else {
+            levelView.hideWarning();
+        }
     }
 
     private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
@@ -342,12 +338,5 @@ public abstract class LevelParent extends Observable {
 
     private void updateNumberOfEnemies() {
         currentNumberOfEnemies = enemyUnits.size();
-    }
-
-    private void addWarningAreaEnemy(EnemyPlane enemy) {
-        if (!warningAreaEnemies.contains(enemy)) {
-            warningAreaEnemies.add(enemy);
-            root.getChildren().add(new WarningImage(enemy.getLayoutY()));
-        }
     }
 }

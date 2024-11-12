@@ -19,21 +19,14 @@ public class WarningImage extends ImageView {
         this.setPreserveRatio(true);
         this.setFitHeight(X_POSITION);
         this.setLayoutY(yPosition);
-
-//        flashTimeline = new Timeline(
-//                new KeyFrame(Duration.seconds(0.5), e -> this.setVisible(!this.isVisible()))
-//        );
-//        flashTimeline.setCycleCount(Timeline.INDEFINITE);
-//        flashTimeline.play();
+        this.setVisible(false);
     }
 
     public void showWarning() {
         this.setVisible(true);
-//        flashTimeline.play();
     }
 
     public void hideWarning() {
         this.setVisible(false);
-//        flashTimeline.stop();
     }
 }

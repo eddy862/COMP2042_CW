@@ -1,10 +1,8 @@
 package com.example.demo.level;
 
+import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.controller.Main;
-import com.example.demo.ui.GameOverImage;
-import com.example.demo.ui.HeartDisplay;
-import com.example.demo.ui.NumberOfKillsLabel;
-import com.example.demo.ui.WinImage;
+import com.example.demo.ui.*;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
@@ -24,12 +22,27 @@ public class LevelView {
 	private final WinImage winImage;
 	private final GameOverImage gameOverImage;
 	private final HeartDisplay heartDisplay;
+	private final WarningImage warningImage;
 	
 	public LevelView(Group root, int heartsToDisplay) {
 		this.root = root;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
 		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSITION);
+		this.warningImage = new WarningImage(0);
+	}
+
+	public void displayWarningImage() {
+		root.getChildren().add(warningImage);
+	}
+
+	public void showWarning(double enemyYPosition) {
+		warningImage.setLayoutY(enemyYPosition + EnemyPlane.IMAGE_HEIGHT / 3);
+		warningImage.showWarning();
+	}
+
+	public void hideWarning() {
+		warningImage.hideWarning();
 	}
 	
 	public void showHeartDisplay() {
