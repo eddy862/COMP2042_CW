@@ -8,13 +8,16 @@ import com.example.demo.actor.plane.Boss;
 import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.actor.plane.FighterPlane;
 import com.example.demo.actor.plane.UserPlane;
-import com.example.demo.ui.WarningImage;
+import com.example.demo.controller.Main;
+import com.example.demo.ui.PauseButton;
+import com.example.demo.ui.PauseMenu;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public abstract class LevelParent extends Observable {
@@ -26,7 +29,6 @@ public abstract class LevelParent extends Observable {
     private final double enemyMaximumYPosition;
     private static final int FIRE_COOLDOWN_MILLIS = 200; // time between each fire in milliseconds
     private long lastFireTime; // time of last fire in milliseconds
-    private double warningLastYPosition = 0;
 
     private final Group root;
     private final Timeline timeline;
@@ -40,8 +42,12 @@ public abstract class LevelParent extends Observable {
     private final List<ActiveActorDestructible> enemyProjectiles;
 
     private int currentNumberOfEnemies;
-    private LevelView levelView;
-    private LevelAudio levelAudio;
+    private final LevelView levelView;
+    private final LevelAudio levelAudio;
+    private final Main mainMenu = new Main();
+    private final PauseButton pauseButton;
+    private final PauseMenu pauseMenu;
+    private boolean isPause = false;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -62,6 +68,8 @@ public abstract class LevelParent extends Observable {
         this.currentNumberOfEnemies = 0;
         initializeTimeline();
         friendlyUnits.add(user);
+        this.pauseButton = new PauseButton(this::pauseGame);
+        this.pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu);
     }
 
     protected abstract void initializeFriendlyUnits();
@@ -79,6 +87,8 @@ public abstract class LevelParent extends Observable {
         initializeFriendlyUnits();
         levelView.showHeartDisplay();
         levelView.displayWarningImage();
+        root.getChildren().add(pauseButton);
+        root.getChildren().add(pauseMenu.getLayout());
         initialiseLevelScene();
         return scene;
     }
@@ -145,6 +155,13 @@ public abstract class LevelParent extends Observable {
                 if (kc == KeyCode.LEFT || kc == KeyCode.A) user.moveLeft();
                 if (kc == KeyCode.RIGHT || kc == KeyCode.D) user.moveRight();
                 if (kc == KeyCode.SPACE || kc == KeyCode.L) fireProjectile();
+                if (kc == KeyCode.ESCAPE) {
+                    if (isPause) {
+                        resumeGame();
+                    } else {
+                        pauseGame();
+                    }
+                }
             }
         });
         background.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -343,5 +360,31 @@ public abstract class LevelParent extends Observable {
 
     private void updateNumberOfEnemies() {
         currentNumberOfEnemies = enemyUnits.size();
+    }
+
+    protected void pauseGame() {
+        if (!isPause) {
+            isPause = true;
+            timeline.pause();
+            pauseMenu.show();
+            levelAudio.pauseBackgroundMusic();
+        }
+    }
+
+    protected void resumeGame() {
+        if (isPause) {
+            isPause = false;
+            timeline.play();
+            pauseMenu.hide();
+            levelAudio.playBackgroundMusic();
+        }
+    }
+
+    protected void returnToMenu() {
+        levelAudio.stopBackgroundMusic();
+        levelAudio.pauseWarning();
+        timeline.stop();
+        setChanged();
+        mainMenu.start((Stage) root.getScene().getWindow());
     }
 }

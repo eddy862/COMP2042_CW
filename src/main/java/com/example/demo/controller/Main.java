@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.lang.reflect.InvocationTargetException;
 
+import com.example.demo.ui.PageAudio;
 import com.example.demo.ui.TutorialPage;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -60,11 +61,14 @@ public class Main extends Application {
         mediaView.setFitWidth(SCREEN_WIDTH);
         mediaView.setFitHeight(SCREEN_HEIGHT);
 
+        PageAudio pageAudio = new PageAudio();
+
         Label welcomeLabel = new Label("Welcome to Sky Battle!");
         welcomeLabel.getStyleClass().add("label");
 
         Button playButton = new Button("Start the game");
         playButton.setOnAction(e -> {
+            pageAudio.playButtonClick();
             try {
                 startLevelOne(stage, musicPlayer);
             } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException |
@@ -75,7 +79,11 @@ public class Main extends Application {
         playButton.getStyleClass().addAll("button", "play-button");
 
         Button tutorialButton = new Button("Tutorial");
-        tutorialButton.setOnAction(e -> showTutorial(stage));
+        tutorialButton.setOnAction(e -> {
+                    pageAudio.playButtonClick();
+                    showTutorial(stage);
+                }
+        );
         tutorialButton.getStyleClass().addAll("button", "tutorial-button");
 
         VBox layout = new VBox(50);
@@ -99,7 +107,7 @@ public class Main extends Application {
     }
 
     private void showTutorial(Stage stage) {
-        TutorialPage tutorialPage = new TutorialPage();
+        TutorialPage tutorialPage = new TutorialPage(this);
         Scene tutorialScene = tutorialPage.initializeScene(stage);
         stage.setScene(tutorialScene);
     }

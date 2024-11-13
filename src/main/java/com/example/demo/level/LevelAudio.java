@@ -110,6 +110,10 @@ public class LevelAudio {
         backgroundMusicPlayer.play();
     }
 
+    public void pauseBackgroundMusic() {
+        backgroundMusicPlayer.pause();
+    }
+
     public void stopBackgroundMusic() {
         backgroundMusicPlayer.stop();
     }
