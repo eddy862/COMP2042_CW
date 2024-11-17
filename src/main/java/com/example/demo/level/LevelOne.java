@@ -2,6 +2,8 @@ package com.example.demo.level;
 
 import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.plane.EnemyPlane;
+import com.example.demo.audio.Music;
+import com.example.demo.audio.SoundEffect;
 import com.example.demo.ui.WarningImage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,13 +17,13 @@ public class LevelOne extends LevelParent {
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
 	private static final String NEXT_LEVEL = "com.example.demo.level.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
-	private static final int KILLS_TO_ADVANCE = 20;
+	private static final int KILLS_TO_ADVANCE = 10;
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private LevelViewLevelOne levelView;
 
-	public LevelOne(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+	public LevelOne(double screenHeight, double screenWidth, Music music, SoundEffect soundEffect) {
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, music, soundEffect);
 	}
 
 	@Override

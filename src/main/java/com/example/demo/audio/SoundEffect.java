@@ -29,6 +29,8 @@ public class SoundEffect {
     private final Media warning;
     private final MediaPlayer warningPlayer;
 
+    private boolean isMuted = false;
+
     public SoundEffect() {
         enemyProjectileDestroyed = new Media(getClass().getResource(ENEMY_PROJECTILE_DESTROYED).toExternalForm());
         activateShield = new Media(getClass().getResource(ACTIVATE_SHIELD).toExternalForm());
@@ -46,55 +48,79 @@ public class SoundEffect {
         warningPlayer.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
+    public boolean isMuted() {
+        return isMuted;
+    }
+
+    public void mute() {
+        isMuted = true;
+        warningPlayer.setVolume(0);
+    }
+
+    public void unmute() {
+        isMuted = false;
+        warningPlayer.setVolume(1);
+    }
+
     public void playEnemyProjectileDestroyed() {
         MediaPlayer enemyProjectileDestroyedPlayer = new MediaPlayer(enemyProjectileDestroyed);
+        if (isMuted) enemyProjectileDestroyedPlayer.setVolume(0);
         enemyProjectileDestroyedPlayer.play();
     }
 
     public void playActivateShield() {
         MediaPlayer activateShieldPlayer = new MediaPlayer(activateShield);
         activateShieldPlayer.setVolume(1.2);
+        if (isMuted) activateShieldPlayer.setVolume(0);
         activateShieldPlayer.play();
     }
 
     public void playEnemyHit() {
         MediaPlayer enemyHitPlayer = new MediaPlayer(enemyHit);
+        if (isMuted) enemyHitPlayer.setVolume(0);
         enemyHitPlayer.play();
     }
 
     public void playUserFire() {
         MediaPlayer userFirePlayer = new MediaPlayer(userFire);
         userFirePlayer.setVolume(0.5);
+        if (isMuted) userFirePlayer.setVolume(0);
         userFirePlayer.play();
     }
 
     public void playGameOver() {
         MediaPlayer gameOverPlayer = new MediaPlayer(gameOver);
+        if (isMuted) gameOverPlayer.setVolume(0);
         gameOverPlayer.play();
     }
 
     public void playNextLevel() {
         MediaPlayer nextLevelPlayer = new MediaPlayer(nextLevel);
+        if (isMuted) nextLevelPlayer.setVolume(0);
         nextLevelPlayer.play();
     }
 
     public void playWin() {
         MediaPlayer winPlayer = new MediaPlayer(win);
+        if (isMuted) winPlayer.setVolume(0);
         winPlayer.play();
     }
 
     public void playUserHit() {
         MediaPlayer userHitPlayer = new MediaPlayer(userHit);
+        if (isMuted) userHitPlayer.setVolume(0);
         userHitPlayer.play();
     }
 
     public void playShieldHit() {
         MediaPlayer shieldHitPlayer = new MediaPlayer(shieldHit);
+        if (isMuted) shieldHitPlayer.setVolume(0);
         shieldHitPlayer.play();
     }
 
     public void playShieldDeactivate() {
         MediaPlayer shieldDeactivatePlayer = new MediaPlayer(shieldDeactivate);
+        if (isMuted) shieldDeactivatePlayer.setVolume(0);
         shieldDeactivatePlayer.setVolume(1.2);
         shieldDeactivatePlayer.play();
     }

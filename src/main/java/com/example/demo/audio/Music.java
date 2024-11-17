@@ -8,6 +8,7 @@ public class Music {
     private static final String MAIN_MENU_BACKGROUND_MUSIC = "/com/example/demo/audio/mainMenuBackgroundMusic.mp3";
     private MediaPlayer game_backgroundMusicPlayer;
     private MediaPlayer mainMenuBackgroundMusicPlayer;
+    private boolean isMuted = false;
 
     public Music() {
         game_backgroundMusicPlayer = new MediaPlayer(new Media(getClass().getResource(GAME_BACKGROUND_MUSIC).toExternalForm()));
@@ -18,14 +19,20 @@ public class Music {
         mainMenuBackgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
+    public boolean isMuted() {
+        return isMuted;
+    }
+
     public void mute() {
         game_backgroundMusicPlayer.setVolume(0);
         mainMenuBackgroundMusicPlayer.setVolume(0);
+        isMuted = true;
     }
 
     public void unmute() {
         game_backgroundMusicPlayer.setVolume(0.6);
         mainMenuBackgroundMusicPlayer.setVolume(1);
+        isMuted = false;
     }
 
     public void playGameBackgroundMusic() {

@@ -52,7 +52,7 @@ public abstract class LevelParent extends Observable {
     private final PauseMenu pauseMenu;
     private boolean isPause = false;
 
-    public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
+    public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, Music music, SoundEffect soundEffect) {
         this.root = new Group();
         this.scene = new Scene(root, screenWidth, screenHeight);
         this.timeline = new Timeline();
@@ -67,13 +67,13 @@ public abstract class LevelParent extends Observable {
         this.screenWidth = screenWidth;
         this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
         this.levelView = instantiateLevelView();
-        this.soundEffect = new SoundEffect();
-        this.music = new Music();
+        this.soundEffect = soundEffect;
+        this.music = music;
         this.currentNumberOfEnemies = 0;
         initializeTimeline();
         friendlyUnits.add(user);
         this.pauseButton = new PauseButton(this::pauseGame);
-        this.pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu);
+        this.pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music, soundEffect);
     }
 
     protected abstract void initializeFriendlyUnits();
@@ -159,7 +159,7 @@ public abstract class LevelParent extends Observable {
                 if (kc == KeyCode.LEFT || kc == KeyCode.A) user.moveLeft();
                 if (kc == KeyCode.RIGHT || kc == KeyCode.D) user.moveRight();
                 if (kc == KeyCode.SPACE || kc == KeyCode.L) fireProjectile();
-                if (kc == KeyCode.ESCAPE) {
+                if (kc == KeyCode.ESCAPE || kc == KeyCode.P) {
                     if (isPause) {
                         resumeGame();
                     } else {

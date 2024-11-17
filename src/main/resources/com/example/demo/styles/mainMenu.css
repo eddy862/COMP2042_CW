@@ -36,3 +36,12 @@
 .quit-button:hover {
     -fx-background-color: #c82333;
 }
+
+.setting-button {
+    -fx-background-color: #ffc107;
+    -fx-text-fill: white;
+}
+
+.setting-button:hover {
+    -fx-background-color: #d39e00;
+}

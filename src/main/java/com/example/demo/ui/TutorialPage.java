@@ -1,6 +1,5 @@
 package com.example.demo.ui;
 
-import com.example.demo.controller.Main;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -77,7 +76,7 @@ public class TutorialPage {
         mainLayout.getChildren().addAll(controlLayout, levelLayout);
         mainLayout.setAlignment(Pos.TOP_CENTER);
 
-        Button backButton = new Button("Back to Main Menu");
+        Button backButton = new Button("Back");
         backButton.setOnAction(e -> showMainMenu(stage));
         backButton.setStyle("-fx-font-size: 12px; -fx-padding: 10px 20px; -fx-background-radius: 5px;");
 
@@ -86,7 +85,7 @@ public class TutorialPage {
         BorderPane.setMargin(backButton, new Insets(10));
         layout.setCenter(mainLayout);
 
-        Scene scene = new Scene(layout, Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
+        Scene scene = new Scene(layout, stage.getWidth(), stage.getWidth());
 
         return scene;
     }

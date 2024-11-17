@@ -14,7 +14,6 @@ public class LevelViewLevelTwo extends LevelView {
 	private final ShieldImage shieldImage;
 	private final BossHealthLabel bossHealthLabel;
 
-	
 	public LevelViewLevelTwo(Group root, int heartsToDisplay, int bossHealth) {
 		super(root, heartsToDisplay);
 		this.root = root;

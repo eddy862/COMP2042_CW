@@ -18,7 +18,7 @@ public class Boss extends FighterPlane {
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
 	private static final double BOSS_FIRE_RATE = .04;
-	private static final double BOSS_SHIELD_PROBABILITY = .003;
+	private static final double BOSS_SHIELD_PROBABILITY = .004;
 	private static final int IMAGE_HEIGHT = 300;
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HEALTH = 10;
@@ -33,7 +33,6 @@ public class Boss extends FighterPlane {
 	private int consecutiveMovesInSameDirection; // Number of frames with the same move
 	private int indexOfCurrentMove; // Index of the current move in the move pattern
 	private int framesWithShieldActivated; // Number of frames with the shield activated
-	private SoundEffect soundEffect;
 
 	public Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
@@ -43,7 +42,6 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 		isShielded = false;
 		initializeMovePattern();
-		soundEffect = new SoundEffect();
 	}
 
 	/**
@@ -154,13 +152,11 @@ public class Boss extends FighterPlane {
 
 	private void activateShield() {
 		isShielded = true;
-		soundEffect.playActivateShield();
 	}
 
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
-		soundEffect.playShieldDeactivate();
 	}
 
 	public boolean isShielded() {
