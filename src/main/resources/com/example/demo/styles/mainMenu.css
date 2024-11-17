@@ -1,5 +1,5 @@
 .label {
-    -fx-font-size: 50px;
+    -fx-font-size: 60px;
     -fx-text-fill: #333;
     -fx-font-weight: bold;
 }
@@ -26,4 +26,13 @@
 
 .tutorial-button:hover {
     -fx-background-color: #218838;
+}
+
+.quit-button {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+}
+
+.quit-button:hover {
+    -fx-background-color: #c82333;
 }

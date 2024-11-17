@@ -19,19 +19,18 @@ import java.util.List;
 public class TutorialPage {
     private int currentGalleryIndex = 0;
     private List<Image> levelScreenshots = new ArrayList<>();
-    private Main mainMenu;
+    private MainMenu mainMenu;
     private List<String> levelName = new ArrayList<>();
     private List<String> levelDesc = new ArrayList<>();
     private ImageView imageView = new ImageView();
     private Label levelNameLabel;
     private Label levelDescLabel;
-    private static final String TUTORIAL_PAGE_CSS = "/com/example/demo/styles/tutorial.css";
 
-    public TutorialPage(Main mainMenu) {
+    public TutorialPage(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
         levelScreenshots.add(new Image(getClass().getResource("/com/example/demo/images/tutorial1.png").toExternalForm()));
         levelScreenshots.add(new Image(getClass().getResource("/com/example/demo/images/tutorial2.png").toExternalForm()));
-        levelName.addAll(List.of("Tutorial 1", "Tutorial 2"));
+        levelName.addAll(List.of("Level 1", "Level 2"));
         levelDesc.addAll(List.of("Target: kills a certain number of enemy planes.\nIf any enemy plan pass the leftmost boundary, the user will lose a life.",
                 "Target: kills the boss plane.\nThe boss plane has a shield that can be activated randomly.")
         );
@@ -40,15 +39,15 @@ public class TutorialPage {
     public Scene initializeScene(Stage stage) {
         BorderPane layout = new BorderPane();
         Label controTitleLabel = new Label("Controls");
-        controTitleLabel.getStyleClass().add("title");
-        Label controlLabel = new Label("W or UP - Move Up\nA or LEFT - Move Left\nS or DOWN - Move Down\nD or RIGHT - Move Right\nL or SPACE - Fire Projectile");
-        controlLabel.getStyleClass().add("text");
+        controTitleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        Label controlLabel = new Label("W or UP - Move Up\t\tA or LEFT - Move Left\tS or DOWN - Move Down\nD or RIGHT - Move Right\tL or SPACE - Fire Projectile\tESC - Pause Game");
+        controlLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: 400;");
         Label levelTitleLabel = new Label("Levels");
-        levelTitleLabel.getStyleClass().add("title");
+        levelTitleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
         levelNameLabel = new Label(levelName.get(currentGalleryIndex));
-        levelNameLabel.getStyleClass().add("text");
+        levelNameLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: 400;");
         levelDescLabel = new Label(levelDesc.get(currentGalleryIndex));
-        levelDescLabel.getStyleClass().add("text");
+        levelDescLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: 400;");
 
         VBox controlLayout = new VBox(10);
         controlLayout.getChildren().addAll(controTitleLabel, controlLabel);
@@ -60,11 +59,11 @@ public class TutorialPage {
 
         Button leftButton = new Button("Previous");
         leftButton.setOnAction(e -> showPreviousImage());
-        leftButton.getStyleClass().addAll("button", "level-button");
+        leftButton.setStyle("-fx-font-size: 16px; -fx-padding: 5px 15px; -fx-background-radius: 5px; -fx-background-color: gray; -fx-text-fill: white;");
 
         Button rightButton = new Button("Next");
         rightButton.setOnAction(e -> showNextImage());
-        rightButton.getStyleClass().addAll("button", "level-button");
+        rightButton.setStyle("-fx-font-size: 16px; -fx-padding: 5px 15px; -fx-background-radius: 5px; -fx-background-color: gray; -fx-text-fill: white;");
 
         HBox buttonLayout = new HBox(10);
         buttonLayout.getChildren().addAll(leftButton, levelNameLabel, rightButton);
@@ -80,7 +79,7 @@ public class TutorialPage {
 
         Button backButton = new Button("Back to Main Menu");
         backButton.setOnAction(e -> showMainMenu(stage));
-        backButton.getStyleClass().add("button");
+        backButton.setStyle("-fx-font-size: 12px; -fx-padding: 10px 20px; -fx-background-radius: 5px;");
 
         layout.setTop(backButton);
         BorderPane.setAlignment(backButton, Pos.TOP_LEFT);
@@ -88,13 +87,12 @@ public class TutorialPage {
         layout.setCenter(mainLayout);
 
         Scene scene = new Scene(layout, Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
-        scene.getStylesheets().add(getClass().getResource(TUTORIAL_PAGE_CSS).toExternalForm());
 
         return scene;
     }
 
     private void showMainMenu(Stage stage) {
-        mainMenu.start(stage);
+        stage.setScene(mainMenu.initializeScene());
     }
 
     private void showPreviousImage() {

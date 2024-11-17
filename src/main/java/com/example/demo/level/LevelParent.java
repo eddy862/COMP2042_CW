@@ -8,6 +8,8 @@ import com.example.demo.actor.plane.Boss;
 import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.actor.plane.FighterPlane;
 import com.example.demo.actor.plane.UserPlane;
+import com.example.demo.audio.Music;
+import com.example.demo.audio.SoundEffect;
 import com.example.demo.controller.Main;
 import com.example.demo.ui.PauseButton;
 import com.example.demo.ui.PauseMenu;
@@ -43,7 +45,8 @@ public abstract class LevelParent extends Observable {
 
     private int currentNumberOfEnemies;
     private final LevelView levelView;
-    private final LevelAudio levelAudio;
+    private final SoundEffect soundEffect;
+    private final Music music;
     private final Main mainMenu = new Main();
     private final PauseButton pauseButton;
     private final PauseMenu pauseMenu;
@@ -64,7 +67,8 @@ public abstract class LevelParent extends Observable {
         this.screenWidth = screenWidth;
         this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
         this.levelView = instantiateLevelView();
-        this.levelAudio = new LevelAudio();
+        this.soundEffect = new SoundEffect();
+        this.music = new Music();
         this.currentNumberOfEnemies = 0;
         initializeTimeline();
         friendlyUnits.add(user);
@@ -94,15 +98,15 @@ public abstract class LevelParent extends Observable {
     }
 
     public void startGame() {
-        levelAudio.playBackgroundMusic();
+        music.playGameBackgroundMusic();
         background.requestFocus();
         timeline.play();
     }
 
     public void goToNextLevel(String levelName) {
-        levelAudio.pauseWarning();
-        levelAudio.stopBackgroundMusic();
-        levelAudio.playNextLevel();
+        soundEffect.pauseWarning();
+        music.stopGameBackgroundMusic();
+        soundEffect.playNextLevel();
         timeline.stop();
         setChanged();
         notifyObservers(levelName);
@@ -182,7 +186,7 @@ public abstract class LevelParent extends Observable {
             ActiveActorDestructible projectile = user.fireProjectile();
             root.getChildren().add(projectile);
             userProjectiles.add(projectile);
-            levelAudio.playUserFire();
+            soundEffect.playUserFire();
             lastFireTime = currentTime;
         }
     }
@@ -230,12 +234,12 @@ public abstract class LevelParent extends Observable {
         if (enemyHit != null) {
             if (enemyHit instanceof Boss) {
                 if (((Boss) enemyHit).isShielded()) {
-                    levelAudio.playShieldHit();
+                    soundEffect.playShieldHit();
                 } else {
-                    levelAudio.playEnemyHit();
+                    soundEffect.playEnemyHit();
                 }
             } else {
-                levelAudio.playEnemyHit();
+                soundEffect.playEnemyHit();
             }
 
             if (enemyHit instanceof EnemyPlane) {
@@ -246,13 +250,13 @@ public abstract class LevelParent extends Observable {
 
     private void handleEnemyProjectileCollisions() {
         if (handleCollisions(enemyProjectiles, friendlyUnits) != null) {
-            levelAudio.playUserHit();
+            soundEffect.playUserHit();
         }
     }
 
     private void handleUserAndEnemyProjectileCollisions() {
         if (handleCollisions(userProjectiles, enemyProjectiles) != null) {
-            levelAudio.playEnemyProjectileDestroyed();
+            soundEffect.playEnemyProjectileDestroyed();
         }
     }
 
@@ -270,8 +274,6 @@ public abstract class LevelParent extends Observable {
         return null;
     }
 
-    ;
-
     /**
      * Check if any enemy has penetrated the defenses and if so, destroy the user
      */
@@ -280,7 +282,7 @@ public abstract class LevelParent extends Observable {
             if (enemyHasPenetratedDefenses(enemy)) {
                 user.takeDamage();
                 enemy.destroy();
-                levelAudio.playUserHit();
+                soundEffect.playUserHit();
             }
         }
     }
@@ -302,10 +304,10 @@ public abstract class LevelParent extends Observable {
         if (!warningEnemies.isEmpty()) {
             EnemyPlane lastEnemy = warningEnemies.get(warningEnemies.size() - 1);
             levelView.showWarning(lastEnemy.getLayoutY());
-            levelAudio.playWarning();
+            soundEffect.playWarning();
         } else {
             levelView.hideWarning();
-            levelAudio.pauseWarning();
+            soundEffect.pauseWarning();
         }
     }
 
@@ -314,19 +316,19 @@ public abstract class LevelParent extends Observable {
     }
 
     protected void winGame() {
-        levelAudio.pauseWarning();
-        levelAudio.stopBackgroundMusic();
+        soundEffect.pauseWarning();
+        music.stopGameBackgroundMusic();
         timeline.stop();
         levelView.showWinImage();
-        levelAudio.playWin();
+        soundEffect.playWin();
     }
 
     protected void loseGame() {
-        levelAudio.pauseWarning();
-        levelAudio.stopBackgroundMusic();
+        soundEffect.pauseWarning();
+        music.stopGameBackgroundMusic();
         timeline.stop();
         levelView.showGameOverImage();
-        levelAudio.playGameOver();
+        soundEffect.playGameOver();
     }
 
     protected UserPlane getUser() {
@@ -367,7 +369,8 @@ public abstract class LevelParent extends Observable {
             isPause = true;
             timeline.pause();
             pauseMenu.show();
-            levelAudio.pauseBackgroundMusic();
+            music.pauseGameBackgroundMusic();
+            soundEffect.pauseWarning();
         }
     }
 
@@ -376,13 +379,13 @@ public abstract class LevelParent extends Observable {
             isPause = false;
             timeline.play();
             pauseMenu.hide();
-            levelAudio.playBackgroundMusic();
+            music.playGameBackgroundMusic();
         }
     }
 
     protected void returnToMenu() {
-        levelAudio.stopBackgroundMusic();
-        levelAudio.pauseWarning();
+        music.stopGameBackgroundMusic();
+        soundEffect.pauseWarning();
         timeline.stop();
         setChanged();
         mainMenu.start((Stage) root.getScene().getWindow());

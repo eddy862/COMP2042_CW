@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelViewLevelTwo extends LevelView {
-	private static final int BOSS_HEALTH_X_POSITION = Main.SCREEN_WIDTH - 350;
-	private static final int BOSS_HEALTH_Y_POSITION = 25;
 	private final Group root;
 	private final ShieldImage shieldImage;
 	private final BossHealthLabel bossHealthLabel;
@@ -21,7 +19,7 @@ public class LevelViewLevelTwo extends LevelView {
 		super(root, heartsToDisplay);
 		this.root = root;
 		this.shieldImage = new ShieldImage();
-		this.bossHealthLabel = new BossHealthLabel(BOSS_HEALTH_X_POSITION, BOSS_HEALTH_Y_POSITION, bossHealth);
+		this.bossHealthLabel = new BossHealthLabel(bossHealth);
 	}
 
 	public void showBossHealth() {

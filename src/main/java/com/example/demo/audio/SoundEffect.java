@@ -1,9 +1,9 @@
-package com.example.demo.level;
+package com.example.demo.audio;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-public class LevelAudio {
+public class SoundEffect {
     private static final String ENEMY_PROJECTILE_DESTROYED = "/com/example/demo/audio/enemyProjectileDestroyed.mp3";
     private static final String ACTIVATE_SHIELD = "/com/example/demo/audio/activateShield.mp3";
     private static final String ENEMY_HIT = "/com/example/demo/audio/enemyHit.mp3";
@@ -14,7 +14,6 @@ public class LevelAudio {
     private static final String USER_HIT = "/com/example/demo/audio/userHit.mp3";
     private static final String SHIELD_HIT = "/com/example/demo/audio/shieldHit.mp3";
     private static final String SHIELD_DEACTIVATE = "/com/example/demo/audio/deactivateShield.mp3";
-    private static final String BACKGROUND_MUSIC = "/com/example/demo/audio/gameBackgroundMusic.mp3";
     private static final String WARNING = "/com/example/demo/audio/warning.mp3";
 
     private final Media enemyProjectileDestroyed;
@@ -27,11 +26,10 @@ public class LevelAudio {
     private final Media userHit;
     private final Media shieldHit;
     private final Media shieldDeactivate;
-    private final MediaPlayer backgroundMusicPlayer;
     private final Media warning;
     private final MediaPlayer warningPlayer;
 
-    public LevelAudio() {
+    public SoundEffect() {
         enemyProjectileDestroyed = new Media(getClass().getResource(ENEMY_PROJECTILE_DESTROYED).toExternalForm());
         activateShield = new Media(getClass().getResource(ACTIVATE_SHIELD).toExternalForm());
         enemyHit = new Media(getClass().getResource(ENEMY_HIT).toExternalForm());
@@ -42,11 +40,6 @@ public class LevelAudio {
         userHit = new Media(getClass().getResource(USER_HIT).toExternalForm());
         shieldHit = new Media(getClass().getResource(SHIELD_HIT).toExternalForm());
         shieldDeactivate = new Media(getClass().getResource(SHIELD_DEACTIVATE).toExternalForm());
-
-        Media backgroundMusic = new Media(getClass().getResource(BACKGROUND_MUSIC).toExternalForm());
-        backgroundMusicPlayer = new MediaPlayer(backgroundMusic);
-        backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        backgroundMusicPlayer.setVolume(0.6);
 
         warning = new Media(getClass().getResource(WARNING).toExternalForm());
         warningPlayer = new MediaPlayer(warning);
@@ -104,18 +97,6 @@ public class LevelAudio {
         MediaPlayer shieldDeactivatePlayer = new MediaPlayer(shieldDeactivate);
         shieldDeactivatePlayer.setVolume(1.2);
         shieldDeactivatePlayer.play();
-    }
-
-    public void playBackgroundMusic() {
-        backgroundMusicPlayer.play();
-    }
-
-    public void pauseBackgroundMusic() {
-        backgroundMusicPlayer.pause();
-    }
-
-    public void stopBackgroundMusic() {
-        backgroundMusicPlayer.stop();
     }
 
     public void playWarning() {

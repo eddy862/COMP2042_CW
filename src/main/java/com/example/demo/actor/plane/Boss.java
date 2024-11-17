@@ -2,7 +2,7 @@ package com.example.demo.actor.plane;
 
 import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.projectile.BossProjectile;
-import com.example.demo.level.LevelAudio;
+import com.example.demo.audio.SoundEffect;
 
 import java.util.*;
 
@@ -33,7 +33,7 @@ public class Boss extends FighterPlane {
 	private int consecutiveMovesInSameDirection; // Number of frames with the same move
 	private int indexOfCurrentMove; // Index of the current move in the move pattern
 	private int framesWithShieldActivated; // Number of frames with the shield activated
-	private LevelAudio levelAudio;
+	private SoundEffect soundEffect;
 
 	public Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
@@ -43,7 +43,7 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 		isShielded = false;
 		initializeMovePattern();
-		levelAudio = new LevelAudio();
+		soundEffect = new SoundEffect();
 	}
 
 	/**
@@ -154,13 +154,13 @@ public class Boss extends FighterPlane {
 
 	private void activateShield() {
 		isShielded = true;
-		levelAudio.playActivateShield();
+		soundEffect.playActivateShield();
 	}
 
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
-		levelAudio.playShieldDeactivate();
+		soundEffect.playShieldDeactivate();
 	}
 
 	public boolean isShielded() {
