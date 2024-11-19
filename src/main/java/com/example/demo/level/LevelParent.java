@@ -215,7 +215,10 @@ public abstract class LevelParent extends Observable {
         removeDestroyedActors(friendlyUnits);
         removeDestroyedActors(userProjectiles);
         removeDestroyedActors(enemyProjectiles);
+        removeDestroyedEnemyUnits();
+    }
 
+    private void removeDestroyedEnemyUnits() {
         for (ActiveActorDestructible enemy : removeDestroyedActors(enemyUnits)) {
             levelView.showExplosion(enemy);
             levelView.hideWarning(enemy);
