@@ -1,13 +1,9 @@
 package com.example.demo.level;
 
 import com.example.demo.actor.ActiveActorDestructible;
-import com.example.demo.actor.plane.EnemyPlane;
-import com.example.demo.controller.Main;
 import com.example.demo.ui.*;
 import javafx.animation.PauseTransition;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -20,7 +16,7 @@ import java.util.Map;
  */
 public class LevelView {
 	
-	private static final double HEART_DISPLAY_X_POSITION = 5;
+	private static final double HEART_DISPLAY_X_POSITION = 10;
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
 	private static final int WIN_IMAGE_X_POSITION = 355;
 	private static final int WIN_IMAGE_Y_POSITION = 175;
@@ -87,8 +83,8 @@ public class LevelView {
 			explosion.show();
 
 			// Hide the explosion image after a short delay
-			PauseTransition delay = new PauseTransition(Duration.millis(500));
-			delay.setOnFinished(event -> explosion.setVisible(false));
+			PauseTransition delay = new PauseTransition(Duration.millis(400));
+			delay.setOnFinished(event -> explosion.hide());
 			delay.play();
 		}
 	}
@@ -126,5 +122,13 @@ public class LevelView {
 			}
 		}
 		return null; // No available explosion, consider increasing the pool size
+	}
+
+	public void heartsStartZooming() {
+		heartDisplay.startZooming();
+	}
+
+	public void heartsStopZooming() {
+		heartDisplay.stopZooming();
 	}
 }

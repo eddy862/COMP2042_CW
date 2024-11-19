@@ -39,8 +39,9 @@
 8. Implemented main menu, tutorial page, audio setting page and pause menu.
 9. Enabled user to pause the game, mute/unmute sound effects and music, resume the game, restart the game, and return to the main menu.
 10. Displayed a warning sign and played a sound effect when an enemy plane enters a warning state (approaching the leftmost boundary).
-11. Played music and made displayed hearts shake when the user's health is low.
+11. Made displayed hearts zoom in and out when the user's health is low.
 12. Limited the user's fire rate to save memory usage and prevent frame rate drops.
+13. Insert loading screen between levels.
 
 ## Implemented but Not Working Properly
 

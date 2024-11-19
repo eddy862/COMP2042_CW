@@ -28,9 +28,7 @@ public class SoundEffect {
     private final Media userHit;
     private final Media shieldHit;
     private final Media shieldDeactivate;
-    private final Media warning;
     private final MediaPlayer warningPlayer;
-
     private boolean isMuted = false;
 
     public SoundEffect() {
@@ -45,7 +43,7 @@ public class SoundEffect {
         shieldHit = new Media(getClass().getResource(SHIELD_HIT).toExternalForm());
         shieldDeactivate = new Media(getClass().getResource(SHIELD_DEACTIVATE).toExternalForm());
 
-        warning = new Media(getClass().getResource(WARNING).toExternalForm());
+        Media warning = new Media(getClass().getResource(WARNING).toExternalForm());
         warningPlayer = new MediaPlayer(warning);
         warningPlayer.setCycleCount(MediaPlayer.INDEFINITE);
     }
@@ -65,15 +63,15 @@ public class SoundEffect {
     }
 
     public void playEnemyProjectileDestroyed() {
+        if (isMuted) return;
         MediaPlayer enemyProjectileDestroyedPlayer = new MediaPlayer(enemyProjectileDestroyed);
-        if (isMuted) enemyProjectileDestroyedPlayer.setVolume(0);
         enemyProjectileDestroyedPlayer.play();
     }
 
     public void playActivateShield() {
+        if (isMuted) return;
         MediaPlayer activateShieldPlayer = new MediaPlayer(activateShield);
         activateShieldPlayer.setVolume(1.2);
-        if (isMuted) activateShieldPlayer.setVolume(0);
         activateShieldPlayer.play();
     }
 
@@ -90,48 +88,53 @@ public class SoundEffect {
     }
 
     public void playUserFire() {
+        if (isMuted) return;
         MediaPlayer userFirePlayer = new MediaPlayer(userFire);
         userFirePlayer.setVolume(0.5);
-        if (isMuted) userFirePlayer.setVolume(0);
         userFirePlayer.play();
     }
 
     public void playGameOver() {
+        if (isMuted) return;
         MediaPlayer gameOverPlayer = new MediaPlayer(gameOver);
-        if (isMuted) gameOverPlayer.setVolume(0);
         gameOverPlayer.play();
     }
 
     public void playNextLevel() {
+        if (isMuted) return;
         MediaPlayer nextLevelPlayer = new MediaPlayer(nextLevel);
-        if (isMuted) nextLevelPlayer.setVolume(0);
         nextLevelPlayer.play();
     }
 
     public void playWin() {
+        if (isMuted) return;
         MediaPlayer winPlayer = new MediaPlayer(win);
-        if (isMuted) winPlayer.setVolume(0);
         winPlayer.play();
     }
 
     public void playUserHit() {
+        if (isMuted) return;
         MediaPlayer userHitPlayer = new MediaPlayer(userHit);
-        if (isMuted) userHitPlayer.setVolume(0);
         userHitPlayer.play();
     }
 
     public void playShieldDeactivate() {
+        if (isMuted) return;
         MediaPlayer shieldDeactivatePlayer = new MediaPlayer(shieldDeactivate);
-        if (isMuted) shieldDeactivatePlayer.setVolume(0);
         shieldDeactivatePlayer.setVolume(1.2);
         shieldDeactivatePlayer.play();
     }
 
     public void playWarning() {
+        if (isMuted) return;
         warningPlayer.play();
     }
 
     public void pauseWarning() {
         warningPlayer.pause();
+    }
+
+    public void stopWarning() {
+        warningPlayer.stop();
     }
 }

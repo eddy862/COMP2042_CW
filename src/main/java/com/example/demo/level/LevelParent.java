@@ -1,10 +1,8 @@
 package com.example.demo.level;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.example.demo.actor.ActiveActorDestructible;
-import com.example.demo.actor.plane.Boss;
 import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.actor.plane.FighterPlane;
 import com.example.demo.actor.plane.UserPlane;
@@ -31,6 +29,7 @@ public abstract class LevelParent extends Observable {
     private final double enemyMaximumYPosition;
     private static final int FIRE_COOLDOWN_MILLIS = 200; // time between each fire in milliseconds
     private long lastFireTime; // time of last fire in milliseconds
+    private static final int USER_LOW_HEALTH_THRESHOLD = 3;
 
     private final Group root;
     private final Timeline timeline;
@@ -52,6 +51,7 @@ public abstract class LevelParent extends Observable {
     private final PauseMenu pauseMenu;
     private boolean isPause = false;
     private boolean levelComplete = false;
+    private boolean playerLowHealth = false;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, Music music, SoundEffect soundEffect) {
         this.root = new Group();
@@ -140,6 +140,7 @@ public abstract class LevelParent extends Observable {
         handlePlaneCollisions();
         removeAllDestroyedActors();
         updateLevelView();
+        checkUserHealth();
         checkIfGameOver();
     }
 
@@ -316,7 +317,7 @@ public abstract class LevelParent extends Observable {
     }
 
     protected void winGame() {
-        soundEffect.pauseWarning();
+        soundEffect.stopWarning();
         music.stopGameBackgroundMusic();
         timeline.stop();
         levelView.showWinImage();
@@ -325,7 +326,7 @@ public abstract class LevelParent extends Observable {
     }
 
     protected void loseGame() {
-        soundEffect.pauseWarning();
+        soundEffect.stopWarning();
         music.stopGameBackgroundMusic();
         timeline.stop();
         levelView.showGameOverImage();
@@ -387,9 +388,18 @@ public abstract class LevelParent extends Observable {
 
     protected void returnToMenu() {
         music.stopGameBackgroundMusic();
-        soundEffect.pauseWarning();
+        soundEffect.stopWarning();
         timeline.stop();
         setChanged();
         mainMenu.start((Stage) root.getScene().getWindow());
+    }
+
+    private void checkUserHealth() {
+        if (user.getHealth() <= USER_LOW_HEALTH_THRESHOLD && !playerLowHealth) {
+            levelView.heartsStartZooming();
+            playerLowHealth = true;
+        } else if (user.getHealth() > USER_LOW_HEALTH_THRESHOLD && playerLowHealth) {
+            levelView.heartsStopZooming();
+        }
     }
 }
