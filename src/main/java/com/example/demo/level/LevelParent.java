@@ -240,19 +240,7 @@ public abstract class LevelParent extends Observable {
 
     private void handleUserProjectileCollisions() {
         ActiveActorDestructible enemyHit = handleCollisions(userProjectiles, enemyUnits);
-
-        // check if boss is shielded and play the appropriate sound
-        if (enemyHit != null) {
-            if (enemyHit instanceof Boss) {
-                if (((Boss) enemyHit).isShielded()) {
-                    soundEffect.playShieldHit();
-                } else {
-                    soundEffect.playEnemyHit();
-                }
-            } else {
-                soundEffect.playEnemyHit();
-            }
-        }
+        if (enemyHit != null) soundEffect.playEnemyHit(enemyHit);
     }
 
     private void handleEnemyProjectileCollisions() {

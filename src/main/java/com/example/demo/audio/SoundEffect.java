@@ -1,5 +1,7 @@
 package com.example.demo.audio;
 
+import com.example.demo.actor.ActiveActorDestructible;
+import com.example.demo.actor.plane.Boss;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -75,9 +77,15 @@ public class SoundEffect {
         activateShieldPlayer.play();
     }
 
-    public void playEnemyHit() {
+    public void playEnemyHit(ActiveActorDestructible enemy) {
+        if (isMuted) return;
         MediaPlayer enemyHitPlayer = new MediaPlayer(enemyHit);
-        if (isMuted) enemyHitPlayer.setVolume(0);
+        MediaPlayer shieldHitPlayer = new MediaPlayer(shieldHit);
+
+        if (enemy instanceof Boss && ((Boss) enemy).isShielded()) {
+            shieldHitPlayer.play();
+            return;
+        }
         enemyHitPlayer.play();
     }
 
@@ -110,12 +118,6 @@ public class SoundEffect {
         MediaPlayer userHitPlayer = new MediaPlayer(userHit);
         if (isMuted) userHitPlayer.setVolume(0);
         userHitPlayer.play();
-    }
-
-    public void playShieldHit() {
-        MediaPlayer shieldHitPlayer = new MediaPlayer(shieldHit);
-        if (isMuted) shieldHitPlayer.setVolume(0);
-        shieldHitPlayer.play();
     }
 
     public void playShieldDeactivate() {
