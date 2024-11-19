@@ -72,7 +72,7 @@ public class MainMenu {
 
         VBox layout = new VBox(50);
         VBox buttonLayout = new VBox(20);
-        buttonLayout.getChildren().addAll(playButton, tutorialButton, quitButton, settingButton);
+        buttonLayout.getChildren().addAll(playButton, tutorialButton, settingButton, quitButton);
         buttonLayout.setAlignment(Pos.CENTER);
         layout.getChildren().addAll(welcomeLabel, buttonLayout);
         layout.setAlignment(Pos.CENTER);

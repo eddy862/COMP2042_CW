@@ -1,12 +1,7 @@
 package com.example.demo.level;
 
-import com.example.demo.controller.Main;
 import com.example.demo.ui.NumberOfKillsLabel;
-import com.example.demo.ui.WarningImage;
 import javafx.scene.Group;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LevelViewLevelOne extends LevelView{
     private final Group root;

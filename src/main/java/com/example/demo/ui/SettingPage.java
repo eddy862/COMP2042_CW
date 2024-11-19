@@ -11,8 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class SettingPage {
-    private MainMenu mainMenu;
-    private Music music;
+    private final MainMenu mainMenu;
+    private final Music music;
     private final SoundEffect soundEffect;
     private static final String SETTING_PAGE_CSS = "/com/example/demo/styles/setting.css";
 
@@ -22,7 +22,8 @@ public class SettingPage {
         this.soundEffect = soundEffect;
     }
     public Scene initializeScene(Stage stage) {
-        VBox vBox = new VBox();
+        VBox vBox1 = new VBox(40);
+        VBox vBox2 = new VBox(20);
 
         Label settingLabel = new Label("Settings");
         settingLabel.getStyleClass().add("label");
@@ -43,12 +44,15 @@ public class SettingPage {
         backButton.setOnAction(e -> showMainMenu(stage));
         backButton.getStyleClass().add("button");
 
-        vBox.getChildren().addAll(settingLabel, hBox, backButton);
-        vBox.setSpacing(20);
-        vBox.setAlignment(Pos.CENTER);
-        vBox.getStylesheets().add(getClass().getResource(SETTING_PAGE_CSS).toExternalForm());
+        vBox2.getChildren().addAll(hBox, backButton);
+        vBox2.setAlignment(Pos.CENTER);
+        vBox1.getChildren().addAll(settingLabel, vBox2);
+        vBox1.setAlignment(Pos.CENTER);
 
-        return new Scene(vBox, stage.getWidth(), stage.getHeight());
+        Scene scene = new Scene(vBox1, stage.getWidth(), stage.getHeight());
+        scene.getStylesheets().add(getClass().getResource(SETTING_PAGE_CSS).toExternalForm());
+
+        return scene;
     }
 
     private void showMainMenu(Stage stage) {

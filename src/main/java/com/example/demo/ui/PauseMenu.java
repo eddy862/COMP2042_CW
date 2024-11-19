@@ -10,12 +10,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class PauseMenu {
-    private static final double WIDTH = 500;
-    private static final double HEIGHT = 200;
-    private VBox layout;
+    private static final double WIDTH = 300;
+    private static final double HEIGHT = 300;
+    private final VBox layout;
     private static final String PAUSE_MENU_CSS = "/com/example/demo/styles/pauseMenu.css";
-    private Music music;
-    private SoundEffect soundEffect;
+    private final Music music;
+    private final SoundEffect soundEffect;
 
     public PauseMenu(Runnable onResume, Runnable onReturnToMainMenu, Music music, SoundEffect soundEffect) {
         this.music = music;
@@ -30,9 +30,6 @@ public class PauseMenu {
         layout.setLayoutX(Main.SCREEN_WIDTH / 2 - WIDTH / 2);
         layout.setLayoutY(Main.SCREEN_HEIGHT / 2 - HEIGHT / 2);
 
-        HBox layout1 = new HBox(20);
-        HBox layout2 = new HBox(20);
-
         Label pauseLabel = new Label("Game Paused");
         pauseLabel.getStyleClass().add("label");
         pauseLabel.getStyleClass().add("title");
@@ -45,9 +42,6 @@ public class PauseMenu {
         muteSoundEffectButton.setOnAction(e -> toggleMuteSoundEffect(muteSoundEffectButton));
         muteSoundEffectButton.getStyleClass().add("button");
 
-        layout2.getChildren().addAll(muteMusicButton, muteSoundEffectButton);
-        layout2.setAlignment(Pos.CENTER);
-
         Button resumeButton = new Button("Resume");
         resumeButton.setOnAction(e -> onResume.run());
         resumeButton.getStyleClass().add("button");
@@ -56,10 +50,8 @@ public class PauseMenu {
         returnToMainMenuButton.setOnAction(e -> onReturnToMainMenu.run());
         returnToMainMenuButton.getStyleClass().add("button");
 
-        layout1.getChildren().addAll(resumeButton, returnToMainMenuButton);
-        layout1.setAlignment(Pos.CENTER);
-
-        layout.getChildren().addAll(pauseLabel, layout2, layout1);
+        layout.getChildren().addAll(pauseLabel, muteMusicButton, muteSoundEffectButton, resumeButton, returnToMainMenuButton);
+        layout.getChildren().addAll();
         layout.getStylesheets().add(getClass().getResource(PAUSE_MENU_CSS).toExternalForm());
     }
 

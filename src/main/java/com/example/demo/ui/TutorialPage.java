@@ -17,11 +17,11 @@ import java.util.List;
 
 public class TutorialPage {
     private int currentGalleryIndex = 0;
-    private List<Image> levelScreenshots = new ArrayList<>();
-    private MainMenu mainMenu;
-    private List<String> levelName = new ArrayList<>();
-    private List<String> levelDesc = new ArrayList<>();
-    private ImageView imageView = new ImageView();
+    private final List<Image> levelScreenshots = new ArrayList<>();
+    private final MainMenu mainMenu;
+    private final List<String> levelName = new ArrayList<>();
+    private final List<String> levelDesc = new ArrayList<>();
+    private final ImageView imageView = new ImageView();
     private Label levelNameLabel;
     private Label levelDescLabel;
 
@@ -38,11 +38,11 @@ public class TutorialPage {
     public Scene initializeScene(Stage stage) {
         BorderPane layout = new BorderPane();
         Label controTitleLabel = new Label("Controls");
-        controTitleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        controTitleLabel.setStyle("-fx-font-size: 30px; -fx-text-fill: #333; -fx-font-weight: bold;");
         Label controlLabel = new Label("W or UP - Move Up\t\tA or LEFT - Move Left\tS or DOWN - Move Down\nD or RIGHT - Move Right\tL or SPACE - Fire Projectile\tESC - Pause Game");
         controlLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: 400;");
         Label levelTitleLabel = new Label("Levels");
-        levelTitleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        levelTitleLabel.setStyle("-fx-font-size: 30px; -fx-text-fill: #333; -fx-font-weight: bold;");
         levelNameLabel = new Label(levelName.get(currentGalleryIndex));
         levelNameLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: 400;");
         levelDescLabel = new Label(levelDesc.get(currentGalleryIndex));
@@ -58,11 +58,11 @@ public class TutorialPage {
 
         Button leftButton = new Button("Previous");
         leftButton.setOnAction(e -> showPreviousImage());
-        leftButton.setStyle("-fx-font-size: 16px; -fx-padding: 5px 15px; -fx-background-radius: 5px; -fx-background-color: gray; -fx-text-fill: white;");
+        leftButton.setStyle("-fx-font-size: 16px; -fx-padding: 5px 15px; -fx-background-radius: 5px; -fx-background-color: #007bff; -fx-text-fill: white;");
 
         Button rightButton = new Button("Next");
         rightButton.setOnAction(e -> showNextImage());
-        rightButton.setStyle("-fx-font-size: 16px; -fx-padding: 5px 15px; -fx-background-radius: 5px; -fx-background-color: gray; -fx-text-fill: white;");
+        rightButton.setStyle("-fx-font-size: 16px; -fx-padding: 5px 15px; -fx-background-radius: 5px; -fx-background-color: #007bff; -fx-text-fill: white;");
 
         HBox buttonLayout = new HBox(10);
         buttonLayout.getChildren().addAll(leftButton, levelNameLabel, rightButton);
@@ -78,16 +78,14 @@ public class TutorialPage {
 
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> showMainMenu(stage));
-        backButton.setStyle("-fx-font-size: 12px; -fx-padding: 10px 20px; -fx-background-radius: 5px;");
+        backButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px; -fx-background-color: grey; -fx-text-fill: white;");
 
         layout.setTop(backButton);
         BorderPane.setAlignment(backButton, Pos.TOP_LEFT);
         BorderPane.setMargin(backButton, new Insets(10));
         layout.setCenter(mainLayout);
 
-        Scene scene = new Scene(layout, stage.getWidth(), stage.getWidth());
-
-        return scene;
+        return new Scene(layout, stage.getWidth(), stage.getWidth());
     }
 
     private void showMainMenu(Stage stage) {
