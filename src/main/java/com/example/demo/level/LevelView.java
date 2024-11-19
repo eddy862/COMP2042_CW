@@ -3,9 +3,11 @@ package com.example.demo.level;
 import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.controller.Main;
 import com.example.demo.ui.*;
+import javafx.animation.PauseTransition;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 /**
  * Responsible for displaying the UI elements in the level.
@@ -63,5 +65,15 @@ public class LevelView {
 		for (int i = 0; i < currentNumberOfHearts - heartsRemaining; i++) {
 			heartDisplay.removeHeart();
 		}
+	}
+
+	public void showExplosion(double xPosition, double yPosition) {
+		ExplosionImage explosion = new ExplosionImage(xPosition, yPosition);
+		root.getChildren().add(explosion);
+
+		// Remove the explosion image after a short delay
+		PauseTransition delay = new PauseTransition(Duration.millis(500));
+		delay.setOnFinished(event -> root.getChildren().remove(explosion));
+		delay.play();
 	}
 }

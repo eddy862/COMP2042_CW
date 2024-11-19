@@ -51,6 +51,7 @@ public abstract class LevelParent extends Observable {
     private final PauseButton pauseButton;
     private final PauseMenu pauseMenu;
     private boolean isPause = false;
+    private boolean levelComplete = false;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, Music music, SoundEffect soundEffect) {
         this.root = new Group();
@@ -267,6 +268,11 @@ public abstract class LevelParent extends Observable {
                 if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
                     actor.takeDamage();
                     otherActor.takeDamage();
+
+                    if (actor.isDestroyed()) {
+                        levelView.showExplosion(actor.getTranslateX() + actor.getLayoutX(), actor.getTranslateY() + actor.getLayoutY());
+                    }
+
                     return actor;
                 }
             }
@@ -321,6 +327,7 @@ public abstract class LevelParent extends Observable {
         timeline.stop();
         levelView.showWinImage();
         soundEffect.playWin();
+        levelComplete = true;
     }
 
     protected void loseGame() {
@@ -329,6 +336,7 @@ public abstract class LevelParent extends Observable {
         timeline.stop();
         levelView.showGameOverImage();
         soundEffect.playGameOver();
+        levelComplete = true;
     }
 
     protected UserPlane getUser() {
@@ -365,7 +373,7 @@ public abstract class LevelParent extends Observable {
     }
 
     protected void pauseGame() {
-        if (!isPause) {
+        if (!isPause && !levelComplete) {
             isPause = true;
             timeline.pause();
             pauseMenu.show();
@@ -375,7 +383,7 @@ public abstract class LevelParent extends Observable {
     }
 
     protected void resumeGame() {
-        if (isPause) {
+        if (isPause && !levelComplete) {
             isPause = false;
             timeline.play();
             pauseMenu.hide();
