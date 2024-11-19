@@ -13,5 +13,14 @@ public class ExplosionImage extends ImageView {
         this.setPreserveRatio(true);
         this.setLayoutX(xPosition);
         this.setLayoutY(yPosition);
+        this.setVisible(false);
+    }
+
+    public void show() {
+        this.setVisible(true);
+    }
+
+    public void hide() {
+        this.setVisible(false);
     }
 }

@@ -45,7 +45,7 @@ public class LevelTwo extends LevelParent {
     protected LevelView instantiateLevelView() {
         // check is boss is initialised
         boss = boss == null ? new Boss() : boss;
-        levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH, boss.getHealth());
+        levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH, boss.getHealth(), 1);
         return levelView;
     }
 

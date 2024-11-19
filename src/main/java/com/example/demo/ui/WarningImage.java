@@ -10,7 +10,6 @@ public class WarningImage extends ImageView {
 
     private static final String IMAGE_NAME = "/com/example/demo/images/warning.png";
     public static final int WARNING_SIZE = 100;
-//    private final Timeline flashTimeline;
     private static final int X_POSITION = 50;
 
     public WarningImage(double yPosition) {
@@ -22,11 +21,11 @@ public class WarningImage extends ImageView {
         this.setVisible(false);
     }
 
-    public void showWarning() {
+    public void show() {
         this.setVisible(true);
     }
 
-    public void hideWarning() {
+    public void hide() {
         this.setVisible(false);
     }
 }

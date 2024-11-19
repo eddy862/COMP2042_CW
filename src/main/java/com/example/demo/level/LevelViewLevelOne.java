@@ -7,8 +7,8 @@ public class LevelViewLevelOne extends LevelView{
     private final Group root;
     private final NumberOfKillsLabel numberOfKillsLabel;
 
-    public LevelViewLevelOne(Group root, int heartsToDisplay, int killsToAdvance, int numberOfEnemies) {
-        super(root, heartsToDisplay);
+    public LevelViewLevelOne(Group root, int heartsToDisplay, int killsToAdvance, int totalEnemiesPerTime) {
+        super(root, heartsToDisplay, totalEnemiesPerTime);
         this.root = root;
         this.numberOfKillsLabel = new NumberOfKillsLabel(killsToAdvance);
     }

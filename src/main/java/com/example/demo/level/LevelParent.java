@@ -91,7 +91,8 @@ public abstract class LevelParent extends Observable {
         initializeBackground();
         initializeFriendlyUnits();
         levelView.showHeartDisplay();
-        levelView.displayWarningImage();
+        levelView.initialiseWarningPool();
+        levelView.initialiseExplosionPool();
         root.getChildren().add(pauseButton);
         root.getChildren().add(pauseMenu.getLayout());
         initialiseLevelScene();
@@ -204,24 +205,33 @@ public abstract class LevelParent extends Observable {
     }
 
     private void updateActors() {
-        friendlyUnits.forEach(plane -> plane.updateActor());
-        enemyUnits.forEach(enemy -> enemy.updateActor());
-        userProjectiles.forEach(projectile -> projectile.updateActor());
-        enemyProjectiles.forEach(projectile -> projectile.updateActor());
+        friendlyUnits.forEach(ActiveActorDestructible::updateActor);
+        enemyUnits.forEach(ActiveActorDestructible::updateActor);
+        userProjectiles.forEach(ActiveActorDestructible::updateActor);
+        enemyProjectiles.forEach(ActiveActorDestructible::updateActor);
     }
 
     private void removeAllDestroyedActors() {
         removeDestroyedActors(friendlyUnits);
         removeDestroyedActors(userProjectiles);
         removeDestroyedActors(enemyProjectiles);
-        removeDestroyedActors(enemyUnits);
+
+        for (ActiveActorDestructible enemy : removeDestroyedActors(enemyUnits)) {
+            levelView.showExplosion(enemy);
+            levelView.hideWarning(enemy);
+            if (enemy instanceof EnemyPlane) {
+                user.incrementKillCount();
+            }
+        }
     }
 
-    private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
-        List<ActiveActorDestructible> destroyedActors = actors.stream().filter(actor -> actor.isDestroyed())
-                .collect(Collectors.toList());
+    private List<ActiveActorDestructible> removeDestroyedActors(List<ActiveActorDestructible> actors) {
+        List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed)
+                .toList();
         root.getChildren().removeAll(destroyedActors);
         actors.removeAll(destroyedActors);
+
+        return destroyedActors;
     }
 
     private void handlePlaneCollisions() {
@@ -241,10 +251,6 @@ public abstract class LevelParent extends Observable {
                 }
             } else {
                 soundEffect.playEnemyHit();
-            }
-
-            if (enemyHit instanceof EnemyPlane) {
-                user.incrementKillCount();
             }
         }
     }
@@ -268,10 +274,6 @@ public abstract class LevelParent extends Observable {
                 if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
                     actor.takeDamage();
                     otherActor.takeDamage();
-
-                    if (actor.isDestroyed()) {
-                        levelView.showExplosion(actor.getTranslateX() + actor.getLayoutX(), actor.getTranslateY() + actor.getLayoutY());
-                    }
 
                     return actor;
                 }
@@ -305,14 +307,15 @@ public abstract class LevelParent extends Observable {
         List<EnemyPlane> warningEnemies = enemyUnits.stream()
                 .filter(enemy -> enemy instanceof EnemyPlane && ((EnemyPlane) enemy).getInWarningArea())
                 .map(enemy -> (EnemyPlane) enemy)
-                .collect(Collectors.toList());
+                .toList();
+
+        for (EnemyPlane enemy : warningEnemies) {
+            levelView.showWarning(enemy);
+        }
 
         if (!warningEnemies.isEmpty()) {
-            EnemyPlane lastEnemy = warningEnemies.get(warningEnemies.size() - 1);
-            levelView.showWarning(lastEnemy.getLayoutY());
             soundEffect.playWarning();
         } else {
-            levelView.hideWarning();
             soundEffect.pauseWarning();
         }
     }
