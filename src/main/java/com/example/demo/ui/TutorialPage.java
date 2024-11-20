@@ -18,15 +18,18 @@ import java.util.List;
 public class TutorialPage {
     private int currentGalleryIndex = 0;
     private final List<Image> levelScreenshots = new ArrayList<>();
-    private final MainMenu mainMenu;
     private final List<String> levelName = new ArrayList<>();
     private final List<String> levelDesc = new ArrayList<>();
     private final ImageView imageView = new ImageView();
     private Label levelNameLabel;
     private Label levelDescLabel;
+    private final Stage stage;
+    private final Scene mainMenuScene;
 
-    public TutorialPage(MainMenu mainMenu) {
-        this.mainMenu = mainMenu;
+    public TutorialPage(Scene mainMenuScene) {
+        this.mainMenuScene = mainMenuScene;
+        this.stage = (Stage) mainMenuScene.getWindow();
+
         levelScreenshots.add(new Image(getClass().getResource("/com/example/demo/images/tutorial1.png").toExternalForm()));
         levelScreenshots.add(new Image(getClass().getResource("/com/example/demo/images/tutorial2.png").toExternalForm()));
         levelName.addAll(List.of("Level 1", "Level 2"));
@@ -35,7 +38,7 @@ public class TutorialPage {
         );
     }
 
-    public Scene initializeScene(Stage stage) {
+    public Scene initializeScene() {
         BorderPane layout = new BorderPane();
         Label controTitleLabel = new Label("Controls");
         controTitleLabel.setStyle("-fx-font-size: 30px; -fx-text-fill: #333; -fx-font-weight: bold;");
@@ -77,7 +80,7 @@ public class TutorialPage {
         mainLayout.setAlignment(Pos.TOP_CENTER);
 
         Button backButton = new Button("Back");
-        backButton.setOnAction(e -> showMainMenu(stage));
+        backButton.setOnAction(e -> showMainMenu());
         backButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-radius: 5px; -fx-background-color: grey; -fx-text-fill: white;");
 
         layout.setTop(backButton);
@@ -88,8 +91,8 @@ public class TutorialPage {
         return new Scene(layout, stage.getWidth(), stage.getWidth());
     }
 
-    private void showMainMenu(Stage stage) {
-        stage.setScene(mainMenu.initializeScene());
+    private void showMainMenu() {
+        stage.setScene(mainMenuScene);
     }
 
     private void showPreviousImage() {

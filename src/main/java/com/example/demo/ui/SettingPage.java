@@ -11,17 +11,19 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class SettingPage {
-    private final MainMenu mainMenu;
+    private final Scene mainMenuScene;
     private final Music music;
     private final SoundEffect soundEffect;
     private static final String SETTING_PAGE_CSS = "/com/example/demo/styles/setting.css";
+    private final Stage stage;
 
-    public SettingPage(MainMenu mainMenu, Music music, SoundEffect soundEffect) {
-        this.mainMenu = mainMenu;
+    public SettingPage(Scene mainMenuScene, Music music, SoundEffect soundEffect) {
+        this.mainMenuScene = mainMenuScene;
         this.music = music;
         this.soundEffect = soundEffect;
+        this.stage = (Stage) mainMenuScene.getWindow();
     }
-    public Scene initializeScene(Stage stage) {
+    public Scene initializeScene() {
         VBox vBox1 = new VBox(40);
         VBox vBox2 = new VBox(20);
 
@@ -41,7 +43,7 @@ public class SettingPage {
         hBox.getChildren().addAll(muteMusicButton, muteSoundEffectButton);
 
         Button backButton = new Button("Back");
-        backButton.setOnAction(e -> showMainMenu(stage));
+        backButton.setOnAction(e -> showMainMenu());
         backButton.getStyleClass().add("button");
 
         vBox2.getChildren().addAll(hBox, backButton);
@@ -55,8 +57,8 @@ public class SettingPage {
         return scene;
     }
 
-    private void showMainMenu(Stage stage) {
-        stage.setScene(mainMenu.initializeScene());
+    private void showMainMenu() {
+        stage.setScene(mainMenuScene);
     }
 
     private void toggleMuteMusic(Button muteMusicButton) {

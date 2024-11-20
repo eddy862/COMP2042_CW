@@ -9,7 +9,6 @@ import com.example.demo.actor.plane.UserPlane;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
 import com.example.demo.controller.Main;
-import com.example.demo.ui.LoadingPage;
 import com.example.demo.ui.PauseButton;
 import com.example.demo.ui.PauseMenu;
 import javafx.animation.*;
@@ -49,7 +48,7 @@ public abstract class LevelParent extends Observable {
     private final Music music;
     private final Main mainMenu = new Main();
     private final PauseButton pauseButton;
-    private final PauseMenu pauseMenu;
+    private PauseMenu pauseMenu;
     private boolean isPause = false;
     private boolean levelComplete = false;
     private boolean playerLowHealth = false;
@@ -75,7 +74,6 @@ public abstract class LevelParent extends Observable {
         initializeTimeline();
         friendlyUnits.add(user);
         this.pauseButton = new PauseButton(this::pauseGame);
-        this.pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music, soundEffect);
     }
 
     protected abstract void initializeFriendlyUnits();
@@ -95,7 +93,6 @@ public abstract class LevelParent extends Observable {
         levelView.initialiseWarningPool();
         levelView.initialiseExplosionPool();
         root.getChildren().add(pauseButton);
-        root.getChildren().add(pauseMenu.getLayout());
         initialiseLevelScene();
         return scene;
     }
@@ -158,11 +155,13 @@ public abstract class LevelParent extends Observable {
         background.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent e) {
                 KeyCode kc = e.getCode();
-                if (kc == KeyCode.UP || kc == KeyCode.W) user.moveUp();
-                if (kc == KeyCode.DOWN || kc == KeyCode.S) user.moveDown();
-                if (kc == KeyCode.LEFT || kc == KeyCode.A) user.moveLeft();
-                if (kc == KeyCode.RIGHT || kc == KeyCode.D) user.moveRight();
-                if (kc == KeyCode.SPACE || kc == KeyCode.L) fireProjectile();
+                if (!isPause) {
+                    if (kc == KeyCode.UP || kc == KeyCode.W) user.moveUp();
+                    if (kc == KeyCode.DOWN || kc == KeyCode.S) user.moveDown();
+                    if (kc == KeyCode.LEFT || kc == KeyCode.A) user.moveLeft();
+                    if (kc == KeyCode.RIGHT || kc == KeyCode.D) user.moveRight();
+                    if (kc == KeyCode.SPACE || kc == KeyCode.L) fireProjectile();
+                }
                 if (kc == KeyCode.ESCAPE || kc == KeyCode.P) {
                     if (isPause) {
                         resumeGame();
@@ -365,9 +364,10 @@ public abstract class LevelParent extends Observable {
 
     protected void pauseGame() {
         if (!isPause && !levelComplete) {
+            pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music, soundEffect, screenWidth, screenHeight);
+            root.getChildren().add(pauseMenu.getLayout());
             isPause = true;
             timeline.pause();
-            pauseMenu.show();
             music.pauseGameBackgroundMusic();
             soundEffect.pauseWarning();
         }
@@ -375,9 +375,9 @@ public abstract class LevelParent extends Observable {
 
     protected void resumeGame() {
         if (isPause && !levelComplete) {
+            root.getChildren().remove(pauseMenu.getLayout());
             isPause = false;
             timeline.play();
-            pauseMenu.hide();
             music.playGameBackgroundMusic();
         }
     }

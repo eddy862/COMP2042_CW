@@ -41,9 +41,10 @@
 10. Displayed a warning sign and played a sound effect when an enemy plane enters a warning state (approaching the leftmost boundary).
 11. Made displayed hearts zoom in and out when the user's health is low.
 12. Limited the user's fire rate to save memory usage and prevent frame rate drops.
-13. Insert loading screen between levels.
+13. Inserted loading screen between levels to prevent user see the latency of the level transition.
 
 ## Implemented but Not Working Properly
+1. When user pause the game, blur the background and display the buttons. However, the background can recover to normal when user resume the game.
 
 ## Feature Not Implemented
 
@@ -52,3 +53,6 @@
 ## Modified Java Class
 
 ## Unexpected Problems
+1. In main menu, when user switch between pages, the scene of the new page is not fit perfectly withing the stage. (e.g.When click switch from main menu to tutorial page, the tutorial page is not centered in the stage; when click switch from tutorial page to main menu, the main menu is not centered in the stage.)
+   - steps to debug:
+      - sdf

@@ -4,13 +4,6 @@ import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
-import com.example.demo.ui.WarningImage;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LevelOne extends LevelParent {
 	

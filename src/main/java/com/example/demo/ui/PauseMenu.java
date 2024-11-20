@@ -2,11 +2,9 @@ package com.example.demo.ui;
 
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
-import com.example.demo.controller.Main;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class PauseMenu {
@@ -17,18 +15,17 @@ public class PauseMenu {
     private final Music music;
     private final SoundEffect soundEffect;
 
-    public PauseMenu(Runnable onResume, Runnable onReturnToMainMenu, Music music, SoundEffect soundEffect) {
+    public PauseMenu(Runnable onResume, Runnable onReturnToMainMenu, Music music, SoundEffect soundEffect, double screenWidth, double screenHeight) {
         this.music = music;
         this.soundEffect = soundEffect;
 
         layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
-        layout.setVisible(false);
         layout.getStyleClass().add("pause-menu");
         layout.setPrefWidth(WIDTH);
         layout.setPrefHeight(HEIGHT);
-        layout.setLayoutX(Main.SCREEN_WIDTH / 2 - WIDTH / 2);
-        layout.setLayoutY(Main.SCREEN_HEIGHT / 2 - HEIGHT / 2);
+        layout.setLayoutX(screenWidth / 2 - WIDTH / 2);
+        layout.setLayoutY(screenHeight / 2 - HEIGHT / 2);
 
         Label pauseLabel = new Label("Game Paused");
         pauseLabel.getStyleClass().add("label");
@@ -51,16 +48,7 @@ public class PauseMenu {
         returnToMainMenuButton.getStyleClass().add("button");
 
         layout.getChildren().addAll(pauseLabel, muteMusicButton, muteSoundEffectButton, resumeButton, returnToMainMenuButton);
-        layout.getChildren().addAll();
         layout.getStylesheets().add(getClass().getResource(PAUSE_MENU_CSS).toExternalForm());
-    }
-
-    public void show() {
-        layout.setVisible(true);
-    }
-
-    public void hide() {
-        layout.setVisible(false);
     }
 
     public VBox getLayout() {
