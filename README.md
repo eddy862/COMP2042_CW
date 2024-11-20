@@ -35,16 +35,19 @@
 5. Displayed boss health in level 2.
 6. Displayed explosion images when an enemy plane or boss is destroyed.
 7. Added sound effects and music:
-   - Sound effects: user fires projectile, enemy destroyed, enemy hit, enemy projectile destroyed, boss activates & deactivates shield, shield hit, next level, game over, and win.
+   - Sound effects: user fires projectile, enemy destroyed, user's projectile hit enemy, enemy projectile destroyed, boss activates & deactivates shield, user's projectile hit boss's shield, next level, game over, and win.
+   - Music: main menu, game play
 8. Implemented main menu, tutorial page, audio setting page and pause menu.
 9. Enabled user to pause the game, mute/unmute sound effects and music, resume the game, restart the game, and return to the main menu.
 10. Displayed a warning sign and played a sound effect when an enemy plane enters a warning state (approaching the leftmost boundary).
 11. Made displayed hearts zoom in and out when the user's health is low.
 12. Limited the user's fire rate to save memory usage and prevent frame rate drops.
 13. Inserted loading screen between levels to prevent user see the latency of the level transition.
+14. Inserted level completion menu with play again, return to main menu, and next level buttons.
+15. Randomly generated a power-up which user can hit to increase health.
 
 ## Implemented but Not Working Properly
-1. When user pause the game, blur the background and display the buttons. However, the background can recover to normal when user resume the game.
+1. When user pause the game, blur the current scene and display the buttons. However, the scene didn't recover to normal state when user resume the game.
 
 ## Feature Not Implemented
 
@@ -53,6 +56,9 @@
 ## Modified Java Class
 
 ## Unexpected Problems
-1. In main menu, when user switch between pages, the scene of the new page is not fit perfectly withing the stage. (e.g.When click switch from main menu to tutorial page, the tutorial page is not centered in the stage; when click switch from tutorial page to main menu, the main menu is not centered in the stage.)
-   - steps to debug:
-      - sdf
+1. In main menu, when user switch between pages, the scene of the new page is not fit perfectly withing the stage where the top-left corner is blank. (e.g.When click switch from main menu to tutorial page, the tutorial page is not centered in the stage; when click switch from tutorial page to main menu, the main menu is not centered in the stage.)
+   - Attempts to debug:
+      - What I observed is the initial main menu scene is centered in the stage. The problem occurs when I switch to new pages.
+      - I printed the x and y coordinates of the scene in the stage using ```getX()``` and ```getY()``` in the terminal to see if the scene is centered in the stage. 
+      - It turns out when I switch to new pages, the x and y coordinates is same as the initial scene, but visually the scene is not centered in the stage like the initial scene.
+      - When create a new scene, I set the width and height of the scene to the width and height of the previous scene of the stage instead of the stage itself. However, the result is the same.

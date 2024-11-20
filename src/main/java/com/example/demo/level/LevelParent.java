@@ -9,8 +9,10 @@ import com.example.demo.actor.plane.UserPlane;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
 import com.example.demo.controller.Main;
+import com.example.demo.ui.LevelCompletedMenu;
 import com.example.demo.ui.PauseButton;
 import com.example.demo.ui.PauseMenu;
+import com.example.demo.ui.PostLevelButtons;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -52,6 +54,7 @@ public abstract class LevelParent extends Observable {
     private boolean isPause = false;
     private boolean levelComplete = false;
     private boolean playerLowHealth = false;
+    private PostLevelButtons postLevelButtons;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, Music music, SoundEffect soundEffect) {
         this.root = new Group();
@@ -74,6 +77,7 @@ public abstract class LevelParent extends Observable {
         initializeTimeline();
         friendlyUnits.add(user);
         this.pauseButton = new PauseButton(this::pauseGame);
+        this.postLevelButtons = new PostLevelButtons(getScreenWidth(), this::returnToMenu, () -> restartLevel("com.example.demo.level.LevelOne"));
     }
 
     protected abstract void initializeFriendlyUnits();
@@ -93,6 +97,7 @@ public abstract class LevelParent extends Observable {
         levelView.initialiseWarningPool();
         levelView.initialiseExplosionPool();
         root.getChildren().add(pauseButton);
+        root.getChildren().add(postLevelButtons.getLayout());
         initialiseLevelScene();
         return scene;
     }
@@ -104,12 +109,21 @@ public abstract class LevelParent extends Observable {
     }
 
     public void goToNextLevel(String levelName) {
+        levelCompleted();
+        soundEffect.playNextLevel();
+        notifyObservers(levelName);
+    }
+
+    protected void restartLevel(String levelName) {
+        levelCompleted();
+        notifyObservers(levelName);
+    }
+
+    protected void levelCompleted() {
         soundEffect.pauseWarning();
         music.stopGameBackgroundMusic();
-        soundEffect.playNextLevel();
         timeline.stop();
         setChanged();
-        notifyObservers(levelName);
     }
 
     /**
@@ -155,7 +169,7 @@ public abstract class LevelParent extends Observable {
         background.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent e) {
                 KeyCode kc = e.getCode();
-                if (!isPause) {
+                if (!isPause && !levelComplete) {
                     if (kc == KeyCode.UP || kc == KeyCode.W) user.moveUp();
                     if (kc == KeyCode.DOWN || kc == KeyCode.S) user.moveDown();
                     if (kc == KeyCode.LEFT || kc == KeyCode.A) user.moveLeft();
@@ -318,6 +332,7 @@ public abstract class LevelParent extends Observable {
         levelView.showWinImage();
         soundEffect.playWin();
         levelComplete = true;
+        postLevelButtons.show();
     }
 
     protected void loseGame() {
@@ -327,6 +342,7 @@ public abstract class LevelParent extends Observable {
         levelView.showGameOverImage();
         soundEffect.playGameOver();
         levelComplete = true;
+        postLevelButtons.show();
     }
 
     protected UserPlane getUser() {
@@ -354,6 +370,10 @@ public abstract class LevelParent extends Observable {
         return screenWidth;
     }
 
+    protected double getScreenHeight() {
+        return screenHeight;
+    }
+
     protected boolean userIsDestroyed() {
         return user.isDestroyed();
     }
@@ -362,9 +382,10 @@ public abstract class LevelParent extends Observable {
         currentNumberOfEnemies = enemyUnits.size();
     }
 
-    protected void pauseGame() {
+    private void pauseGame() {
         if (!isPause && !levelComplete) {
             pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music, soundEffect, screenWidth, screenHeight);
+            System.out.println(pauseMenu);
             root.getChildren().add(pauseMenu.getLayout());
             isPause = true;
             timeline.pause();
@@ -373,9 +394,11 @@ public abstract class LevelParent extends Observable {
         }
     }
 
-    protected void resumeGame() {
+    private void resumeGame() {
         if (isPause && !levelComplete) {
+            pauseMenu.hide();
             root.getChildren().remove(pauseMenu.getLayout());
+            System.out.println(pauseMenu);
             isPause = false;
             timeline.play();
             music.playGameBackgroundMusic();
@@ -397,5 +420,27 @@ public abstract class LevelParent extends Observable {
         } else if (user.getHealth() > USER_LOW_HEALTH_THRESHOLD && playerLowHealth) {
             levelView.heartsStopZooming();
         }
+    }
+
+    protected abstract void goToNextLevel();
+
+    protected abstract void restartLevel();
+
+    protected abstract void showLevelCompletedMenu();
+
+    protected Timeline getTimeline() {
+        return timeline;
+    }
+
+    protected Music getMusic() {
+        return music;
+    }
+
+    protected SoundEffect getSoundEffect() {
+        return soundEffect;
+    }
+
+    protected void setLevelComplete(boolean levelComplete) {
+        this.levelComplete = levelComplete;
     }
 }

@@ -26,6 +26,7 @@ public class PauseMenu {
         layout.setPrefHeight(HEIGHT);
         layout.setLayoutX(screenWidth / 2 - WIDTH / 2);
         layout.setLayoutY(screenHeight / 2 - HEIGHT / 2);
+        layout.setVisible(true);
 
         Label pauseLabel = new Label("Game Paused");
         pauseLabel.getStyleClass().add("label");
@@ -43,12 +44,16 @@ public class PauseMenu {
         resumeButton.setOnAction(e -> onResume.run());
         resumeButton.getStyleClass().add("button");
 
-        Button returnToMainMenuButton = new Button("Return to Main Menu");
+        Button returnToMainMenuButton = new Button("Main Menu");
         returnToMainMenuButton.setOnAction(e -> onReturnToMainMenu.run());
         returnToMainMenuButton.getStyleClass().add("button");
 
         layout.getChildren().addAll(pauseLabel, muteMusicButton, muteSoundEffectButton, resumeButton, returnToMainMenuButton);
         layout.getStylesheets().add(getClass().getResource(PAUSE_MENU_CSS).toExternalForm());
+    }
+
+    public void hide() {
+        layout.setVisible(false);
     }
 
     public VBox getLayout() {

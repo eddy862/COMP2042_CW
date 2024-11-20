@@ -54,7 +54,6 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
         music.playMainMenuBackgroundMusic();
-
     }
 
     public Scene initializeScene() {
@@ -71,7 +70,7 @@ public class Main extends Application {
         Label welcomeLabel = new Label("Welcome to Sky Battle!");
         welcomeLabel.getStyleClass().add("label");
 
-        Button playButton = new Button("Start the game");
+        Button playButton = new Button("Start Game");
         playButton.setOnAction(e -> {
             try {
                 startLevelOne();
@@ -123,12 +122,14 @@ public class Main extends Application {
         TutorialPage tutorialPage = new TutorialPage(scene);
         Scene tutorialScene = tutorialPage.initializeScene();
         stage.setScene(tutorialScene);
+        System.out.println(stage.getScene().getX() + " " + stage.getScene().getY());
     }
 
     private void showSetting(Stage stage) {
         SettingPage settingPage = new SettingPage(scene, music, soundEffect);
         Scene settingScene = settingPage.initializeScene();
         stage.setScene(settingScene);
+        System.out.println(stage.getScene().getX() + " " + stage.getScene().getY());
     }
 
     public static void main(String[] args) {

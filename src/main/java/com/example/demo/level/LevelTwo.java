@@ -78,4 +78,19 @@ public class LevelTwo extends LevelParent {
         // update boss health
         levelView.updateBossHealth(boss.getHealth());
     }
+
+    @Override
+    protected void goToNextLevel() {
+
+    }
+
+    @Override
+    protected void restartLevel() {
+
+    }
+
+    @Override
+    protected void showLevelCompletedMenu() {
+
+    }
 }

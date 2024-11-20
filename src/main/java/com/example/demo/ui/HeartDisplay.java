@@ -9,7 +9,8 @@ import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
 public class HeartDisplay {
-	
+	private static final double X_POSITION = 10;
+	private static final double Y_POSITION = 25;
 	private static final String HEART_IMAGE_NAME = "/com/example/demo/images/heart.png";
 	private static final int HEART_HEIGHT = 50;
 	private static final int INDEX_OF_FIRST_ITEM = 0;
@@ -18,9 +19,9 @@ public class HeartDisplay {
 	private final double containerYPosition;
 	private final int numberOfHeartsToDisplay;
 	
-	public HeartDisplay(double xPosition, double yPosition, int heartsToDisplay) {
-		this.containerXPosition = xPosition;
-		this.containerYPosition = yPosition;
+	public HeartDisplay(int heartsToDisplay) {
+		this.containerXPosition = X_POSITION;
+		this.containerYPosition = Y_POSITION;
 		this.numberOfHeartsToDisplay = heartsToDisplay;
 		initializeContainer();
 		initializeHearts();

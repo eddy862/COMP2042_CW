@@ -4,13 +4,14 @@ import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
+import com.example.demo.ui.LevelCompletedMenu;
 
 public class LevelOne extends LevelParent {
 	
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
 	private static final String NEXT_LEVEL = "com.example.demo.level.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
-	private static final int KILLS_TO_ADVANCE = 10;
+	private static final int KILLS_TO_ADVANCE = 5;
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final int PLAYER_INITIAL_HEALTH = 6;
 	private LevelViewLevelOne levelView;
@@ -25,7 +26,7 @@ public class LevelOne extends LevelParent {
 			loseGame();
 		}
 		else if (userHasReachedKillTarget())
-			goToNextLevel(NEXT_LEVEL);
+			showLevelCompletedMenu();
 	}
 
 	@Override
@@ -59,6 +60,26 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected void updateSpecificLevelView() {
 		levelView.updateKills(getUser().getNumberOfKills());
+	}
+
+	@Override
+	protected void goToNextLevel() {
+		goToNextLevel(NEXT_LEVEL);
+	}
+
+	@Override
+	protected void restartLevel() {
+		restartLevel("com.example.demo.level.LevelOne");
+	}
+
+	@Override
+	protected void showLevelCompletedMenu() {
+		setLevelComplete(true);
+		getMusic().stopGameBackgroundMusic();
+		getSoundEffect().playWin();
+		getTimeline().stop();
+		LevelCompletedMenu levelCompletedMenu = new LevelCompletedMenu("Level One", this::returnToMenu, this::restartLevel, this::goToNextLevel, getScreenWidth(), getScreenHeight());
+		getRoot().getChildren().add(levelCompletedMenu.getLayout());
 	}
 
 	private boolean userHasReachedKillTarget() {
