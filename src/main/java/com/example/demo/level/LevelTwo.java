@@ -10,7 +10,7 @@ public class LevelTwo extends LevelParent {
     private static final int PLAYER_INITIAL_HEALTH = 10;
     private Boss boss;
     private LevelViewLevelTwo levelView;
-    private SoundEffect soundEffect;
+    private final SoundEffect soundEffect;
     private boolean isBossShielded;
 
     public LevelTwo(double screenHeight, double screenWidth, Music music, SoundEffect soundEffect) {

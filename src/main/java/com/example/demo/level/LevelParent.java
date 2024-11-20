@@ -9,6 +9,7 @@ import com.example.demo.actor.plane.UserPlane;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
 import com.example.demo.controller.Main;
+import com.example.demo.ui.LoadingPage;
 import com.example.demo.ui.PauseButton;
 import com.example.demo.ui.PauseMenu;
 import javafx.animation.*;
@@ -230,8 +231,7 @@ public abstract class LevelParent extends Observable {
     }
 
     private List<ActiveActorDestructible> removeDestroyedActors(List<ActiveActorDestructible> actors) {
-        List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed)
-                .toList();
+        List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed).toList();
         root.getChildren().removeAll(destroyedActors);
         actors.removeAll(destroyedActors);
 
@@ -259,8 +259,7 @@ public abstract class LevelParent extends Observable {
         }
     }
 
-    private ActiveActorDestructible handleCollisions(List<ActiveActorDestructible> actors1,
-                                                     List<ActiveActorDestructible> actors2) {
+    private ActiveActorDestructible handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2) {
         for (ActiveActorDestructible actor : actors2) {
             for (ActiveActorDestructible otherActor : actors1) {
                 if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
@@ -296,10 +295,7 @@ public abstract class LevelParent extends Observable {
     }
 
     private void updateWarningImage() {
-        List<EnemyPlane> warningEnemies = enemyUnits.stream()
-                .filter(enemy -> enemy instanceof EnemyPlane && ((EnemyPlane) enemy).getInWarningArea())
-                .map(enemy -> (EnemyPlane) enemy)
-                .toList();
+        List<EnemyPlane> warningEnemies = enemyUnits.stream().filter(enemy -> enemy instanceof EnemyPlane && ((EnemyPlane) enemy).getInWarningArea()).map(enemy -> (EnemyPlane) enemy).toList();
 
         for (EnemyPlane enemy : warningEnemies) {
             levelView.showWarning(enemy);
