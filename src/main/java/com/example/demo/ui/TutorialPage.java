@@ -40,16 +40,17 @@ public class TutorialPage {
 
     public Scene initializeScene() {
         BorderPane layout = new BorderPane();
+        layout.setStyle("-fx-background-color: #2c3e50;");
         Label controTitleLabel = new Label("Controls");
-        controTitleLabel.setStyle("-fx-font-size: 30px; -fx-text-fill: #333; -fx-font-weight: bold;");
-        Label controlLabel = new Label("W or UP - Move Up\t\tA or LEFT - Move Left\tS or DOWN - Move Down\nD or RIGHT - Move Right\tL or SPACE - Fire Projectile\tESC - Pause Game");
-        controlLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: 400;");
+        controTitleLabel.setStyle("-fx-font-size: 30px; -fx-text-fill: white; -fx-font-weight: bold;");
+        Label controlLabel = new Label("W or UP - Move Up\t\tA or LEFT - Move Left\tS or DOWN - Move Down\nD or RIGHT - Move Right\tL or SPACE - Fire Projectile\tESC or P - Pause Game");
+        controlLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: 400;");
         Label levelTitleLabel = new Label("Levels");
-        levelTitleLabel.setStyle("-fx-font-size: 30px; -fx-text-fill: #333; -fx-font-weight: bold;");
+        levelTitleLabel.setStyle("-fx-font-size: 30px; -fx-text-fill: white; -fx-font-weight: bold;");
         levelNameLabel = new Label(levelName.get(currentGalleryIndex));
-        levelNameLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: 400;");
+        levelNameLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: 400;");
         levelDescLabel = new Label(levelDesc.get(currentGalleryIndex));
-        levelDescLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: 400;");
+        levelDescLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: 400;");
 
         VBox controlLayout = new VBox(10);
         controlLayout.getChildren().addAll(controTitleLabel, controlLabel);

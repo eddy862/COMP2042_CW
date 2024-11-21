@@ -24,10 +24,10 @@ public class SettingPage {
         this.stage = (Stage) mainMenuScene.getWindow();
     }
     public Scene initializeScene() {
-        VBox vBox1 = new VBox(40);
+        VBox vBox1 = new VBox(50);
         VBox vBox2 = new VBox(20);
 
-        Label settingLabel = new Label("Settings");
+        Label settingLabel = new Label("Audio Settings");
         settingLabel.getStyleClass().add("label");
 
         Button muteMusicButton = new Button(music.isMuted() ? "Unmute Music" : "Mute Music");
@@ -50,6 +50,7 @@ public class SettingPage {
         vBox2.setAlignment(Pos.CENTER);
         vBox1.getChildren().addAll(settingLabel, vBox2);
         vBox1.setAlignment(Pos.CENTER);
+        vBox1.setStyle("-fx-background-color: #2c3e50;");
 
         Scene scene = new Scene(vBox1, stage.getWidth(), stage.getHeight());
         scene.getStylesheets().add(getClass().getResource(SETTING_PAGE_CSS).toExternalForm());

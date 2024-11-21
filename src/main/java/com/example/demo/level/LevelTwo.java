@@ -3,10 +3,13 @@ package com.example.demo.level;
 import com.example.demo.actor.plane.Boss;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
+import com.example.demo.ui.LevelCompletedMenu;
+import javafx.scene.Scene;
 
 public class LevelTwo extends LevelParent {
 
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
+    private static final String NEXT_LEVEL = "com.example.demo.level.LevelThree";
     private static final int PLAYER_INITIAL_HEALTH = 10;
     private Boss boss;
     private LevelViewLevelTwo levelView;
@@ -21,16 +24,11 @@ public class LevelTwo extends LevelParent {
     }
 
     @Override
-    protected void initializeFriendlyUnits() {
-        getRoot().getChildren().add(getUser());
-    }
-
-    @Override
     protected void checkIfGameOver() {
         if (userIsDestroyed()) {
             loseGame();
         } else if (boss.isDestroyed()) {
-            winGame();
+            levelCompleted();
         }
     }
 
@@ -50,13 +48,16 @@ public class LevelTwo extends LevelParent {
     }
 
     @Override
-    protected void initialiseLevelScene() {
+    public Scene initializeScene() {
+        Scene scene = super.initializeScene();
         levelView.displayShield();
         levelView.showBossHealth();
+        return scene;
     }
 
     @Override
-    protected void updateSpecificLevelView() {
+    protected void updateLevelView() {
+        super.updateLevelView();
         // update shield position
         levelView.updateShieldPosition(boss.getLayoutX() + boss.getTranslateX(), boss.getLayoutY() + boss.getTranslateY());
         boolean bossWasShielded = isBossShielded;
@@ -81,16 +82,16 @@ public class LevelTwo extends LevelParent {
 
     @Override
     protected void goToNextLevel() {
-
+        goToNextLevel(NEXT_LEVEL);
     }
 
     @Override
-    protected void restartLevel() {
-
+    protected void replayLevel() {
+        replayLevel("com.example.demo.level.LevelTwo");
     }
 
     @Override
-    protected void showLevelCompletedMenu() {
-
+    protected LevelCompletedMenu showLevelCompletedMenu() {
+        return new LevelCompletedMenu("Level Two", this::returnToMenu, this::replayLevel, this::goToNextLevel, getScreenWidth(), getScreenHeight());
     }
 }

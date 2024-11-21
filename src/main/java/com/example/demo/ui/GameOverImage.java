@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 public class GameOverImage extends ImageView {
 	private static final int HEIGHT = 700;
 	private static final String IMAGE_NAME = "/com/example/demo/images/gameover.png";
-	private static final int X_POSITION = 325;
+	private static final int X_POSITION = 275;
 	private static final int Y_POSITION = -75;
 
 	public GameOverImage() {

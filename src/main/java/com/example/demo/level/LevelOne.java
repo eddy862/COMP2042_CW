@@ -5,6 +5,7 @@ import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
 import com.example.demo.ui.LevelCompletedMenu;
+import javafx.scene.Scene;
 
 public class LevelOne extends LevelParent {
 	
@@ -25,13 +26,9 @@ public class LevelOne extends LevelParent {
 		if (userIsDestroyed()) {
 			loseGame();
 		}
-		else if (userHasReachedKillTarget())
-			showLevelCompletedMenu();
-	}
-
-	@Override
-	protected void initializeFriendlyUnits() {
-		getRoot().getChildren().add(getUser());
+		else if (userHasReachedKillTarget()) {
+			levelCompleted();
+		}
 	}
 
 	@Override
@@ -53,12 +50,15 @@ public class LevelOne extends LevelParent {
 	}
 
 	@Override
-	protected void initialiseLevelScene() {
+	public Scene initializeScene() {
+		Scene scene = super.initializeScene();
 		levelView.showNumberOfKills();
+		return scene;
 	}
 
 	@Override
-	protected void updateSpecificLevelView() {
+	protected void updateLevelView() {
+		super.updateLevelView();
 		levelView.updateKills(getUser().getNumberOfKills());
 	}
 
@@ -68,18 +68,13 @@ public class LevelOne extends LevelParent {
 	}
 
 	@Override
-	protected void restartLevel() {
-		restartLevel("com.example.demo.level.LevelOne");
+	protected void replayLevel() {
+		replayLevel("com.example.demo.level.LevelOne");
 	}
 
 	@Override
-	protected void showLevelCompletedMenu() {
-		setLevelComplete(true);
-		getMusic().stopGameBackgroundMusic();
-		getSoundEffect().playWin();
-		getTimeline().stop();
-		LevelCompletedMenu levelCompletedMenu = new LevelCompletedMenu("Level One", this::returnToMenu, this::restartLevel, this::goToNextLevel, getScreenWidth(), getScreenHeight());
-		getRoot().getChildren().add(levelCompletedMenu.getLayout());
+	protected LevelCompletedMenu showLevelCompletedMenu() {
+        return new LevelCompletedMenu("Level One", this::returnToMenu, this::replayLevel, this::goToNextLevel, getScreenWidth(), getScreenHeight());
 	}
 
 	private boolean userHasReachedKillTarget() {

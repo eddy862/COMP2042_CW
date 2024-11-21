@@ -9,19 +9,14 @@ import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
 public class HeartDisplay {
-	private static final double X_POSITION = 10;
-	private static final double Y_POSITION = 25;
 	private static final String HEART_IMAGE_NAME = "/com/example/demo/images/heart.png";
 	private static final int HEART_HEIGHT = 50;
-	private static final int INDEX_OF_FIRST_ITEM = 0;
 	private HBox container;
-	private final double containerXPosition;
-	private final double containerYPosition;
+	private final double containerXPosition = 10;
+	private final double containerYPosition = 25;
 	private final int numberOfHeartsToDisplay;
 	
 	public HeartDisplay(int heartsToDisplay) {
-		this.containerXPosition = X_POSITION;
-		this.containerYPosition = Y_POSITION;
 		this.numberOfHeartsToDisplay = heartsToDisplay;
 		initializeContainer();
 		initializeHearts();
@@ -30,7 +25,7 @@ public class HeartDisplay {
 	private void initializeContainer() {
 		container = new HBox();
 		container.setLayoutX(containerXPosition);
-		container.setLayoutY(containerYPosition);		
+		container.setLayoutY(containerYPosition);
 	}
 	
 	private void initializeHearts() {
@@ -45,7 +40,7 @@ public class HeartDisplay {
 	
 	public void removeHeart() {
 		if (!container.getChildren().isEmpty())
-			container.getChildren().remove(INDEX_OF_FIRST_ITEM);
+			container.getChildren().remove(0);
 	}
 	
 	public HBox getContainer() {

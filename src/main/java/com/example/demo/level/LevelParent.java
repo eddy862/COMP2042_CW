@@ -54,7 +54,8 @@ public abstract class LevelParent extends Observable {
     private boolean isPause = false;
     private boolean levelComplete = false;
     private boolean playerLowHealth = false;
-    private PostLevelButtons postLevelButtons;
+    private final PostLevelButtons postLevelButtons;
+    private int userFireCount = 0;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, Music music, SoundEffect soundEffect) {
         this.root = new Group();
@@ -77,18 +78,18 @@ public abstract class LevelParent extends Observable {
         initializeTimeline();
         friendlyUnits.add(user);
         this.pauseButton = new PauseButton(this::pauseGame);
-        this.postLevelButtons = new PostLevelButtons(getScreenWidth(), this::returnToMenu, () -> restartLevel("com.example.demo.level.LevelOne"));
+        this.postLevelButtons = new PostLevelButtons(getScreenWidth(), this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelOne "));
     }
 
-    protected abstract void initializeFriendlyUnits();
+    private void initializeFriendlyUnits() {
+        getRoot().getChildren().add(getUser());
+    };
 
     protected abstract void checkIfGameOver();
 
     protected abstract void spawnEnemyUnits();
 
     protected abstract LevelView instantiateLevelView();
-
-    protected abstract void initialiseLevelScene();
 
     public Scene initializeScene() {
         initializeBackground();
@@ -98,7 +99,6 @@ public abstract class LevelParent extends Observable {
         levelView.initialiseExplosionPool();
         root.getChildren().add(pauseButton);
         root.getChildren().add(postLevelButtons.getLayout());
-        initialiseLevelScene();
         return scene;
     }
 
@@ -109,21 +109,23 @@ public abstract class LevelParent extends Observable {
     }
 
     public void goToNextLevel(String levelName) {
-        levelCompleted();
         soundEffect.playNextLevel();
         notifyObservers(levelName);
     }
 
-    protected void restartLevel(String levelName) {
-        levelCompleted();
+    protected void replayLevel(String levelName) {
         notifyObservers(levelName);
     }
 
     protected void levelCompleted() {
+        setLevelComplete();
         soundEffect.pauseWarning();
+        soundEffect.playWin();
         music.stopGameBackgroundMusic();
         timeline.stop();
         setChanged();
+        LevelCompletedMenu levelCompletedMenu = showLevelCompletedMenu();
+        root.getChildren().add(levelCompletedMenu.getLayout());
     }
 
     /**
@@ -140,7 +142,7 @@ public abstract class LevelParent extends Observable {
      * updating the level view,
      * and checking if the game is over.
      */
-    private void updateScene() {
+    protected void updateScene() {
         spawnEnemyUnits();
         updateActors();
         generateEnemyFire();
@@ -196,7 +198,7 @@ public abstract class LevelParent extends Observable {
         root.getChildren().add(background);
     }
 
-    private void fireProjectile() {
+    protected void fireProjectile() {
         long currentTime = System.currentTimeMillis();
         // check if enough time has passed since the last fire
         if (currentTime - lastFireTime > FIRE_COOLDOWN_MILLIS || lastFireTime == 0) {
@@ -299,12 +301,9 @@ public abstract class LevelParent extends Observable {
         }
     }
 
-    protected abstract void updateSpecificLevelView();
-
-    private void updateLevelView() {
+    protected void updateLevelView() {
         levelView.removeHearts(user.getHealth());
         updateWarningImage();
-        updateSpecificLevelView();
     }
 
     private void updateWarningImage() {
@@ -331,8 +330,9 @@ public abstract class LevelParent extends Observable {
         timeline.stop();
         levelView.showWinImage();
         soundEffect.playWin();
-        levelComplete = true;
+        setLevelComplete();
         postLevelButtons.show();
+        setChanged();
     }
 
     protected void loseGame() {
@@ -341,8 +341,9 @@ public abstract class LevelParent extends Observable {
         timeline.stop();
         levelView.showGameOverImage();
         soundEffect.playGameOver();
-        levelComplete = true;
+        setLevelComplete();
         postLevelButtons.show();
+        setChanged();
     }
 
     protected UserPlane getUser() {
@@ -385,7 +386,6 @@ public abstract class LevelParent extends Observable {
     private void pauseGame() {
         if (!isPause && !levelComplete) {
             pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music, soundEffect, screenWidth, screenHeight);
-            System.out.println(pauseMenu);
             root.getChildren().add(pauseMenu.getLayout());
             isPause = true;
             timeline.pause();
@@ -398,7 +398,6 @@ public abstract class LevelParent extends Observable {
         if (isPause && !levelComplete) {
             pauseMenu.hide();
             root.getChildren().remove(pauseMenu.getLayout());
-            System.out.println(pauseMenu);
             isPause = false;
             timeline.play();
             music.playGameBackgroundMusic();
@@ -424,23 +423,23 @@ public abstract class LevelParent extends Observable {
 
     protected abstract void goToNextLevel();
 
-    protected abstract void restartLevel();
+    protected abstract void replayLevel();
 
-    protected abstract void showLevelCompletedMenu();
+    protected abstract LevelCompletedMenu showLevelCompletedMenu();
 
     protected Timeline getTimeline() {
         return timeline;
     }
 
-    protected Music getMusic() {
-        return music;
+    protected void setLevelComplete() {
+        this.levelComplete = true;
     }
 
-    protected SoundEffect getSoundEffect() {
-        return soundEffect;
+    private void increaseUserFireCount() {
+        userFireCount++;
     }
 
-    protected void setLevelComplete(boolean levelComplete) {
-        this.levelComplete = levelComplete;
+    protected int getUserFireCount() {
+        return userFireCount;
     }
 }

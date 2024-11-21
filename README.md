@@ -45,6 +45,11 @@
 13. Inserted loading screen between levels to prevent user see the latency of the level transition.
 14. Inserted level completion menu with play again, return to main menu, and next level buttons.
 15. Randomly generated a power-up which user can hit to increase health.
+16. Created new levels:
+    - Level 3: User has limit projectiles and has to survive for a certain amount of time. Every a few seconds, increase the number of user's projectiles.
+    - Level 4: User has to defeat a boss with multiple stages. The boss changes tactics and abilities with each stage.
+        - Stage 1: Boss shoots projectiles at user.
+        - Stage 2: Boss shoots projectiles at user and summons enemy planes.
 
 ## Implemented but Not Working Properly
 1. When user pause the game, blur the current scene and display the buttons. However, the scene didn't recover to normal state when user resume the game.
