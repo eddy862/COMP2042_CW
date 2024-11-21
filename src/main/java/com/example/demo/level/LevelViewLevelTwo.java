@@ -1,32 +1,34 @@
 package com.example.demo.level;
 
-import com.example.demo.controller.Main;
-import com.example.demo.ui.BossHealthLabel;
+import com.example.demo.actor.plane.Boss;
+import com.example.demo.ui.BossHealthDisplay;
 import com.example.demo.ui.ShieldImage;
-import com.example.demo.ui.WarningImage;
 import javafx.scene.Group;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LevelViewLevelTwo extends LevelView {
 	private final Group root;
 	private final ShieldImage shieldImage;
-	private final BossHealthLabel bossHealthLabel;
+	private final BossHealthDisplay bossHealthDisplay;
 
 	public LevelViewLevelTwo(Group root, int heartsToDisplay, int bossHealth, int totalEnemiesPerTime) {
 		super(root, heartsToDisplay, totalEnemiesPerTime);
 		this.root = root;
 		this.shieldImage = new ShieldImage();
-		this.bossHealthLabel = new BossHealthLabel(bossHealth);
+		this.bossHealthDisplay = new BossHealthDisplay(bossHealth);
 	}
 
 	public void showBossHealth() {
-		root.getChildren().add(bossHealthLabel);
+		root.getChildren().add(bossHealthDisplay);
+	}
+
+	public void updateBossHealthPosition(Boss boss) {
+		double xPos = boss.getLayoutX() + boss.getTranslateX() + 50;
+		double yPos = boss.getLayoutY() + boss.getTranslateY() + boss.getFitHeight() / 4;
+		bossHealthDisplay.setLayout(xPos, yPos);
 	}
 
 	public void updateBossHealth(int bossHealth) {
-		bossHealthLabel.updateBossHealth(bossHealth);
+		bossHealthDisplay.updateBossHealth(bossHealth);
 	}
 
 	public void displayShield() {

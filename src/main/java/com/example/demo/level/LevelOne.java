@@ -63,18 +63,8 @@ public class LevelOne extends LevelParent {
 	}
 
 	@Override
-	protected void goToNextLevel() {
-		goToNextLevel(NEXT_LEVEL);
-	}
-
-	@Override
-	protected void replayLevel() {
-		replayLevel("com.example.demo.level.LevelOne");
-	}
-
-	@Override
 	protected LevelCompletedMenu showLevelCompletedMenu() {
-        return new LevelCompletedMenu("Level One", this::returnToMenu, this::replayLevel, this::goToNextLevel, getScreenWidth(), getScreenHeight());
+        return new LevelCompletedMenu("Level One", this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelOne"), () -> goToNextLevel(NEXT_LEVEL), getScreenWidth(), getScreenHeight());
 	}
 
 	private boolean userHasReachedKillTarget() {

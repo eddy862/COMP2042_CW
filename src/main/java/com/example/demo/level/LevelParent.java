@@ -110,7 +110,7 @@ public abstract class LevelParent extends Observable {
 
     public void goToNextLevel(String levelName) {
         soundEffect.playNextLevel();
-        notifyObservers(levelName);
+        replayLevel(levelName);
     }
 
     protected void replayLevel(String levelName) {
@@ -391,6 +391,9 @@ public abstract class LevelParent extends Observable {
             timeline.pause();
             music.pauseGameBackgroundMusic();
             soundEffect.pauseWarning();
+            if (playerLowHealth) {
+                levelView.heartsStopZooming();
+            }
         }
     }
 
@@ -401,6 +404,9 @@ public abstract class LevelParent extends Observable {
             isPause = false;
             timeline.play();
             music.playGameBackgroundMusic();
+            if (playerLowHealth) {
+                levelView.heartsStartZooming();
+            }
         }
     }
 
@@ -420,10 +426,6 @@ public abstract class LevelParent extends Observable {
             levelView.heartsStopZooming();
         }
     }
-
-    protected abstract void goToNextLevel();
-
-    protected abstract void replayLevel();
 
     protected abstract LevelCompletedMenu showLevelCompletedMenu();
 

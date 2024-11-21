@@ -78,20 +78,11 @@ public class LevelTwo extends LevelParent {
 
         // update boss health
         levelView.updateBossHealth(boss.getHealth());
-    }
-
-    @Override
-    protected void goToNextLevel() {
-        goToNextLevel(NEXT_LEVEL);
-    }
-
-    @Override
-    protected void replayLevel() {
-        replayLevel("com.example.demo.level.LevelTwo");
+        levelView.updateBossHealthPosition(boss);
     }
 
     @Override
     protected LevelCompletedMenu showLevelCompletedMenu() {
-        return new LevelCompletedMenu("Level Two", this::returnToMenu, this::replayLevel, this::goToNextLevel, getScreenWidth(), getScreenHeight());
+        return new LevelCompletedMenu("Level Two", this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelTwo"), () -> goToNextLevel(NEXT_LEVEL), getScreenWidth(), getScreenHeight());
     }
 }

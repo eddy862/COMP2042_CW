@@ -8,7 +8,7 @@ import com.example.demo.ui.LevelCompletedMenu;
 import javafx.scene.Scene;
 
 public class LevelThree extends LevelParent {
-    private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
+    private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background3.jpg";
     private static final String NEXT_LEVEL = "com.example.demo.level.LevelFour";
     private static final int TOTAL_ENEMIES = 3;
     private static final int USER_PROJECTILE_LIMIT = 8;
@@ -79,18 +79,8 @@ public class LevelThree extends LevelParent {
     }
 
     @Override
-    protected void goToNextLevel() {
-        goToNextLevel(NEXT_LEVEL);
-    }
-
-    @Override
-    protected void replayLevel() {
-        replayLevel("com.example.demo.level.LevelThree");
-    }
-
-    @Override
     protected LevelCompletedMenu showLevelCompletedMenu() {
-        return new LevelCompletedMenu("Level Three", this::returnToMenu, this::replayLevel, this::goToNextLevel, getScreenWidth(), getScreenHeight());
+        return new LevelCompletedMenu("Level Three", this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelThree"), () -> goToNextLevel(NEXT_LEVEL), getScreenWidth(), getScreenHeight());
     }
 
     private void decreaseUserProjectileRemaining() {
