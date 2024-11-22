@@ -21,6 +21,10 @@ public class LevelViewLevelTwo extends LevelView {
 		root.getChildren().add(bossHealthDisplay);
 	}
 
+	public void hideBossHealth() {
+		bossHealthDisplay.hide();
+	}
+
 	public void updateBossHealthPosition(Boss boss) {
 		double xPos = boss.getLayoutX() + boss.getTranslateX() + 50;
 		double yPos = boss.getLayoutY() + boss.getTranslateY() + boss.getFitHeight() / 4;
@@ -43,8 +47,19 @@ public class LevelViewLevelTwo extends LevelView {
 		shieldImage.hideShield();
 	}
 
-	public void updateShieldPosition(double bossPositionX, double bossPositionY) {
-		shieldImage.setLayoutX(bossPositionX - ShieldImage.SHIELD_SIZE / 3);
-		shieldImage.setLayoutY(bossPositionY + ShieldImage.SHIELD_SIZE / 4);
+	public void updateShieldPosition(Boss boss) {
+		double bossPositionX = boss.getLayoutX() + boss.getTranslateX() - ShieldImage.SHIELD_SIZE / 3;
+		double bossPositionY = boss.getLayoutY() + boss.getTranslateY() + ShieldImage.SHIELD_SIZE / 4;
+
+		shieldImage.setLayoutX(bossPositionX);
+		shieldImage.setLayoutY(bossPositionY);
+	}
+
+	protected BossHealthDisplay getBossHealthDisplay() {
+		return bossHealthDisplay;
+	}
+
+	protected ShieldImage getShieldImage() {
+		return shieldImage;
 	}
 }

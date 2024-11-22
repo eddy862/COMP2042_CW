@@ -28,4 +28,7 @@ public abstract class ActiveActor extends ImageView {
 		this.setTranslateY(getTranslateY() + verticalMove);
 	}
 
+	protected void changeImage(String imageName) {
+		this.setImage(new Image(getClass().getResource(IMAGE_LOCATION + imageName).toExternalForm()));
+	}
 }

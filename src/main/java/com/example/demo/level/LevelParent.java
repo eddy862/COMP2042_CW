@@ -78,7 +78,7 @@ public abstract class LevelParent extends Observable {
         initializeTimeline();
         friendlyUnits.add(user);
         this.pauseButton = new PauseButton(this::pauseGame);
-        this.postLevelButtons = new PostLevelButtons(getScreenWidth(), this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelOne "));
+        this.postLevelButtons = new PostLevelButtons(getScreenWidth(), this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelOne"));
     }
 
     private void initializeFriendlyUnits() {

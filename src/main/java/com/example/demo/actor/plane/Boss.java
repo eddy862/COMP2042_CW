@@ -21,7 +21,6 @@ public class Boss extends FighterPlane {
 	private static final double BOSS_SHIELD_PROBABILITY = .003;
 	private static final int IMAGE_HEIGHT = 300;
 	private static final int VERTICAL_VELOCITY = 8;
-	private static final int HEALTH = 10;
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5; // Number of moves per cycle
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
@@ -34,8 +33,8 @@ public class Boss extends FighterPlane {
 	private int indexOfCurrentMove; // Index of the current move in the move pattern
 	private int framesWithShieldActivated; // Number of frames with the shield activated
 
-	public Boss() {
-		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
+	public Boss(int health) {
+		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, health);
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;

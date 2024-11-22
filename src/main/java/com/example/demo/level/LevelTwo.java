@@ -10,8 +10,9 @@ public class LevelTwo extends LevelParent {
 
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
     private static final String NEXT_LEVEL = "com.example.demo.level.LevelThree";
-    private static final int PLAYER_INITIAL_HEALTH = 10;
+    private static final int PLAYER_INITIAL_HEALTH = 6;
     private Boss boss;
+    private static final int BOSS_HEALTH = 15;
     private LevelViewLevelTwo levelView;
     private final SoundEffect soundEffect;
     private boolean isBossShielded;
@@ -19,7 +20,7 @@ public class LevelTwo extends LevelParent {
     public LevelTwo(double screenHeight, double screenWidth, Music music, SoundEffect soundEffect) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, music, soundEffect);
         this.soundEffect = soundEffect;
-        boss = boss == null ? new Boss() : boss;
+        boss = new Boss(BOSS_HEALTH);
         this.isBossShielded = boss.isShielded();
     }
 
@@ -27,8 +28,10 @@ public class LevelTwo extends LevelParent {
     protected void checkIfGameOver() {
         if (userIsDestroyed()) {
             loseGame();
+            levelView.hideBossHealth();
         } else if (boss.isDestroyed()) {
             levelCompleted();
+            levelView.hideBossHealth();
         }
     }
 
@@ -41,9 +44,7 @@ public class LevelTwo extends LevelParent {
 
     @Override
     protected LevelView instantiateLevelView() {
-        // check is boss is initialised
-        boss = boss == null ? new Boss() : boss;
-        levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH, boss.getHealth(), 1);
+        levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH, BOSS_HEALTH, 1);
         return levelView;
     }
 
@@ -59,7 +60,7 @@ public class LevelTwo extends LevelParent {
     protected void updateLevelView() {
         super.updateLevelView();
         // update shield position
-        levelView.updateShieldPosition(boss.getLayoutX() + boss.getTranslateX(), boss.getLayoutY() + boss.getTranslateY());
+        levelView.updateShieldPosition(boss);
         boolean bossWasShielded = isBossShielded;
 
         if (boss.isShielded()) {

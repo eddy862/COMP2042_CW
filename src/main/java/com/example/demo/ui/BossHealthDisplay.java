@@ -6,7 +6,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.StackPane;
 
 public class BossHealthDisplay extends StackPane {
-    private final int bossInitialHealth;
+    private int bossInitialHealth;
     private final ProgressBar healthBar;
     private final Label healthText;
     private static final int BAR_WIDTH = 200;
@@ -19,7 +19,7 @@ public class BossHealthDisplay extends StackPane {
         this.healthText.setStyle("-fx-font-size: 16; -fx-text-fill: white;");
         this.healthBar.setPrefWidth(BAR_WIDTH);
         this.healthBar.setPrefHeight(BAR_HEIGHT);
-        this.healthBar.setStyle("-fx-accent: darkred; -fx-control-inner-background: grayaaaaa;");
+        this.healthBar.setStyle("-fx-accent: darkred; -fx-control-inner-background: gray;");
         this.getChildren().addAll(healthBar, healthText);
     }
 
@@ -32,5 +32,14 @@ public class BossHealthDisplay extends StackPane {
     public void setLayout(double x, double y) {
         this.setLayoutX(x);
         this.setLayoutY(y);
+    }
+
+    public void resetHealth(int bossHealth) {
+        this.bossInitialHealth = bossHealth;
+        this.healthBar.setStyle("-fx-accent: #00008B; -fx-control-inner-background: gray;");
+    }
+
+    public void hide() {
+        this.setVisible(false);
     }
 }

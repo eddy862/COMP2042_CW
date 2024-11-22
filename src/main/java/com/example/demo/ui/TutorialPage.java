@@ -32,10 +32,14 @@ public class TutorialPage {
 
         levelScreenshots.add(new Image(getClass().getResource("/com/example/demo/images/tutorial1.png").toExternalForm()));
         levelScreenshots.add(new Image(getClass().getResource("/com/example/demo/images/tutorial2.png").toExternalForm()));
-        levelName.addAll(List.of("Level 1", "Level 2"));
-        levelDesc.addAll(List.of("Target: kills a certain number of enemy planes.\nIf any enemy plan pass the leftmost boundary, the user will lose a life.",
-                "Target: kills the boss plane.\nThe boss plane has a shield that can be activated randomly.")
-        );
+        levelScreenshots.add(new Image(getClass().getResource("/com/example/demo/images/tutorial3.png").toExternalForm()));
+        levelScreenshots.add(new Image(getClass().getResource("/com/example/demo/images/tutorial4.png").toExternalForm()));
+        levelName.addAll(List.of("Level 1", "Level 2", "Level 3", "Level 4"));
+        levelDesc.addAll(List.of("Target: kill a certain number of enemy planes.\nIf any enemy plane passes the leftmost boundary, the user will lose a life.",
+                "Target: kill the boss plane.\nThe boss plane has a shield that can be activated randomly.",
+                "Target: survive for 20 seconds.\nYou only have 8 projectiles. Every 2 seconds, you will gain 1 projectile.",
+                "Target: kill the multi-stage boss.\nThe boss plane has a shield that can be activated randomly. At stage 2, the boss will summon enemy planes."
+        ));
     }
 
     public Scene initializeScene() {

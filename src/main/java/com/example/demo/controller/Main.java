@@ -122,14 +122,12 @@ public class Main extends Application {
         TutorialPage tutorialPage = new TutorialPage(scene);
         Scene tutorialScene = tutorialPage.initializeScene();
         stage.setScene(tutorialScene);
-        System.out.println(stage.getScene().getX() + " " + stage.getScene().getY());
     }
 
     private void showSetting(Stage stage) {
         SettingPage settingPage = new SettingPage(scene, music, soundEffect);
         Scene settingScene = settingPage.initializeScene();
         stage.setScene(settingScene);
-        System.out.println(stage.getScene().getX() + " " + stage.getScene().getY());
     }
 
     public static void main(String[] args) {

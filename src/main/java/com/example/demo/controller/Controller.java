@@ -17,7 +17,7 @@ import com.example.demo.level.LevelParent;
 
 public class Controller implements Observer {
 
-    private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.level.LevelTwo";
+    private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.level.LevelOne";
     private final Stage stage;
     private final Music music;
     private final SoundEffect soundEffect;
