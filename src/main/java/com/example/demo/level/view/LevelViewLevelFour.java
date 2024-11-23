@@ -1,4 +1,4 @@
-package com.example.demo.level;
+package com.example.demo.level.view;
 
 import com.example.demo.actor.plane.Boss;
 import com.example.demo.actor.plane.MultiStageBoss;

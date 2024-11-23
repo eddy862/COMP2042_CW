@@ -1,6 +1,7 @@
-package com.example.demo.level;
+package com.example.demo.level.view;
 
 import com.example.demo.controller.Main;
+import com.example.demo.level.view.LevelView;
 import com.example.demo.ui.inGameElement.UserProjectileDisplay;
 import javafx.scene.Group;
 import javafx.scene.control.Label;

@@ -5,7 +5,9 @@ import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.actor.plane.MultiStageBoss;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
-import com.example.demo.ui.inGameElement.LevelCompletedMenu;
+import com.example.demo.level.view.LevelView;
+import com.example.demo.level.view.LevelViewLevelFour;
+import com.example.demo.ui.inGameElement.LevelCompletionMenu;
 import javafx.scene.Scene;
 
 /**
@@ -159,7 +161,7 @@ public class LevelFour extends LevelParent {
      */
     @Override
     protected LevelView instantiateLevelView() {
-        levelView = new LevelViewLevelFour(getRoot(), PLAYER_INITIAL_HEALTH, BOSS_STAGE_ONE_HEALTH, TOTAL_ENEMY_PLANES, BOSS_STAGE_TWO_HEALTH);
+        levelView = new LevelViewLevelFour(getLowerRoot(), PLAYER_INITIAL_HEALTH, BOSS_STAGE_ONE_HEALTH, TOTAL_ENEMY_PLANES, BOSS_STAGE_TWO_HEALTH);
         return levelView;
     }
 
@@ -169,7 +171,7 @@ public class LevelFour extends LevelParent {
      * @return the level completed menu
      */
     @Override
-    protected LevelCompletedMenu showLevelCompletedMenu() {
+    protected LevelCompletionMenu showLevelCompletedMenu() {
         return null;
     }
 }

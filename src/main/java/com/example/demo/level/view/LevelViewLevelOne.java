@@ -1,5 +1,6 @@
-package com.example.demo.level;
+package com.example.demo.level.view;
 
+import com.example.demo.level.view.LevelView;
 import com.example.demo.ui.inGameElement.NumberOfKillsLabel;
 import javafx.scene.Group;
 

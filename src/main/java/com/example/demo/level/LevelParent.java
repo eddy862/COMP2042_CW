@@ -9,7 +9,8 @@ import com.example.demo.actor.plane.UserPlane;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
 import com.example.demo.controller.Main;
-import com.example.demo.ui.inGameElement.LevelCompletedMenu;
+import com.example.demo.level.view.LevelView;
+import com.example.demo.ui.inGameElement.LevelCompletionMenu;
 import com.example.demo.ui.inGameElement.PauseButton;
 import com.example.demo.ui.inGameElement.PauseMenu;
 import com.example.demo.ui.inGameElement.PostLevelButtons;
@@ -17,6 +18,7 @@ import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
@@ -64,10 +66,11 @@ public abstract class LevelParent extends Observable {
     /**
      * The root group of the scene to add all elements to.
      */
-    private final Group root;
+    private final Group lowerRoot;
     /**
      * The timeline for the game loop.
      */
+    private final Group upperRoot;
     private final Timeline timeline;
     /**
      * The user plane in the game.
@@ -151,7 +154,10 @@ public abstract class LevelParent extends Observable {
      * @param soundEffect         the sound effect manager
      */
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, Music music, SoundEffect soundEffect) {
-        this.root = new Group();
+        this.lowerRoot = new Group();
+        this.upperRoot = new Group();
+        Group root = new Group();
+        root.getChildren().addAll(lowerRoot, upperRoot);
         this.scene = new Scene(root, screenWidth, screenHeight);
         this.timeline = new Timeline();
         this.user = new UserPlane(playerInitialHealth);
@@ -177,7 +183,7 @@ public abstract class LevelParent extends Observable {
      * Initializes the friendly units in the game.
      */
     private void initializeFriendlyUnits() {
-        getRoot().getChildren().add(getUser());
+        getLowerRoot().getChildren().add(getUser());
     }
 
 
@@ -212,8 +218,8 @@ public abstract class LevelParent extends Observable {
         levelView.showHeartDisplay();
         levelView.initialiseWarningPool();
         levelView.initialiseExplosionPool();
-        root.getChildren().add(pauseButton);
-        root.getChildren().add(postLevelButtons.getLayout());
+        lowerRoot.getChildren().add(pauseButton);
+        lowerRoot.getChildren().add(postLevelButtons.getLayout());
         return scene;
     }
 
@@ -256,8 +262,8 @@ public abstract class LevelParent extends Observable {
         music.stopGameBackgroundMusic();
         timeline.stop();
         setChanged();
-        LevelCompletedMenu levelCompletedMenu = showLevelCompletedMenu();
-        root.getChildren().add(levelCompletedMenu.getLayout());
+        LevelCompletionMenu levelCompletionMenu = showLevelCompletedMenu();
+        lowerRoot.getChildren().add(levelCompletionMenu.getLayout());
     }
 
     /**
@@ -321,7 +327,7 @@ public abstract class LevelParent extends Observable {
                     user.stopHorizontally();
             }
         });
-        root.getChildren().add(background);
+        lowerRoot.getChildren().add(background);
     }
 
     /**
@@ -332,7 +338,7 @@ public abstract class LevelParent extends Observable {
         // check if enough time has passed since the last fire
         if (currentTime - lastFireTime > FIRE_COOLDOWN_MILLIS || lastFireTime == 0) {
             ActiveActorDestructible projectile = user.fireProjectile();
-            root.getChildren().add(projectile);
+            lowerRoot.getChildren().add(projectile);
             userProjectiles.add(projectile);
             soundEffect.playUserFire();
             lastFireTime = currentTime;
@@ -353,7 +359,7 @@ public abstract class LevelParent extends Observable {
      */
     private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
         if (projectile != null) {
-            root.getChildren().add(projectile);
+            lowerRoot.getChildren().add(projectile);
             enemyProjectiles.add(projectile);
         }
     }
@@ -399,7 +405,7 @@ public abstract class LevelParent extends Observable {
      */
     private List<ActiveActorDestructible> removeDestroyedActors(List<ActiveActorDestructible> actors) {
         List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed).toList();
-        root.getChildren().removeAll(destroyedActors);
+        lowerRoot.getChildren().removeAll(destroyedActors);
         actors.removeAll(destroyedActors);
 
         return destroyedActors;
@@ -561,8 +567,12 @@ public abstract class LevelParent extends Observable {
      *
      * @return the root group
      */
-    protected Group getRoot() {
-        return root;
+    protected Group getLowerRoot() {
+        return lowerRoot;
+    }
+
+    protected Group getUpperRoot() {
+        return upperRoot;
     }
 
     /**
@@ -581,7 +591,7 @@ public abstract class LevelParent extends Observable {
      */
     protected void addEnemyUnit(ActiveActorDestructible enemy) {
         enemyUnits.add(enemy);
-        root.getChildren().add(enemy);
+        lowerRoot.getChildren().add(enemy);
     }
 
     /**
@@ -625,8 +635,9 @@ public abstract class LevelParent extends Observable {
      */
     private void pauseGame() {
         if (!isPause && !levelComplete) {
+            lowerRoot.setEffect(new GaussianBlur(20));
             pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music, soundEffect, screenWidth, screenHeight);
-            root.getChildren().add(pauseMenu.getLayout());
+            upperRoot.getChildren().add(pauseMenu.getLayout());
             isPause = true;
             timeline.pause();
             music.pauseGameBackgroundMusic();
@@ -642,8 +653,9 @@ public abstract class LevelParent extends Observable {
      */
     private void resumeGame() {
         if (isPause && !levelComplete) {
+            lowerRoot.setEffect(null);
             pauseMenu.hide();
-            root.getChildren().remove(pauseMenu.getLayout());
+            upperRoot.getChildren().remove(pauseMenu.getLayout());
             isPause = false;
             timeline.play();
             music.playGameBackgroundMusic();
@@ -662,7 +674,7 @@ public abstract class LevelParent extends Observable {
         soundEffect.stopWarning();
         timeline.stop();
         setChanged();
-        mainMenu.start((Stage) root.getScene().getWindow());
+        mainMenu.start((Stage) lowerRoot.getScene().getWindow());
     }
 
     /**
@@ -683,7 +695,7 @@ public abstract class LevelParent extends Observable {
      *
      * @return the level completed menu
      */
-    protected abstract LevelCompletedMenu showLevelCompletedMenu();
+    protected abstract LevelCompletionMenu showLevelCompletedMenu();
 
     /**
      * Returns the timeline for the game loop.
@@ -705,6 +717,6 @@ public abstract class LevelParent extends Observable {
      * Cleans up the scene by removing all children from the root group to reduce memory usage.
      */
     private void cleanUp() {
-        root.getChildren().clear();
+        lowerRoot.getChildren().clear();
     }
 }

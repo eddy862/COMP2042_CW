@@ -3,7 +3,9 @@ package com.example.demo.level;
 import com.example.demo.actor.plane.Boss;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
-import com.example.demo.ui.inGameElement.LevelCompletedMenu;
+import com.example.demo.level.view.LevelView;
+import com.example.demo.level.view.LevelViewLevelTwo;
+import com.example.demo.ui.inGameElement.LevelCompletionMenu;
 import javafx.scene.Scene;
 
 /**
@@ -93,7 +95,7 @@ public class LevelTwo extends LevelParent {
      */
     @Override
     protected LevelView instantiateLevelView() {
-        levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH, BOSS_HEALTH, 1);
+        levelView = new LevelViewLevelTwo(getLowerRoot(), PLAYER_INITIAL_HEALTH, BOSS_HEALTH, 1);
         return levelView;
     }
 
@@ -146,7 +148,7 @@ public class LevelTwo extends LevelParent {
      * @return the level completed menu
      */
     @Override
-    protected LevelCompletedMenu showLevelCompletedMenu() {
-        return new LevelCompletedMenu("Level Two", this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelTwo"), () -> goToNextLevel(NEXT_LEVEL), getScreenWidth(), getScreenHeight());
+    protected LevelCompletionMenu showLevelCompletedMenu() {
+        return new LevelCompletionMenu("Level Two", this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelTwo"), () -> goToNextLevel(NEXT_LEVEL), getScreenWidth(), getScreenHeight());
     }
 }

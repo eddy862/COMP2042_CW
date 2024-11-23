@@ -1,6 +1,7 @@
-package com.example.demo.level;
+package com.example.demo.level.view;
 
 import com.example.demo.actor.plane.Boss;
+import com.example.demo.level.view.LevelView;
 import com.example.demo.ui.inGameElement.BossHealthDisplay;
 import com.example.demo.ui.inGameElement.ShieldImage;
 import javafx.scene.Group;

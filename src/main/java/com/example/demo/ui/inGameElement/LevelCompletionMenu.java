@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
  * Represents the menu displayed when a level is completed.
  * This class creates a layout with options to return to the main menu, restart the level, or proceed to the next level.
  */
-public class LevelCompletedMenu {
+public class LevelCompletionMenu {
     /**
      * The width of the level completed menu.
      */
@@ -38,7 +38,7 @@ public class LevelCompletedMenu {
      * @param screenWidth the width of the screen
      * @param screenHeight the height of the screen
      */
-    public LevelCompletedMenu(String levelName, Runnable onReturnToMainMenu, Runnable restart, Runnable nextLevel, double screenWidth, double screenHeight) {
+    public LevelCompletionMenu(String levelName, Runnable onReturnToMainMenu, Runnable restart, Runnable nextLevel, double screenWidth, double screenHeight) {
         layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
         layout.setPrefWidth(WIDTH);

@@ -4,7 +4,9 @@ import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.plane.EnemyPlane;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
-import com.example.demo.ui.inGameElement.LevelCompletedMenu;
+import com.example.demo.level.view.LevelView;
+import com.example.demo.level.view.LevelViewLevelThree;
+import com.example.demo.ui.inGameElement.LevelCompletionMenu;
 import javafx.scene.Scene;
 
 /**
@@ -123,7 +125,7 @@ public class LevelThree extends LevelParent {
      */
     @Override
     protected LevelView instantiateLevelView() {
-        this.levelView = new LevelViewLevelThree(getRoot(), PLAYER_INITIAL_HEALTH, TOTAL_ENEMIES, USER_PROJECTILE_LIMIT, SURVIVAL_SEC);
+        this.levelView = new LevelViewLevelThree(getLowerRoot(), PLAYER_INITIAL_HEALTH, TOTAL_ENEMIES, USER_PROJECTILE_LIMIT, SURVIVAL_SEC);
         return levelView;
     }
 
@@ -156,8 +158,8 @@ public class LevelThree extends LevelParent {
      * @return the level completed menu
      */
     @Override
-    protected LevelCompletedMenu showLevelCompletedMenu() {
-        return new LevelCompletedMenu("Level Three", this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelThree"), () -> goToNextLevel(NEXT_LEVEL), getScreenWidth(), getScreenHeight());
+    protected LevelCompletionMenu showLevelCompletedMenu() {
+        return new LevelCompletionMenu("Level Three", this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelThree"), () -> goToNextLevel(NEXT_LEVEL), getScreenWidth(), getScreenHeight());
     }
 
     /**

@@ -61,6 +61,10 @@
 16. **Projectile cleanup**: Cleaned up user and enemy projectiles when they are off-screen to save memory, resulting in a significant decrease in memory usage.
 17. **UI cleanup**: Cleaned up all children of the root of the scene when entering a new level to save memory.
 18. **Final level options**: When the user loses or wins the final level, display buttons to restart from level 1 or return to the main menu.
+19. **Pause Menu and Screen Blur**: When the game is paused, the game screen is blurred, and a pause menu is displayed on top of it. 
+    - Achieved by using two `Group` objects (`upperRoot` and `lowerRoot`) added to a single `Group` in `LevelParent`. All game elements are added to `lowerRoot`. 
+    - When the game is paused, a pause menu is added to `upperRoot`, and `lowerRoot` is blurred. 
+    - When the game is resumed, the pause menu is removed from `upperRoot`, and `lowerRoot` returns to its original state.
 
 ## Implemented but Not Working Properly
 
@@ -72,15 +76,49 @@
         - Found that the x and y coordinates remain the same when switching pages, but visually the scene is not centered like the initial scene.
         - Tried setting the width and height of the new scene to match the previous scene's dimensions instead of the stage's dimensions, but the issue persisted.
 
-Features attempted to implement:
-1. When user pause the game, blur the current scene and display the buttons. However, the scene didn't recover to normal state when user resume the game.
-   - attempts: 
-     - I captured the current scene and blurred it
-
 
 ## Feature Not Implemented
+1. **Power-ups**: Randomly generated power-ups that increases the user's health, speed, or projectile damage when hit by the user plane.
 
-## New Java Class
+## New Java Classes
+
+1. **MultiStageBoss** (`src/main/java/com/example/demo/actor/plane/MultiStageBoss.java`): Inherits from `Boss` and implements a multi-stage boss in Level Four with changing tactics and abilities.
+
+2. **Music** (`src/main/java/com/example/demo/audio/Music.java`): Manages background music across different levels and menus.
+
+3. **SoundEffect** (`src/main/java/com/example/demo/audio/SoundEffect.java`): Handles various sound effects triggered by game events, such as firing projectiles and explosions.
+
+4. **LevelThree** (`src/main/java/com/example/demo/level/LevelThree.java`): Implements the third level of the game, where the user has limited projectiles and must survive for a certain time.
+
+5. **LevelViewLevelThree** (`src/main/java/com/example/demo/level/view/LevelViewLevelThree.java`): Manages the visual representation and UI elements specific to Level Three.
+
+6. **LevelFour** (`src/main/java/com/example/demo/level/LevelFour.java`): Implements the fourth level of the game, featuring a multi-stage boss with changing tactics.
+
+7. **LevelViewLevelFour** (`src/main/java/com/example/demo/level/view/LevelViewLevelFour.java`): Manages the visual representation and UI elements specific to Level Four.
+
+8. **BossHealthDisplay** (`src/main/java/com/example/demo/ui/inGameElement/BossHealthDisplay.java`): Displays the health bar of the boss during gameplay.
+
+9. **ExplosionImage** (`src/main/java/com/example/demo/ui/inGameElement/ExplosionImage.java`): Displays explosion animations when an enemy unit is destroyed.
+
+10. **LevelCompletionMenu** (`src/main/java/com/example/demo/ui/inGameElement/LevelCompletionMenu.java`): Provides options to replay the level, return to the main menu, or proceed to the next level upon level completion for all levels except the final level.
+
+11. **NumberOfKillsLabel** (`src/main/java/com/example/demo/ui/inGameElement/NumberOfKillsLabel.java`): Displays the number of kills achieved by the user in Level One.
+
+12. **PauseButton** (`src/main/java/com/example/demo/ui/inGameElement/PauseButton.java`): Represents the button used to pause the game across all levels.
+
+13. **PauseMenu** (`src/main/java/com/example/demo/ui/inGameElement/PauseMenu.java`): Displays the pause menu with options to resume the game, restart, or return to the main menu.
+
+14. **PostLevelButtons** (`src/main/java/com/example/demo/ui/inGameElement/PostLevelButtons.java`): Displays buttons to restart from Level One or return to the main menu after the final level.
+
+15. **WarningImage** (`src/main/java/com/example/demo/ui/inGameElement/WarningImage.java`): Displays a warning sign when an enemy plane approaches the leftmost boundary.
+
+16. **UserProjectileDisplay** (`src/main/java/com/example/demo/ui/inGameElement/UserProjectileDisplay.java`): Displays the remaining projectiles available to the user in Level Three.
+
+17. **LoadingPage** (`src/main/java/com/example/demo/ui/page/LoadingPage.java`): Displays a loading screen between levels to hide latency during transitions.
+
+18. **SettingPage** (`src/main/java/com/example/demo/ui/page/SettingPage.java`): Displays the audio settings page with options to mute/unmute sound effects and music.
+
+19. **TutorialPage** (`src/main/java/com/example/demo/ui/page/TutorialPage.java`): Displays the tutorial page with control instructions and descriptions of each level.
 
 ## Modified Java Class
 

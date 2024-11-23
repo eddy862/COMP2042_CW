@@ -5,6 +5,7 @@ module com.example.demo {
 
     exports com.example.demo.controller;
     exports com.example.demo.level;
+    exports com.example.demo.level.view;
     exports com.example.demo.actor;
     exports com.example.demo.actor.plane;
     exports com.example.demo.actor.projectile;
@@ -19,4 +20,5 @@ module com.example.demo {
     opens com.example.demo.audio to javafx.fxml;
     opens com.example.demo.ui.page to javafx.fxml;
     opens com.example.demo.ui.inGameElement to javafx.fxml;
+    opens com.example.demo.level.view to javafx.fxml;
 }
