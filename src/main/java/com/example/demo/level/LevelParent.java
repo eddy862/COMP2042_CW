@@ -44,7 +44,6 @@ public abstract class LevelParent extends Observable {
     private final List<ActiveActorDestructible> userProjectiles;
     private final List<ActiveActorDestructible> enemyProjectiles;
 
-    private int currentNumberOfEnemies;
     private final LevelView levelView;
     private final SoundEffect soundEffect;
     private final Music music;
@@ -55,7 +54,6 @@ public abstract class LevelParent extends Observable {
     private boolean levelComplete = false;
     private boolean playerLowHealth = false;
     private final PostLevelButtons postLevelButtons;
-    private int userFireCount = 0;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, Music music, SoundEffect soundEffect) {
         this.root = new Group();
@@ -74,7 +72,6 @@ public abstract class LevelParent extends Observable {
         this.levelView = instantiateLevelView();
         this.soundEffect = soundEffect;
         this.music = music;
-        this.currentNumberOfEnemies = 0;
         initializeTimeline();
         friendlyUnits.add(user);
         this.pauseButton = new PauseButton(this::pauseGame);
@@ -114,6 +111,7 @@ public abstract class LevelParent extends Observable {
     }
 
     protected void replayLevel(String levelName) {
+        cleanUp();
         notifyObservers(levelName);
     }
 
@@ -146,7 +144,6 @@ public abstract class LevelParent extends Observable {
         spawnEnemyUnits();
         updateActors();
         generateEnemyFire();
-        updateNumberOfEnemies();
         handleEnemyPenetration();
         handleUserProjectileCollisions();
         handleEnemyProjectileCollisions();
@@ -289,7 +286,7 @@ public abstract class LevelParent extends Observable {
     }
 
     /**
-     * Check if any enemy has penetrated the defenses and if so, destroy the user
+     * Check if any enemy has penetrated the defenses and if so, destroy the enemy and decrement the user's health.
      */
     private void handleEnemyPenetration() {
         for (ActiveActorDestructible enemy : enemyUnits) {
@@ -379,10 +376,6 @@ public abstract class LevelParent extends Observable {
         return user.isDestroyed();
     }
 
-    private void updateNumberOfEnemies() {
-        currentNumberOfEnemies = enemyUnits.size();
-    }
-
     private void pauseGame() {
         if (!isPause && !levelComplete) {
             pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music, soundEffect, screenWidth, screenHeight);
@@ -411,6 +404,7 @@ public abstract class LevelParent extends Observable {
     }
 
     protected void returnToMenu() {
+        cleanUp();
         music.stopGameBackgroundMusic();
         soundEffect.stopWarning();
         timeline.stop();
@@ -437,11 +431,7 @@ public abstract class LevelParent extends Observable {
         this.levelComplete = true;
     }
 
-    private void increaseUserFireCount() {
-        userFireCount++;
-    }
-
-    protected int getUserFireCount() {
-        return userFireCount;
+    private void cleanUp() {
+        root.getChildren().clear();
     }
 }

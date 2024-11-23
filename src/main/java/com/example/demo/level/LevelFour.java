@@ -15,7 +15,7 @@ public class LevelFour extends LevelParent {
     private final MultiStageBoss boss;
     private static final int BOSS_STAGE_ONE_HEALTH = 15;
     private static final int BOSS_STAGE_TWO_HEALTH = 25;
-    private static final double SUMMON_ENEMY_PROBABILITY = .2;
+    private static final double SUMMON_ENEMY_PROBABILITY = .15;
     private static final int TOTAL_ENEMY_PLANES = 3;
     private boolean isBossShielded;
     private final SoundEffect soundEffect;
