@@ -1,0 +1,9 @@
+module:com.example.demo
+com.example.demo.actor
+com.example.demo.actor.plane
+com.example.demo.actor.projectile
+com.example.demo.audio
+com.example.demo.controller
+com.example.demo.level
+com.example.demo.ui.inGameElement
+com.example.demo.ui.page

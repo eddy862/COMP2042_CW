@@ -8,31 +8,87 @@ import java.util.*;
 
 
 /**
- * Represents the boss in level 2. The boss has a unique move pattern and can activate a shield
- * that makes it invulnerable to damage within limited time.
+ * Represents the boss. The boss moves vertically in unique move pattern and can randomly activate a shield
+ * that makes it invulnerable to damage within a certain time frame.
  */
 public class Boss extends FighterPlane {
-
+	/**
+	 * The name of the image file of the boss.
+	 */
 	private static final String IMAGE_NAME = "bossplane.png";
+	/**
+	 * The initial x position of the boss.
+	 */
 	private static final double INITIAL_X_POSITION = 1000.0;
+	/**
+	 * The initial y position of the boss.
+	 */
 	private static final double INITIAL_Y_POSITION = 400;
+	/**
+	 * The y position of the projectile relative to the boss's position.
+	 */
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
+	/**
+	 * The probability of the boss firing a projectile in each frame.
+	 */
 	private static final double BOSS_FIRE_RATE = .04;
+	/**
+	 * The probability of the boss activating the shield in each frame.
+	 */
 	private static final double BOSS_SHIELD_PROBABILITY = .003;
+	/**
+	 * The height of the image of the boss.
+	 */
 	private static final int IMAGE_HEIGHT = 300;
+	/**
+	 * The predefined vertical velocity of the boss.
+	 */
 	private static final int VERTICAL_VELOCITY = 8;
+	/**
+	 * The number of moves per cycle. The boss moves up, down, and stays in place for a certain number of times.
+	 */
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5; // Number of moves per cycle
-	private static final int ZERO = 0;
+	/**
+	 * The maximum number of frames the boss can move in the same direction before changing direction.
+	 */
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
+	/**
+	 * The y position upper bound which the boss cannot move beyond.
+	 */
 	private static final int Y_POSITION_UPPER_BOUND = -100;
+	/**
+	 * The y position lower bound which the boss cannot move beyond.
+	 */
 	private static final int Y_POSITION_LOWER_BOUND = 475;
+	/**
+	 * The maximum number of frames the boss can have the shield activated.
+	 */
 	private static final int MAX_FRAMES_WITH_SHIELD = 300;
+	/**
+	 * The move pattern of the boss. It consists of a list of moves that the boss can make in a cycle including moving up, down, and staying in place.
+	 */
 	private final List<Integer> movePattern; // List of moves in the move pattern
+	/**
+	 * The shield status of the boss.
+	 */
 	private boolean isShielded;
+	/**
+	 * The number of frames with the same move. The boss should change direction after a certain number of frames.
+	 */
 	private int consecutiveMovesInSameDirection; // Number of frames with the same move
+	/**
+	 * The index of the current move in the move pattern list that determines the boss's next movement.
+	 */
 	private int indexOfCurrentMove; // Index of the current move in the move pattern
+	/**
+	 * The number of frames of boss with the shield activated. The shield is deactivated after a certain number of frames.
+	 */
 	private int framesWithShieldActivated; // Number of frames with the shield activated
 
+	/**
+	 * Constructor to create a new Boss instance with the customised health.
+	 * @param health the health of the boss
+	 */
 	public Boss(int health) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, health);
 		movePattern = new ArrayList<>();
@@ -60,7 +116,7 @@ public class Boss extends FighterPlane {
 	}
 
 	/**
-	 * Updates the boss by updating its position and shield status.
+	 * Updates the boss by updating its position and shield status in each frame.
 	 */
 	@Override
 	public void updateActor() {
@@ -76,7 +132,10 @@ public class Boss extends FighterPlane {
 	public ActiveActorDestructible fireProjectile() {
 		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
 	}
-	
+
+	/**
+	 * If the boss is not shielded, it takes damage. Otherwise, the boss is invulnerable to damage.
+	 */
 	@Override
 	public void takeDamage() {
 		if (!isShielded) {
@@ -85,22 +144,23 @@ public class Boss extends FighterPlane {
 	}
 
 	/**
-	 * Initializes the move pattern of the boss. For each cycle, the boss moves up, down, and stays
-	 * in place a certain number of times. The moving directions are shuffled to make the boss's movement
-	 * less predictable.
+	 * Initializes the move pattern of the boss. For each cycle, the boss  moves up, down, and stays
+	 * in place a certain number of times. Then the moving directions are shuffled to make the boss's movement
+	 * more unpredictable.
 	 */
 	private void initializeMovePattern() {
 		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
 			movePattern.add(VERTICAL_VELOCITY);
 			movePattern.add(-VERTICAL_VELOCITY);
-			movePattern.add(ZERO);
+			movePattern.add(0);
 		}
 		Collections.shuffle(movePattern);
 	}
 
 	/**
-	 * Updates the shield status of the boss. The shield is activated with a certain probability and
-	 * deactivated after a certain number of frames.
+	 * If the boss is shielded, the number of frames with the shield activated is incremented.
+	 * Otherwise, the shield is activated if the boss should activate the shield based on a certain probability.
+	 * The shield is deactivated after a certain number of frames.
 	 */
 	private void updateShield() {
 		if (isShielded) framesWithShieldActivated++;
@@ -111,7 +171,7 @@ public class Boss extends FighterPlane {
 	/**
 	 * Returns the next move in the move pattern. If the boss has moved in the same direction for a
 	 * certain number of frames, the move pattern is shuffled and the index of the current move is
-	 * incremented.
+	 * incremented. Resets the index if it reaches the end of the move pattern.
 	 * @return the next move in the move pattern
 	 */
 	private int getNextMove() {
@@ -137,27 +197,49 @@ public class Boss extends FighterPlane {
 		return Math.random() < BOSS_FIRE_RATE;
 	}
 
+	/**
+	 * Returns the initial y position of the projectile fired by the boss.
+	 * @return the initial y position of the projectile
+	 */
 	private double getProjectileInitialPosition() {
 		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 	}
 
+	/**
+	 * Determines if the boss should activate the shield based on a predefined probability.
+	 * @return true if the boss should activate the shield, false otherwise
+	 */
 	private boolean shieldShouldBeActivated() {
 		return Math.random() < BOSS_SHIELD_PROBABILITY;
 	}
 
+	/**
+	 * Determines if the shield is exhausted based on the number of frames with the shield activated.
+	 * @return true if the shield is exhausted, false otherwise
+	 */
 	private boolean shieldExhausted() {
 		return framesWithShieldActivated == MAX_FRAMES_WITH_SHIELD;
 	}
 
+	/**
+	 * Activates the shield of the boss.
+	 */
 	private void activateShield() {
 		isShielded = true;
 	}
 
+	/**
+	 * Deactivates the shield of the boss.
+	 */
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
 	}
 
+	/**
+	 * Returns the shield status of the boss.
+	 * @return true if the boss is shielded, false otherwise
+	 */
 	public boolean isShielded() {
 		return isShielded;
 	}

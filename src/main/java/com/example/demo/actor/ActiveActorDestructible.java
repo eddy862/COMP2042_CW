@@ -1,33 +1,62 @@
 package com.example.demo.actor;
 
+/**
+ * Abstract class representing an active actor that can be destroyed in the game.
+ */
 public abstract class ActiveActorDestructible extends ActiveActor implements Destructible {
 
-	private boolean isDestroyed;
+	/**
+	 * Determines if the actor is destroyed.
+	 */
+    private boolean isDestroyed;
 
-	public ActiveActorDestructible(String imageName, int imageHeight, double initialXPos, double initialYPos) {
-		super(imageName, imageHeight, initialXPos, initialYPos);
-		isDestroyed = false;
-	}
+    /**
+     * Constructs an ActiveActorDestructible with the specified image, height, and initial position.
+     *
+     * @param imageName the name of the image file
+     * @param imageHeight the height of the image
+     * @param initialXPos the initial x position of the actor
+     * @param initialYPos the initial y position of the actor
+     */
+    public ActiveActorDestructible(String imageName, int imageHeight, double initialXPos, double initialYPos) {
+        super(imageName, imageHeight, initialXPos, initialYPos);
+        isDestroyed = false;
+    }
 
-	@Override
-	public abstract void updatePosition();
+    /**
+     * Updates the position of the actor.
+     * This method should be implemented by subclasses to define specific movement behavior.
+     */
+    @Override
+    public abstract void updatePosition();
 
-	public abstract void updateActor();
+    /**
+     * Updates the state of the actor.
+     * This method should be implemented by subclasses to define specific update behavior.
+     */
+    public abstract void updateActor();
 
-	@Override
-	public abstract void takeDamage();
+    /**
+     * Takes damage and updates the state of the actor.
+     * This method should be implemented by subclasses to define specific damage behavior.
+     */
+    @Override
+    public abstract void takeDamage();
 
-	@Override
-	public void destroy() {
-		setDestroyed();
-	}
+    /**
+     * Destroys the actor by setting its destroyed state.
+     */
+    @Override
+    public void destroy() {
+        this.isDestroyed = true;
+    }
 
-	protected void setDestroyed() {
-		this.isDestroyed = true;
-	}
-
-	public boolean isDestroyed() {
-		return isDestroyed;
-	}
-	
+    /**
+     * Checks if the actor is destroyed.
+     *
+     * @return true if the actor is destroyed, false otherwise
+     */
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
 }

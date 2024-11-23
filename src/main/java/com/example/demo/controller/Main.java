@@ -4,8 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.example.demo.audio.Music;
 import com.example.demo.audio.SoundEffect;
-import com.example.demo.ui.SettingPage;
-import com.example.demo.ui.TutorialPage;
+import com.example.demo.ui.page.SettingPage;
+import com.example.demo.ui.page.TutorialPage;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,28 +18,53 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
+/**
+ * The main class that launches the game. Serve as the entry point of the game.
+ */
 public class Main extends Application {
+    /**
+     * The width of the screen.
+     */
     public static final int SCREEN_WIDTH = 1300;
+    /**
+     * The height of the screen.
+     */
     public static final int SCREEN_HEIGHT = 750;
+    /**
+     * The title of the game.
+     */
     private static final String TITLE = "Sky Battle";
+    /**
+     * The primary stage for the application.
+     */
     private Stage stage;
+    /**
+     * The scene for the main menu.
+     */
     private Scene scene;
+    /**
+     * The CSS file for the main menu.
+     */
     private static final String MAIN_MENU_CSS = "/com/example/demo/styles/mainMenu.css";
+    /**
+     * The background video for the main menu.
+     */
     private static final String BACKGROUND_VIDEO = "/com/example/demo/videos/mainMenuBackground.mp4";
+    /**
+     * The music manager across the game.
+     */
     private final Music music = new Music();
+    /**
+     * The sound effect manager across the game.
+     */
     private final SoundEffect soundEffect = new SoundEffect();
 
     /**
      * Start the application by launching the game
      *
      * @param stage the primary stage for this application
-     * @throws ClassNotFoundException
-     * @throws NoSuchMethodException
-     * @throws SecurityException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
-     * @throws InvocationTargetException
+     * @throws SecurityException if there is a security violation
+     * @throws IllegalArgumentException if the arguments for the level class constructor are invalid
      */
     @Override
     public void start(Stage stage) throws SecurityException,
@@ -56,6 +81,11 @@ public class Main extends Application {
         music.playMainMenuBackgroundMusic();
     }
 
+    /**
+     * Initializes the main menu scene.
+     *
+     * @return the initialized scene
+     */
     public Scene initializeScene() {
         Media background = new Media(getClass().getResource(BACKGROUND_VIDEO).toExternalForm());
         MediaPlayer backgroundPlayer = new MediaPlayer(background);
@@ -112,24 +142,48 @@ public class Main extends Application {
         return scene;
     }
 
+    /**
+     * Starts the first level of the game.
+     *
+     * @throws ClassNotFoundException if the level class is not found
+     * @throws NoSuchMethodException if the level class constructor is not found
+     * @throws SecurityException if there is a security violation
+     * @throws InstantiationException if the level class cannot be instantiated
+     * @throws IllegalAccessException if the level class or its constructor is not accessible
+     * @throws IllegalArgumentException if the arguments for the level class constructor are invalid
+     * @throws InvocationTargetException if the constructor throws an exception
+     */
     private void startLevelOne() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         music.stopMainMenuBackgroundMusic();
         Controller myController = new Controller(stage, music, soundEffect);
         myController.launchGame();
     }
 
+    /**
+     * Shows the tutorial page.
+     */
     private void showTutorial() {
         TutorialPage tutorialPage = new TutorialPage(scene);
         Scene tutorialScene = tutorialPage.initializeScene();
         stage.setScene(tutorialScene);
     }
 
+    /**
+     * Shows the settings page.
+     *
+     * @param stage the primary stage for this application
+     */
     private void showSetting(Stage stage) {
         SettingPage settingPage = new SettingPage(scene, music, soundEffect);
         Scene settingScene = settingPage.initializeScene();
         stage.setScene(settingScene);
     }
 
+    /**
+     * The main method to launch the application.
+     *
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         launch();
     }
