@@ -64,13 +64,16 @@ public abstract class LevelParent extends Observable {
     private static final int USER_LOW_HEALTH_THRESHOLD = 3;
 
     /**
-     * The root group of the scene to add all elements to.
+     * The lower group that contains all the game elements except the pause menu.
      */
     private final Group lowerRoot;
     /**
-     * The timeline for the game loop.
+     * The upper group that contains the pause menu.
      */
     private final Group upperRoot;
+    /**
+     * The timeline for the game loop.
+     */
     private final Timeline timeline;
     /**
      * The user plane in the game.
