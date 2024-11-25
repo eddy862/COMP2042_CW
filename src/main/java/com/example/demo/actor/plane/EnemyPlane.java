@@ -16,7 +16,7 @@ public class EnemyPlane extends FighterPlane {
     /**
      * The height of the image of the enemy plane.
      */
-    public static final int IMAGE_HEIGHT = 120;
+    public static final int IMAGE_HEIGHT = 80;
     /**
      * The predefined horizontal velocity of the enemy plane.
      */

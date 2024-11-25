@@ -19,7 +19,7 @@ public class Boss extends FighterPlane {
 	/**
 	 * The initial x position of the boss.
 	 */
-	private static final double INITIAL_X_POSITION = 1000.0;
+	private static final double INITIAL_X_POSITION = 980.0;
 	/**
 	 * The initial y position of the boss.
 	 */
@@ -39,7 +39,7 @@ public class Boss extends FighterPlane {
 	/**
 	 * The height of the image of the boss.
 	 */
-	private static final int IMAGE_HEIGHT = 300;
+	private static final int IMAGE_HEIGHT = 200;
 	/**
 	 * The predefined vertical velocity of the boss.
 	 */
@@ -55,11 +55,11 @@ public class Boss extends FighterPlane {
 	/**
 	 * The y position upper bound which the boss cannot move beyond.
 	 */
-	private static final int Y_POSITION_UPPER_BOUND = -100;
+	private static final int Y_POSITION_UPPER_BOUND = 0;
 	/**
 	 * The y position lower bound which the boss cannot move beyond.
 	 */
-	private static final int Y_POSITION_LOWER_BOUND = 475;
+	private static final int Y_POSITION_LOWER_BOUND = 550;
 	/**
 	 * The maximum number of frames the boss can have the shield activated.
 	 */

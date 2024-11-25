@@ -59,8 +59,8 @@ public class LevelViewLevelTwo extends LevelView {
      * @param boss the boss whose health position is being updated
      */
     public void updateBossHealthPosition(Boss boss) {
-        double xPos = boss.getLayoutX() + boss.getTranslateX() + 50;
-        double yPos = boss.getLayoutY() + boss.getTranslateY() + boss.getFitHeight() / 4;
+        double xPos = boss.getLayoutX() + boss.getTranslateX() + boss.getFitHeight() / 3;
+        double yPos = boss.getLayoutY() + boss.getTranslateY() + boss.getFitHeight() / 5;
         bossHealthDisplay.setLayout(xPos, yPos);
     }
 
@@ -101,7 +101,7 @@ public class LevelViewLevelTwo extends LevelView {
      */
     public void updateShieldPosition(Boss boss) {
         double bossPositionX = boss.getLayoutX() + boss.getTranslateX() - ShieldImage.SHIELD_SIZE / 3;
-        double bossPositionY = boss.getLayoutY() + boss.getTranslateY() + ShieldImage.SHIELD_SIZE / 4;
+        double bossPositionY = boss.getLayoutY() + boss.getTranslateY() + ShieldImage.SHIELD_SIZE / 6;
         shieldImage.setLayoutX(bossPositionX);
         shieldImage.setLayoutY(bossPositionY);
     }

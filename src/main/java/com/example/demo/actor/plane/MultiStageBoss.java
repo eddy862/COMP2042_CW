@@ -17,6 +17,10 @@ public class MultiStageBoss extends Boss {
      * The name of the image file of the multi-stage boss in the second stage.
      */
     private static final String STAGE_TWO_IMAGE = "eagle.png";
+    /**
+     * The height of the image of the multi-stage boss in the second stage.
+     */
+    private static final double STAGE_TWO_HEIGHT = 300;
 
     /**
      * Constructs a MultiStageBoss with the specified health for each stage.
@@ -47,7 +51,7 @@ public class MultiStageBoss extends Boss {
      */
     public void advanceStage() {
         stage = 2;
-        changeImage(STAGE_TWO_IMAGE);
+        changeImage(STAGE_TWO_IMAGE, STAGE_TWO_HEIGHT);
     }
 
     /**

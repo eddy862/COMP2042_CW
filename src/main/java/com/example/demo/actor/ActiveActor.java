@@ -54,11 +54,12 @@ public abstract class ActiveActor extends ImageView {
     }
 
     /**
-     * Changes the image of the actor.
+     * Changes the image and height of the actor to the image with the specified name.
      *
      * @param imageName the name of the new image file
      */
-    protected void changeImage(String imageName) {
+    protected void changeImage(String imageName, double height) {
         this.setImage(new Image(getClass().getResource(IMAGE_LOCATION + imageName).toExternalForm()));
+        this.setFitHeight(height);
     }
 }

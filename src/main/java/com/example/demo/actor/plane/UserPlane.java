@@ -16,11 +16,11 @@ public class UserPlane extends FighterPlane {
 	/**
 	 * The y position upper bound which the user plane cannot move beyond.
 	 */
-	private static final double Y_UPPER_BOUND = -40;
+	private static final double Y_UPPER_BOUND = 20;
 	/**
 	 * The y position lower bound which the user plane cannot move beyond.
 	 */
-	private static final double Y_LOWER_BOUND = 600.0;
+	private static final double Y_LOWER_BOUND = 650.0;
 	/**
 	 * The x position upper bound which the user plane cannot move beyond.
 	 */
@@ -40,7 +40,7 @@ public class UserPlane extends FighterPlane {
 	/**
 	 * The height of the image of the user plane.
 	 */
-	private static final int IMAGE_HEIGHT = 150;
+	private static final int IMAGE_HEIGHT = 100;
 	/**
 	 * The predefined velocity of the user plane.
 	 */

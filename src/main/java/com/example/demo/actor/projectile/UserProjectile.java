@@ -13,7 +13,7 @@ public class UserProjectile extends Projectile {
 	/**
 	 * The height of the image of the user projectile.
 	 */
-	private static final int IMAGE_HEIGHT = 125;
+	private static final int IMAGE_HEIGHT = 45;
 	/**
 	 * The predefined horizontal velocity of the user projectile.
 	 */

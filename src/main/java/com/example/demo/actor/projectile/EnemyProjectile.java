@@ -13,7 +13,7 @@ public class EnemyProjectile extends Projectile {
 	/**
 	 * The height of the image of the enemy projectile.
 	 */
-    private static final int IMAGE_HEIGHT = 50;
+    private static final int IMAGE_HEIGHT = 30;
 	/**
 	 * The predefined horizontal velocity of the enemy projectile.
 	 */
