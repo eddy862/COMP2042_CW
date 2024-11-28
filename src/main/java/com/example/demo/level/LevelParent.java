@@ -145,6 +145,14 @@ public abstract class LevelParent extends Observable {
      * The post level buttons for the game displayed with win or game over image.
      */
     private final PostLevelButtons postLevelButtons;
+    /**
+     * The flag to check if the game is over.
+     */
+    private boolean isGameOver = false;
+    /**
+     * The flag to check if the game is won.
+     */
+    private boolean isGameWin = false;
 
     /**
      * Constructs a LevelParent object with the specified parameters.
@@ -532,6 +540,7 @@ public abstract class LevelParent extends Observable {
      * Handles the win game scenario by stopping the game and showing the win image.
      */
     protected void winGame() {
+        isGameWin = true;
         soundEffect.stopWarning();
         music.stopGameBackgroundMusic();
         timeline.stop();
@@ -546,6 +555,7 @@ public abstract class LevelParent extends Observable {
      * Handles the game over scenario by stopping the game and showing the game over image.
      */
     protected void loseGame() {
+        isGameOver = true;
         soundEffect.stopWarning();
         music.stopGameBackgroundMusic();
         timeline.stop();
@@ -572,10 +582,6 @@ public abstract class LevelParent extends Observable {
      */
     protected Group getLowerRoot() {
         return lowerRoot;
-    }
-
-    protected Group getUpperRoot() {
-        return upperRoot;
     }
 
     /**
@@ -721,5 +727,21 @@ public abstract class LevelParent extends Observable {
      */
     private void cleanUp() {
         lowerRoot.getChildren().clear();
+    }
+
+    protected boolean isLevelCompleted() {
+        return levelComplete;
+    }
+
+    protected boolean isGameOver() {
+        return isGameOver;
+    }
+
+    protected boolean isGameWin() {
+        return isGameWin;
+    }
+
+    protected ArrayList<ActiveActorDestructible> getEnemyUnits() {
+        return (ArrayList<ActiveActorDestructible>) enemyUnits;
     }
 }

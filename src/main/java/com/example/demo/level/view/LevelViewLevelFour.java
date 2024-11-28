@@ -79,4 +79,13 @@ public class LevelViewLevelFour extends LevelViewLevelTwo {
             getShieldImage().setLayoutY(bossPositionY);
         }
     }
+
+    /**
+     * Returns the boolean value that indicates if the health of the boss has been reset for stage two.
+     *
+     * @return the boolean value that indicates if the health of the boss has been reset for stage two
+     */
+    public boolean getIsHealthReset() {
+        return isHealthReset;
+    }
 }

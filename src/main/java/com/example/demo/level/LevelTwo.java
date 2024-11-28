@@ -151,4 +151,13 @@ public class LevelTwo extends LevelParent {
     protected LevelCompletionMenu showLevelCompletedMenu() {
         return new LevelCompletionMenu("Level Two", this::returnToMenu, () -> replayLevel("com.example.demo.level.LevelTwo"), () -> goToNextLevel(NEXT_LEVEL), getScreenWidth(), getScreenHeight());
     }
+
+    /**
+     * returns the boss of the level.
+     *
+     * @return the boss of the level
+     */
+    protected Boss getBoss() {
+        return boss;
+    }
 }

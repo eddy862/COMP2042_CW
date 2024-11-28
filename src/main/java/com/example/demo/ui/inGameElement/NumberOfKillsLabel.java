@@ -42,4 +42,22 @@ public class NumberOfKillsLabel extends Label {
     public void updateKills(int numberOfKills) {
         this.setText("Kills: " + numberOfKills + "/" + killsToAdvance);
     }
+
+    /**
+     * Returns the number of kills displayed.
+     *
+     * @return the number of kills displayed
+     */
+    public int getNumberOfKills() {
+        return Integer.parseInt(this.getText().split(" ")[1].split("/")[0]);
+    }
+
+    /**
+     * Returns the number of kills required to advance.
+     *
+     * @return the number of kills required to advance
+     */
+    public int getKillsToAdvance() {
+        return killsToAdvance;
+    }
 }

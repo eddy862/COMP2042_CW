@@ -10,6 +10,10 @@ public class MultiStageBoss extends Boss {
      */
     private int stage;
     /**
+     * The health of the multi-stage boss in the first stage.
+     */
+    private final int stageOneHealth;
+    /**
      * The health of the multi-stage boss in the second stage.
      */
     private final int stageTwoHealth;
@@ -32,6 +36,7 @@ public class MultiStageBoss extends Boss {
         super(stageOneHealth + stageTwoHealth);
         this.stage = 1;
         this.stageTwoHealth = stageTwoHealth;
+        this.stageOneHealth = stageOneHealth;
     }
 
     /**
@@ -61,5 +66,23 @@ public class MultiStageBoss extends Boss {
      */
     public int getStage() {
         return stage;
+    }
+
+    /**
+     * Returns the health of the multi-stage boss in the first stage.
+     *
+     * @return the health of the multi-stage boss in the first stage
+     */
+    public int getStageOneHealth() {
+        return stageOneHealth;
+    }
+
+    /**
+     * Returns the health of the multi-stage boss in the second stage.
+     *
+     * @return the health of the multi-stage boss in the second stage
+     */
+    public int getStageTwoHealth() {
+        return stageTwoHealth;
     }
 }

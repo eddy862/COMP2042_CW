@@ -206,4 +206,13 @@ public class LevelView {
     public void heartsStopZooming() {
         heartDisplay.stopZooming();
     }
+
+    /**
+     * Returns the root group for the level view.
+     *
+     * @return the root group for the level view
+     */
+    protected Group getRoot() {
+        return root;
+    }
 }

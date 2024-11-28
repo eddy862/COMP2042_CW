@@ -47,4 +47,13 @@ public class LevelViewLevelOne extends LevelView {
     public void updateKills(int numberOfKills) {
         numberOfKillsLabel.updateKills(numberOfKills);
     }
+
+    /**
+     * Returns label showing the number of enemy kills for the level.
+     *
+     * @return the label showing the number of enemy kills for the level
+     */
+    protected NumberOfKillsLabel getNumberOfKillsLabel() {
+        return numberOfKillsLabel;
+    }
 }

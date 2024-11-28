@@ -174,4 +174,13 @@ public class LevelFour extends LevelParent {
     protected LevelCompletionMenu showLevelCompletedMenu() {
         return null;
     }
+
+    /**
+     * Returns the multi-stage boss for Level Four.
+     *
+     * @return the multi-stage boss for Level Four
+     */
+    protected MultiStageBoss getBoss() {
+        return boss;
+    }
 }

@@ -81,7 +81,7 @@ public class LevelThree extends LevelParent {
         double delay = getTimeline().getCycleDuration().toMillis();
         survivalTimeMillis += delay;
         levelView.updateTimer(SURVIVAL_SEC - survivalTimeMillis / 1000);
-        if (survivalTimeMillis == SURVIVAL_SEC * 1000) {
+        if (survivalTimeMillis >= SURVIVAL_SEC * 1000) {
             levelCompleted();
         }
 
@@ -198,5 +198,13 @@ public class LevelThree extends LevelParent {
             super.fireProjectile();
             decreaseUserProjectileRemaining();
         }
+    }
+
+    /**
+     * sets the survival time in milliseconds for testing purposes.
+     * @param survivalTimeMillis
+     */
+    public void setSurvivalTimeMillis(int survivalTimeMillis) {
+        this.survivalTimeMillis = survivalTimeMillis;
     }
 }

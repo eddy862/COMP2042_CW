@@ -45,7 +45,7 @@ public class LevelViewLevelThree extends LevelView {
         super(root, heartsToDisplay, totalEnemiesPerTime);
         this.root = root;
         this.userProjectileDisplay = new UserProjectileDisplay(initialUserProjectile);
-        this.timerLabel = new Label("Time:" + survivalTimeInSec);
+        this.timerLabel = new Label("Time: " + survivalTimeInSec);
     }
 
     /**
@@ -81,5 +81,23 @@ public class LevelViewLevelThree extends LevelView {
      */
     public void updateUserProjectiles(int userProjectileRemaining) {
         userProjectileDisplay.updateProjectiles(userProjectileRemaining);
+    }
+
+    /**
+     * Returns the label showing the timer for the level.
+     *
+     * @return the label showing the timer for the level
+     */
+    public Label getTimerLabel() {
+        return timerLabel;
+    }
+
+    /**
+     * Returns the ui showing remaining projectiles of user for the level.
+     *
+     * @return the ui showing remaining projectiles of user for the level
+     */
+    public UserProjectileDisplay getUserProjectileDisplay() {
+        return userProjectileDisplay;
     }
 }

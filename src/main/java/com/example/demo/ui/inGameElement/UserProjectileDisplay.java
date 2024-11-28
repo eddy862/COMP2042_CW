@@ -85,4 +85,13 @@ public class UserProjectileDisplay {
     public HBox getContainer() {
         return container;
     }
+
+    /**
+     * Retrieves the number of projectiles to display.
+     *
+     * @return the number of projectiles to display
+     */
+    public int getNumberOfProjectilesToDisplay() {
+        return numberOfProjectilesToDisplay;
+    }
 }

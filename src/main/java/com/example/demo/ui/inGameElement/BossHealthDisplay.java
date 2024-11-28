@@ -85,4 +85,13 @@ public class BossHealthDisplay extends StackPane {
     public void hide() {
         this.setVisible(false);
     }
+
+    /**
+     * Returns the current health of the boss.
+     *
+     * @return the current health of the boss
+     */
+    public int getCurrentHealth() {
+        return Integer.parseInt(this.healthText.getText().split("/")[0]);
+    }
 }
