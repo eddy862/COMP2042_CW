@@ -215,4 +215,49 @@ public class LevelView {
     protected Group getRoot() {
         return root;
     }
+
+    /**
+     * Returns the heart display for the level.
+     *
+     * @return the heart display for the level
+     */
+    protected HeartDisplay getHeartDisplay() {
+        return heartDisplay;
+    }
+
+    /**
+     * Returns the win image for the level.
+     *
+     * @return the win image for the level
+     */
+    protected WinImage getWinImage() {
+        return winImage;
+    }
+
+    /**
+     * Returns the game over image for the level.
+     *
+     * @return the game over image for the level
+     */
+    protected GameOverImage getGameOverImage() {
+        return gameOverImage;
+    }
+
+    /**
+     * Returns the explosion pool for the level.
+     *
+     * @return the explosion pool for the level
+     */
+    protected List<ExplosionImage> getExplosionPool() {
+        return explosionPool;
+    }
+
+    /**
+     * Returns the warning image map for the level.
+     *
+     * @return the warning image map for the level
+     */
+    protected Map<ActiveActorDestructible, WarningImage> getWarningImageMap() {
+        return warningImageMap;
+    }
 }

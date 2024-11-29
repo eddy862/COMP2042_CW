@@ -97,7 +97,7 @@ public class LevelViewLevelThree extends LevelView {
      *
      * @return the ui showing remaining projectiles of user for the level
      */
-    public UserProjectileDisplay getUserProjectileDisplay() {
+    protected UserProjectileDisplay getUserProjectileDisplay() {
         return userProjectileDisplay;
     }
 }

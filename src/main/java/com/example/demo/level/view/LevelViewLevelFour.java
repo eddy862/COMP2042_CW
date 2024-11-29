@@ -85,7 +85,7 @@ public class LevelViewLevelFour extends LevelViewLevelTwo {
      *
      * @return the boolean value that indicates if the health of the boss has been reset for stage two
      */
-    public boolean getIsHealthReset() {
+    protected boolean getIsHealthReset() {
         return isHealthReset;
     }
 }

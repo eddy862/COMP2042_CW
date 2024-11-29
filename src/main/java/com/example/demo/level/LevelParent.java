@@ -729,18 +729,29 @@ public abstract class LevelParent extends Observable {
         lowerRoot.getChildren().clear();
     }
 
+    /**
+     * Checks if the level is complete.
+     *
+     * @return true if the level is complete, false otherwise
+     */
     protected boolean isLevelCompleted() {
         return levelComplete;
     }
 
+    /**
+     * Checks if the game is won.
+     *
+     * @return true if the game is won, false otherwise
+     */
     protected boolean isGameOver() {
         return isGameOver;
     }
 
-    protected boolean isGameWin() {
-        return isGameWin;
-    }
-
+    /**
+     * Checks if the game is over.
+     *
+     * @return true if the game is over, false otherwise
+     */
     protected ArrayList<ActiveActorDestructible> getEnemyUnits() {
         return (ArrayList<ActiveActorDestructible>) enemyUnits;
     }

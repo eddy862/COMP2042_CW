@@ -28,8 +28,18 @@ public class HeartDisplay {
 	 * The x position of the container.
 	 */
     private static final double CONTAINER_X_POSITION = 10;
+    /**
+     * The y position of the container.
+     */
     private static final double CONTAINER_Y_POSITION = 25;
+    /**
+     * The number of hearts to display.
+     */
     private final int numberOfHeartsToDisplay;
+    /**
+     * A flag indicating if any heart image is currently zooming.
+     */
+    private boolean isZooming;
 
     /**
      * Constructs a HeartDisplay object with the specified number of hearts to display.
@@ -105,6 +115,7 @@ public class HeartDisplay {
             ScaleTransition transition = createZoomTransition(heart);
             transition.play();
         }
+        isZooming = true;
     }
 
     /**
@@ -115,5 +126,15 @@ public class HeartDisplay {
             heart.setScaleX(1.0);
             heart.setScaleY(1.0);
         }
+        isZooming = false;
+    }
+
+    /**
+     * Checks if any heart image is currently zooming.
+     *
+     * @return true if any heart image is currently zooming, false otherwise
+     */
+    public boolean isZooming() {
+        return isZooming;
     }
 }
