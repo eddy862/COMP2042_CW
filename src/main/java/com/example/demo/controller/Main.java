@@ -7,6 +7,8 @@ import com.example.demo.audio.SoundEffect;
 import com.example.demo.ui.page.SettingPage;
 import com.example.demo.ui.page.TutorialPage;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -60,6 +62,11 @@ public class Main extends Application {
     private final SoundEffect soundEffect = new SoundEffect();
 
     /**
+     * The media player for the background video.
+     */
+    private MediaPlayer backgroundPlayer;
+
+    /**
      * Start the application by launching the game
      *
      * @param stage the primary stage for this application
@@ -69,16 +76,27 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws SecurityException,
             IllegalArgumentException {
+        backgroundPlayer = new MediaPlayer(new Media(getClass().getResource(BACKGROUND_VIDEO).toExternalForm()));
+        backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        backgroundPlayer.setVolume(0);
+        backgroundPlayer.play();
+
+        backgroundPlayer.statusProperty().addListener(new ChangeListener<MediaPlayer.Status>() {
+            @Override
+            public void changed(ObservableValue<? extends MediaPlayer.Status> observable, MediaPlayer.Status oldValue, MediaPlayer.Status newValue) {
+                System.out.println("MediaPlayer status changed to: " + newValue);
+            }
+        });
+
+        music.playMainMenuBackgroundMusic();
         stage.setTitle(TITLE);
         stage.setResizable(false);
         stage.setHeight(SCREEN_HEIGHT);
         stage.setWidth(SCREEN_WIDTH);
         this.stage = stage;
         this.scene = initializeScene();
-
         stage.setScene(scene);
         stage.show();
-        music.playMainMenuBackgroundMusic();
     }
 
     /**
@@ -87,15 +105,12 @@ public class Main extends Application {
      * @return the initialized scene
      */
     public Scene initializeScene() {
-        Media background = new Media(getClass().getResource(BACKGROUND_VIDEO).toExternalForm());
-        MediaPlayer backgroundPlayer = new MediaPlayer(background);
-        backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        backgroundPlayer.setVolume(0);
-        backgroundPlayer.play();
-
         MediaView mediaView = new MediaView(backgroundPlayer);
         mediaView.setFitWidth(stage.getWidth());
         mediaView.setFitHeight(stage.getHeight());
+
+        boolean isVisible = mediaView.isVisible();
+        System.out.println("Is visible: " + isVisible);
 
         Label welcomeLabel = new Label("Welcome to Sky Battle!");
         welcomeLabel.getStyleClass().add("label");

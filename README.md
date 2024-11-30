@@ -92,13 +92,6 @@
 
 ## Implemented but Not Working Properly
 
-### Bugs
-1. **Scene Alignment Issue**: When switching between pages in the main menu, the new page's scene does not fit perfectly within the stage, leaving the top-left corner blank. For example, when switching from the main menu to the tutorial page, the tutorial page is not centered in the stage. Similarly, when switching back from the tutorial page to the main menu, the main menu is not centered in the stage.
-    - **Debugging Attempts**:
-        - Observed that the initial main menu scene is centered in the stage, but the problem occurs when switching to new pages.
-        - Printed the x and y coordinates of the scene in the stage using `getX()` and `getY()` to check if the scene is centered.
-        - Found that the x and y coordinates remain the same when switching pages, but visually the scene is not centered like the initial scene.
-        - Tried setting the width and height of the new scene to match the previous scene's dimensions instead of the stage's dimensions, but the issue persisted.
 
 ## Features Not Implemented
 1. **Power-ups**: Randomly generated power-ups that increases the user's health, speed, or projectile damage when hit by the user's projectile.
@@ -241,3 +234,23 @@ These features were not implemented due to time constraints as we also had to al
     - Removed the `xPosition` and `yPosition` parameters from the constructor as the image position can be calculated based on the boss's position.
 
 ## Unexpected Problems
+
+### Bugs
+1. **Scene Alignment**: When switching between pages in the main menu, the new page's scene does not fit perfectly within the stage, leaving the top-left corner blank. For example, when switching from the main menu to the tutorial page, the tutorial page is not centered in the stage. Similarly, when switching back from the tutorial page to the main menu, the main menu is not centered in the stage.
+    - **Debugging Attempts**:
+        - Observed that the initial main menu scene is centered in the stage, but the problem occurs when switching to new pages.
+        - Printed the x and y coordinates of the scene in the stage using `getX()` and `getY()` to check if the scene is centered.
+        - Found that the x and y coordinates remain the same when switching pages, but visually the scene is not centered like the initial scene.
+        - Tried setting the width and height of the new scene to match the previous scene's dimensions instead of the stage's dimensions, but the issue persisted.
+
+2. **User plane, projectile, enemy plane and boss dimensions**: The collision detection was triggered even when the projectile did not visually hit the user plane, enemy plane, or boss.
+    - **Debugging Attempts**:
+        - Used an image editor to inspect the dimensions of the images and discovered that the white space around the images was significantly larger than the actual image.
+        - Removed the unnecessary white space from the images and tested the game again. The issue was resolved.
+
+3. **Main menu background video**: The background video in the main menu was not displayed after user returns from the levels.
+    - **Debugging Attempts**:
+        - Checked the code to ensure that the background video is set correctly when initializing the main menu scene.
+        - set add a listener to the MediaPlayer to print the status of the media player and found that the media player was not playing the video after returning from the levels.
+        - set the media player as a class variable and initialized it in the `start()` to ensure that the media player is not null when returning from the levels. The issue was resolved.
+    
