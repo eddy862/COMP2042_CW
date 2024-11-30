@@ -40,22 +40,34 @@
 
 ### General Features
 1. **User plane movement**: Enabled movement of the user plane both horizontally and vertically.
+
 2. **Sound effects and music**:
    - **Sound effects**: User fires projectile, enemy destroyed, user's projectile hits enemy, enemy projectile destroyed, boss activates & deactivates shield, user's projectile hits boss's shield, next level, warning for approaching boundary, game over, and win.
    - **Music**: Main menu, gameplay.
+   
 3. **Menus and pages**: 
    - **Main menu**: Displayed the main menu with options to start the game, view the tutorial, control the volume, and exit the game.
    - **Tutorial**: Displayed the tutorial page with control instructions and descriptions of each level.
    - **Audio settings**: Displayed the audio settings page with options to mute/unmute sound effects and music.
+   
 4. **Pause functionality**: Enabled the user to pause the game, mute/unmute sound effects and music, resume the game, restart the game, and return to the main menu.
+
 5. **Warning sign**: Displayed a warning sign and played a sound effect when an enemy plane approaches the leftmost boundary.
+
 6. **User health indicator**: Made displayed hearts zoom in and out when the user's health is low.
+
 7. **Fire rate limitation**: Limited the user's fire rate to save memory and prevent frame rate drops.
+
 8. **Loading page**: Inserted a loading page between levels to hide latency during level transitions.
+
 9. **Level completion menu**: Inserted a level completion menu with options to play the level again, return to the main menu, and proceed to the next level.
+
 10. **Projectile cleanup**: Cleaned up user and enemy projectiles when they are off-screen to save memory.
+
 11. **UI cleanup**: Cleaned up all children of the root of the scene when entering a new level to save memory.
+
 12. **Final level options**: When the user loses or wins the final level, display buttons to restart from level 1 or return to the main menu.
+
 13. **Pause Menu and Screen Blur**: When the game is paused, the game screen is blurred, and a pause menu is displayed on top of it. 
     - Achieved by using two `Group` objects (`upperRoot` and `lowerRoot`) added to a single `Group` in `LevelParent`. All game elements are added to `lowerRoot`. 
     - When the game is paused, a pause menu is added to `upperRoot`, and `lowerRoot` is blurred. 
@@ -98,75 +110,134 @@ These features were not implemented due to time constraints as we also had to al
 
 ## New Java Classes
 
-1. **MultiStageBoss** (`src/main/java/com/example/demo/actor/plane/MultiStageBoss.java`): Inherits from `Boss` and implements a multi-stage boss in Level Four with changing tactics and abilities.
-
-2. **Music** (`src/main/java/com/example/demo/audio/Music.java`): Manages background music across different levels and menus.
-
-3. **SoundEffect** (`src/main/java/com/example/demo/audio/SoundEffect.java`): Handles various sound effects triggered by game events, such as firing projectiles and explosions.
-
-4. **LevelThree** (`src/main/java/com/example/demo/level/LevelThree.java`): Implements the third level of the game, where the user has limited projectiles and must survive for a certain time.
-
-5. **LevelViewLevelThree** (`src/main/java/com/example/demo/level/view/LevelViewLevelThree.java`): Manages the visual representation and UI elements specific to Level Three.
-
-6. **LevelFour** (`src/main/java/com/example/demo/level/LevelFour.java`): Implements the fourth level of the game, featuring a multi-stage boss with changing tactics.
-
-7. **LevelViewLevelFour** (`src/main/java/com/example/demo/level/view/LevelViewLevelFour.java`): Manages the visual representation and UI elements specific to Level Four.
-
-8. **BossHealthDisplay** (`src/main/java/com/example/demo/ui/inGameElement/BossHealthDisplay.java`): Displays the health bar of the boss during gameplay.
-
-9. **ExplosionImage** (`src/main/java/com/example/demo/ui/inGameElement/ExplosionImage.java`): Displays explosion animations when an enemy unit is destroyed.
-
-10. **LevelCompletionMenu** (`src/main/java/com/example/demo/ui/inGameElement/LevelCompletionMenu.java`): Provides options to replay the level, return to the main menu, or proceed to the next level upon level completion for all levels except the final level.
-
-11. **NumberOfKillsLabel** (`src/main/java/com/example/demo/ui/inGameElement/NumberOfKillsLabel.java`): Displays the number of kills achieved by the user in Level One.
-
-12. **PauseButton** (`src/main/java/com/example/demo/ui/inGameElement/PauseButton.java`): Represents the button used to pause the game across all levels.
-
-13. **PauseMenu** (`src/main/java/com/example/demo/ui/inGameElement/PauseMenu.java`): Displays the pause menu with options to resume the game, restart, or return to the main menu.
-
-14. **PostLevelButtons** (`src/main/java/com/example/demo/ui/inGameElement/PostLevelButtons.java`): Displays buttons to restart from Level One or return to the main menu after the final level.
-
-15. **WarningImage** (`src/main/java/com/example/demo/ui/inGameElement/WarningImage.java`): Displays a warning sign when an enemy plane approaches the leftmost boundary.
-
-16. **UserProjectileDisplay** (`src/main/java/com/example/demo/ui/inGameElement/UserProjectileDisplay.java`): Displays the remaining projectiles available to the user in Level Three.
-
-17. **LoadingPage** (`src/main/java/com/example/demo/ui/page/LoadingPage.java`): Displays a loading screen between levels to hide latency during transitions.
-
-18. **SettingPage** (`src/main/java/com/example/demo/ui/page/SettingPage.java`): Displays the audio settings page with options to mute/unmute sound effects and music.
-
-19. **TutorialPage** (`src/main/java/com/example/demo/ui/page/TutorialPage.java`): Displays the tutorial page with control instructions and descriptions of each level.
+| Class Name | File Path | Description |
+|------------|------------|-------------|
+| **MultiStageBoss** | `src/main/java/com/example/demo/actor/plane/MultiStageBoss.java` | Inherits from `Boss` and implements a multi-stage boss in Level Four with changing tactics and abilities. |
+| **Music** | `src/main/java/com/example/demo/audio/Music.java` | Manages background music across different levels and menus. |
+| **SoundEffect** | `src/main/java/com/example/demo/audio/SoundEffect.java` | Handles various sound effects triggered by game events, such as firing projectiles and explosions. |
+| **LevelViewLevelOne** | `src/main/java/com/example/demo/level/view/LevelViewLevelOne.java` | Manages the visual representation and UI elements specific to Level One. |
+| **LevelThree** | `src/main/java/com/example/demo/level/LevelThree.java` | Implements the third level of the game, where the user has limited projectiles and must survive for a certain time. |
+| **LevelViewLevelThree** | `src/main/java/com/example/demo/level/view/LevelViewLevelThree.java` | Manages the visual representation and UI elements specific to Level Three. |
+| **LevelFour** | `src/main/java/com/example/demo/level/LevelFour.java` | Implements the fourth level of the game, featuring a multi-stage boss with changing tactics. |
+| **LevelViewLevelFour** | `src/main/java/com/example/demo/level/view/LevelViewLevelFour.java` | Manages the visual representation and UI elements specific to Level Four. |
+| **BossHealthDisplay** | `src/main/java/com/example/demo/ui/inGameElement/BossHealthDisplay.java` | Displays the health bar of the boss during gameplay. |
+| **ExplosionImage** | `src/main/java/com/example/demo/ui/inGameElement/ExplosionImage.java` | Displays explosion animations when an enemy unit is destroyed. |
+| **LevelCompletionMenu** | `src/main/java/com/example/demo/ui/inGameElement/LevelCompletionMenu.java` | Provides options to replay the level, return to the main menu, or proceed to the next level upon level completion for all levels except the final level. |
+| **NumberOfKillsLabel** | `src/main/java/com/example/demo/ui/inGameElement/NumberOfKillsLabel.java` | Displays the number of kills achieved by the user in Level One. |
+| **PauseButton** | `src/main/java/com/example/demo/ui/inGameElement/PauseButton.java` | Represents the button used to pause the game across all levels. |
+| **PauseMenu** | `src/main/java/com/example/demo/ui/inGameElement/PauseMenu.java` | Displays the pause menu with options to resume the game, restart, or return to the main menu. |
+| **PostLevelButtons** | `src/main/java/com/example/demo/ui/inGameElement/PostLevelButtons.java` | Displays buttons to restart from Level One or return to the main menu after the final level. |
+| **WarningImage** | `src/main/java/com/example/demo/ui/inGameElement/WarningImage.java` | Displays a warning sign when an enemy plane approaches the leftmost boundary. |
+| **UserProjectileDisplay** | `src/main/java/com/example/demo/ui/inGameElement/UserProjectileDisplay.java` | Displays the remaining projectiles available to the user in Level Three. |
+| **LoadingPage** | `src/main/java/com/example/demo/ui/page/LoadingPage.java` | Displays a loading screen between levels to hide latency during transitions. |
+| **SettingPage** | `src/main/java/com/example/demo/ui/page/SettingPage.java` | Displays the audio settings page with options to mute/unmute sound effects and music. |
+| **TutorialPage** | `src/main/java/com/example/demo/ui/page/TutorialPage.java` | Displays the tutorial page with control instructions and descriptions of each level. |
 
 ## Modified Java Classes
-1. **Boss.java** :
-   - added `isSheildActive()` method to check if the boss's shield is active.
 
-2. **EnemyPlane.java** :
-   - added `inWarningArea` and `WARNING_AREA_X_BOUNDARY` fields and `updateWarningState()` method to check if the enemy plane is in the warning area.
-   - added `getInWarningArea()` method to get the value of `inWarningArea`.
+1. **Boss.java**:
+   - Added `isShieldActive()` method to check if the boss's shield is active.
+
+2. **EnemyPlane.java**:
+   - Added `inWarningArea` and `WARNING_AREA_X_BOUNDARY` fields.
+   - Added `updateWarningState()` method to check if the enemy plane is in the warning area.
+   - Added `getInWarningArea()` method to get the value of `inWarningArea`.
 
 3. **UserPlane.java**:
-   - added `X_UPPER_BOUND` and `X_LOWER_BOUND` as constants to define the user plane's horizontal movement boundaries.
-   - added `horizontalVelocityMultiplier` field to adjust the user plane's horizontal movement speed.
-   - in the `updatePosition()` method, added conditions to limit the user plane's horizontal movement within the defined boundaries.
-   - added `moveLeft()`, `moveRight()` and `stopHorizontally()` methods to handle the user plane's horizontal movement.
-   - changed the initial `stop()` method to `stopVertically()` to handle the user plane's vertical movement.
+   - Added `X_UPPER_BOUND` and `X_LOWER_BOUND` constants to define the user plane's horizontal movement boundaries.
+   - Added `horizontalVelocityMultiplier` field to adjust the user plane's horizontal movement speed.
+   - Updated `updatePosition()` method to limit the user plane's horizontal movement within the defined boundaries.
+   - Added `moveLeft()`, `moveRight()`, and `stopHorizontally()` methods to handle the user plane's horizontal movement.
+   - Renamed the initial `stop()` method to `stopVertically()` to handle the user plane's vertical movement.
 
 4. **ActiveActor.java**:
-   - added `changeImage()` method to change the actor's image based on the current state, mainly used by the multi-stage boss when advancing to the next stage.
+   - Added `changeImage()` method to change the actor's image based on the current state, mainly used by the multi-stage boss when advancing to the next stage.
 
 5. **ActiveActorDestructible.java**:
-   - removed the `setDestroyed()` method as it is not really needed.
+   - Removed the `setDestroyed()` method as it is not needed.
 
 6. **Controller.java**:
-   - initialized `music` and `soundEffect` objects in this class to manage the background music and sound effects across different levels and menus.
-   - in the `gotoLevel()` method, inserted a `loadingPage` object to display a loading before the next level done initializing to hide latency during transitions.
+   - Initialized `music` and `soundEffect` objects to manage background music and sound effects across different levels and menus.
+   - In the `gotoLevel()` method, inserted a `loadingPage` object to display a loading screen before the next level is initialized to hide latency during transitions.
 
 7. **Main.java**:
-   - added `initializeScene()` method to initialize the main menu scene and set the stage's scene to the main menu.
-   - added `startLevelOne()` method for a button to start Level One and set the stage's scene to Level One.
-   - added `startTutorial()` method for a button to view the tutorial and set the stage's scene to the tutorial page.
-   - added `startSettings()` method for a button to view the audio settings and set the stage's scene to the settings page.
-   
-   
+   - Added `initializeScene()` method to initialize the main menu scene and set the stage's scene to the main menu.
+   - Added `startLevelOne()` method for a button to start Level One and set the stage's scene to Level One.
+   - Added `startTutorial()` method for a button to view the tutorial and set the stage's scene to the tutorial page.
+   - Added `startSettings()` method for a button to view the audio settings and set the stage's scene to the settings page.
+
+8. **LevelParent.java**:
+   - Added `upperRoot` and `lowerRoot` `Group` objects to manage the game screen and pause menu separately to blur the game screen when the game is paused.
+   - Moved `music` and `soundEffect` objects from the `Controller` class to manage background music and sound effects across different levels.
+   - Initialized `mainMenu` object to manage the main menu scene and set the stage's scene to the main menu.
+   - Initialized `pauseButton` and `pauseMenu` objects to manage the pause button and pause menu across all levels.
+   - Initialized `postLevelButtons` object to manage the buttons displayed after game over or winning the final level.
+   - Changed `initializeFriendlyUnits()` from abstract to concrete method as only the user plane is a friendly unit.
+   - In `initializeScene()` method, added warning and explosion image pools as well as the pause button and pause menu to the scene.
+   - Added `levelCompleted()` method to handle level completion before the user proceeds to the next level, stop the playing music, play the level completed sound effect, and display the level completion menu.
+   - Added methods to play and stop background music in `startGame()` and `levelCompleted()`.
+   - Created `replayLevel()` method to replay the current level and used this method in `goToNextLevel()` with sound effect.
+   - In `initializeBackground()` method, added new keys to control the user's movement, fire projectiles, and pause the game.
+   - Added `FIRE_COOLDOWN_MILLIS` and `lastFireTime` fields, and used them in `fireProjectile()` method to limit the user's fire rate.
+   - Added `removeDestroyedEnemyUnits()` to handle explosion and warning image visibility as well as keep track of the number of kills.
+   - Changed the return type of `removeDestroyedActors()` method from `void` to `List<ActiveActorDestructible>` to return the list of destroyed actors.
+   - In `handleUserProjectileCollisions()` method, added sound effect when the user's projectile hits the enemy plane.
+   - Added `handleUserAndEnemyProjectileCollisions()` to handle collisions between the user's and enemy's projectiles and play sound effects.
+   - Changed the return type of `handleCollisions()` from `void` to `ActiveActorDestructible` to return the collided actor.
+   - Renamed `handleEnemyPenetration()` method to `handleActorPenetration()` to handle both enemy (play sound effect) and user projectiles (remove from scene) penetration.
+   - Added `updateWarningImage()` method to update the warning image's visibility based on the enemy plane's position and play or pause the warning sound effect. Added this method to `updateLevelView()`.
+   - In `winGame()` and `loseGame()` methods, stopped the playing music, played the game over or win sound effect, displayed the game over or win screen, and displayed the post-level buttons.
+   - Changed `getRoot()` to `getLowerRoot()` method to return the `lowerRoot` object which contains all game elements except the pause menu.
+   - Removed `updateNumberOfEnemies()` as it is not needed.
+   - Added `pauseGame()`, `resumeGame()`, and `returnToMenu()` methods to handle game pause, resume, and return to the main menu.
+   - Added `checkUserHealth()` method to check the user's health and make the hearts zoom in and out when the user's health is low.
+   - Added an abstract `showLevelCompletedMenu()` to initialize the level completion menu for each level as the next level is different.
+   - Added `getTimeline()` method to return the timeline object.
+   - Added `setLevelCompleted()` method to set the level completion status.
+   - Added `cleanUp()` method to clean up all children of the root of the scene when entering a new level.
+   - Added `isGameOver()` method to check if the game is over.
+   - Added `getEnemyUnits()` method to return the list of enemy units.
+
+9. **LevelOne.java**:
+   - Overridden `initializeScene()` method to add the number of kills label to the scene.
+   - Overridden `updateLevelView()` method to update the number of kills label.
+   - Implemented `showLevelCompletedMenu()` method to initialize the level completion menu for Level One.
+
+10. **LevelTwo.java**:
+    - Added `BOSS_HEALTH` constant to define the boss's health and used it when initializing the boss.
+    - Added `soundEffect` object to manage the sound effects of activating and deactivating the boss's shield.
+    - Added `isBossShielded` field to check if the boss's shield is active.
+    - In `checkIfGameOver()`, hid the boss's health bar when the boss is destroyed.
+    - Overridden `initializeScene()` method to add the boss's health bar and shield to the scene.
+    - Overridden `updateLevelView()` method to update the boss's health bar and shield.
+    - Implemented `showLevelCompletedMenu()` method to initialize the level completion menu for Level Two.
+    - Added `getBoss()` method to return the boss object.
+
+11. **LevelView.java**:
+    - Added `explosionPool` field, `initializeExplosionPool()` method to initialize the explosion images pool, `showExplosion()` method to display the explosion images when an enemy unit is destroyed, and `getAvailableExplosion()` method to return an available explosion image.
+    - Added `warningImageMap` and `warningImagePool` fields, `initializeWarningImagePool()` method to initialize the warning images pool, `showWarning()` method to display the warning image when an enemy plane approaches the leftmost boundary, `hideWarning()` to hide the warning image, and `getAvailableWarningImage()` method to return an available warning image.
+    - Added `totalEnemiesPerTime` field to define the number of explosions and warning images to be initialized.
+    - Added `heartsStartZooming()` method to make the hearts zoom in and out when the user's health is low, and `heartsStopZooming()` to stop the zooming effect.
+    - Added `getRoot()`, `getHeartDisplay()`, `getWinImage()`, `getGameOverImage()`, `getExplosionPool()`, and `getWarningImageMap()` methods to return the corresponding objects for testing purposes.
+
+12. **LevelViewLevelTwo.java**:
+    - Renamed `addImagesToRoot()` to `displayShield()` method to display the boss's shield.
+    - Added `bossHealthDisplay` field, `showBossHealth()` method to add the boss's health bar to the scene, `updateBossHealth()` method to update the percentage of the boss's health, `updateBossHealthPosition()` method to update the boss's health bar position, and `hideBossHealth()` method to hide the boss's health bar.
+    - Added `getBossHealthDisplay()` and `getShieldImage()` methods to return the corresponding objects for testing purposes.
+    - Removed `SHIELD_X_POSITION` and `SHIELD_Y_POSITION` constants as they can be calculated based on the boss's position.
+
+13. **GameOverImage.java**:
+    - Added `HEIGHT`, `X_POSITION`, and `Y_POSITION` constants and initialized the image with these values in the constructor.
+
+14. **WinImage.java**:
+    - Added `X_POSITION` and `Y_POSITION` constants and removed the `xPosition` and `yPosition` parameters from the constructor.
+    - Removed the `showWinImage()` method and the visibility property in the constructor as it is not needed.
+
+15. **HeartDisplay.java**:
+    - Added `CONTAINER_X_POSITION` and `CONTAINER_Y_POSITION` constants and removed the `xPosition` and `yPosition` parameters from the constructor.
+    - Added `isZooming` field to check if the hearts are zooming in and out, `createZoomTransition()` method to create the zooming effect, and `startZooming()` and `stopZooming()` methods to start and stop the zooming effect. Added `isZooming()` method to return the value of `isZooming`.
+
+16. **ShieldImage.java**:
+    - Removed the `xPosition` and `yPosition` parameters from the constructor as the image position can be calculated based on the boss's position.
 
 ## Unexpected Problems

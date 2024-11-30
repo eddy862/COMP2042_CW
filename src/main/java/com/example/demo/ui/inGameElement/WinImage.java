@@ -36,17 +36,9 @@ public class WinImage extends ImageView {
      */
     public WinImage() {
         this.setImage(new Image(getClass().getResource(IMAGE_NAME).toExternalForm()));
-        this.setVisible(false);
         this.setFitHeight(HEIGHT);
         this.setFitWidth(WIDTH);
         this.setLayoutX(X_POSITION);
         this.setLayoutY(Y_POSITION);
-    }
-
-    /**
-     * Shows the win image.
-     */
-    public void showWinImage() {
-        this.setVisible(true);
     }
 }
