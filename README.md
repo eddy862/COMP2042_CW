@@ -158,6 +158,7 @@ These features were not implemented due to time constraints as we also had to al
    - Added `startLevelOne()` method for a button to start Level One and set the stage's scene to Level One.
    - Added `startTutorial()` method for a button to view the tutorial and set the stage's scene to the tutorial page.
    - Added `startSettings()` method for a button to view the audio settings and set the stage's scene to the settings page.
+   - Added `backgroundPlayer` field and initialized it in the `start()` method to manage the background video in the main menu.
 
 8. **LevelParent.java**:
    - Added `upperRoot` and `lowerRoot` `Group` objects to manage the game screen and pause menu separately to blur the game screen when the game is paused.

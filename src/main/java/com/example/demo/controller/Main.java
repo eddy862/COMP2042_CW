@@ -81,13 +81,6 @@ public class Main extends Application {
         backgroundPlayer.setVolume(0);
         backgroundPlayer.play();
 
-        backgroundPlayer.statusProperty().addListener(new ChangeListener<MediaPlayer.Status>() {
-            @Override
-            public void changed(ObservableValue<? extends MediaPlayer.Status> observable, MediaPlayer.Status oldValue, MediaPlayer.Status newValue) {
-                System.out.println("MediaPlayer status changed to: " + newValue);
-            }
-        });
-
         music.playMainMenuBackgroundMusic();
         stage.setTitle(TITLE);
         stage.setResizable(false);
@@ -108,9 +101,6 @@ public class Main extends Application {
         MediaView mediaView = new MediaView(backgroundPlayer);
         mediaView.setFitWidth(stage.getWidth());
         mediaView.setFitHeight(stage.getHeight());
-
-        boolean isVisible = mediaView.isVisible();
-        System.out.println("Is visible: " + isVisible);
 
         Label welcomeLabel = new Label("Welcome to Sky Battle!");
         welcomeLabel.getStyleClass().add("label");
