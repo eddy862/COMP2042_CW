@@ -191,6 +191,7 @@ These features were not implemented due to time constraints as we also had to al
    - Added `cleanUp()` method to clean up all children of the root of the scene when entering a new level.
    - Added `isGameOver()` method to check if the game is over.
    - Added `getEnemyUnits()` method to return the list of enemy units.
+   - Added `isGameWin()` method to check if the game is won.
 
 9. **LevelOne.java**:
    - Overridden `initializeScene()` method to add the number of kills label to the scene.
@@ -249,9 +250,9 @@ These features were not implemented due to time constraints as we also had to al
         - Used an image editor to inspect the dimensions of the images and discovered that the white space around the images was significantly larger than the actual image.
         - Removed the unnecessary white space from the images and tested the game again. The issue was resolved.
 
-3. **Main menu background video**: The background video in the main menu was not displayed after user returns from the levels.
+3. **Main menu background video**: The background video in the main menu sometimes was not displayed after user returns from the levels.
     - **Debugging Attempts**:
         - Checked the code to ensure that the background video is set correctly when initializing the main menu scene.
         - set add a listener to the MediaPlayer to print the status of the media player and found that the media player was not playing the video after returning from the levels.
-        - set the media player as a class variable and initialized it in the `start()` to ensure that the media player is not null when returning from the levels. The issue was resolved.
+        - set the media player as a class variable and initialized it in the `start()` to ensure that the media player is not null when returning from the levels. However, the issue persisted.
     

@@ -755,4 +755,13 @@ public abstract class LevelParent extends Observable {
     protected ArrayList<ActiveActorDestructible> getEnemyUnits() {
         return (ArrayList<ActiveActorDestructible>) enemyUnits;
     }
+
+    /**
+     * Checks if the game is won.
+     *
+     * @return true if the game is won, false otherwise
+     */
+    protected boolean isGameWin() {
+        return isGameWin;
+    }
 }
