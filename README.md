@@ -52,6 +52,8 @@
    
 4. **Pause functionality**: Enabled the user to pause the game, mute/unmute sound effects and music, resume the game, restart the game, and return to the main menu.
 
+5. **Warning sign**: Displayed a warning sign and played a sound effect when an enemy plane approaches the leftmost boundary.
+
 6. **User health indicator**: Made displayed hearts zoom in and out when the user's health is low.
 
 7. **Fire rate limitation**: Limited the user's fire rate to save memory and prevent frame rate drops.
@@ -66,7 +68,7 @@
 
 12. **Final level options**: When the user loses or wins the final level, display buttons to restart from level 1 or return to the main menu.
 
-
+13. **Pause Menu and Screen Blur**: When the game is paused, the game screen is blurred, and a pause menu is displayed on top of it.
 
 ### Level 1 Features
 1. **Kill count display**: Displayed the number of kills in level 1.
@@ -86,18 +88,6 @@
 2. **Boss stage change**: Changed the boss's image and reset the health bar when the boss advanced to stage 2.
 
 ## Implemented but Not Working Properly
-
-1. **Warning Sign**: Displaying multiple warning signs for approaching enemy planes caused frame rate drops significantly.
-    - **Debugging Attempts**:
-        - Initially, created a new warning image for each enemy plane which I suspected caused the frame rate drops.
-        - Switched to a pool of reusable warning images, but the issue persisted.
-        - Reduced the number of initialized warning images using third-party software, then tested the game again. The issue was resolved.
-
-2. **Pause Menu and Screen Blur**: The pause menu is blurred along with the game screen when the game is paused.
-- **Debugging Attempts**:
-    - Initially, the `Group` object, `root` contained all game elements. Adding the pause menu to `root` and blurring the game screen caused the issue.
-    - Created `upperRoot` for the pause menu and replaced `root` with `lowerRoot` for the game screen which contains all the in-game elements. Blurring `lowerRoot` while adding the pause menu to `upperRoot` resolved the issue.
-    - Resuming the game removes the pause menu from `upperRoot` and restores the game screen.
 
 ## Features Not Implemented
 1. **Power-ups**: Randomly generated power-ups that increases the user's health, speed, or projectile damage when hit by the user's projectile.
@@ -261,4 +251,16 @@ These features were not implemented due to time constraints as we also had to al
         - Checked the code to ensure that the background video is set correctly when initializing the main menu scene.
         - set add a listener to the MediaPlayer to print the status of the media player and found that the media player was not playing the video after returning from the levels.
         - set the media player as a class variable and initialized it in the `start()` to ensure that the media player is not null when returning from the levels. However, the issue persisted.
+
+4. **Warning Sign**: Displaying multiple warning signs for approaching enemy planes caused frame rate drops significantly.
+    - **Debugging Attempts**:
+        - Initially, created a new warning image for each enemy plane which I suspected caused the frame rate drops.
+        - Switched to a pool of reusable warning images, but the issue persisted.
+        - Reduced the number of initialized warning images using third-party software, then tested the game again. The issue was resolved.
+
+5. **Pause Menu and Screen Blur**: The pause menu is blurred along with the game screen when the game is paused.
+- **Debugging Attempts**:
+    - Initially, the `Group` object, `root` contained all game elements. Adding the pause menu to `root` and blurring the game screen caused the issue.
+    - Created `upperRoot` for the pause menu and replaced `root` with `lowerRoot` for the game screen which contains all the in-game elements. Blurring `lowerRoot` while adding the pause menu to `upperRoot` resolved the issue.
+    - Resuming the game removes the pause menu from `upperRoot` and restores the game screen.
     
