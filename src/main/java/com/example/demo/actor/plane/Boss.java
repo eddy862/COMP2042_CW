@@ -63,7 +63,7 @@ public class Boss extends FighterPlane {
 	/**
 	 * The maximum number of frames the boss can have the shield activated.
 	 */
-	private static final int MAX_FRAMES_WITH_SHIELD = 300;
+	private static final int MAX_FRAMES_WITH_SHIELD = 200;
 	/**
 	 * The move pattern of the boss. It consists of a list of moves that the boss can make in a cycle including moving up, down, and staying in place.
 	 */
