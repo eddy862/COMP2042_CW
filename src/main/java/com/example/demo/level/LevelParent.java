@@ -748,9 +748,9 @@ public abstract class LevelParent extends Observable {
     }
 
     /**
-     * Checks if the game is over.
+     * Returns the list of enemy units in the game.
      *
-     * @return true if the game is over, false otherwise
+     * @return the list of enemy units
      */
     protected ArrayList<ActiveActorDestructible> getEnemyUnits() {
         return (ArrayList<ActiveActorDestructible>) enemyUnits;

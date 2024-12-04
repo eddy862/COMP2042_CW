@@ -23,7 +23,7 @@
 3. Go to **File > Project Structure** or press **Ctrl + Alt + Shift + S**.
 4. In the **Project Settings > Project** section:
     - Set the project SDK to 21 or greater.
-    - Set the language level to 11 or greater.
+    - Set the language level as sdk default.
 5. Install the [JavaFX Library](https://gluonhq.com/products/javafx/) and unzip it to a desired location.
 6. In the **Project Settings > Libraries** section:
     - Add a new project library that points to the `lib` folder of the JavaFX SDK you installed.
@@ -70,12 +70,13 @@
 
 13. **Pause Menu and Screen Blur**: When the game is paused, the game screen is blurred, and a pause menu is displayed on top of it.
 
+14. **Explosion images**: Displayed explosion images when an enemy unit is destroyed.
+
 ### Level 1 Features
 1. **Kill count display**: Displayed the number of kills in level 1.
 
 ### Level 2 Features
 1. **Boss health bar**: Displayed the boss's health with a progress bar and text.
-2. **Explosion images**: Displayed explosion images when an enemy unit is destroyed.
 
 ### Level 3 Features
 1. **New level**: User has limited projectiles and must survive for a certain time. Projectiles increase every few seconds.
@@ -88,6 +89,17 @@
 2. **Boss stage change**: Changed the boss's image and reset the health bar when the boss advanced to stage 2.
 
 ## Implemented but Not Working Properly
+
+### Bugs
+
+1. **Reinitializing Music and Sound Effects**: When the user returns to the main menu from the levels, the background music and sound effects are reinitialized, causing them to play again even if they were muted.
+   - **Debugging Attempts**:
+       - The goal is to maintain the music and sound effects globally, so they are not reinitialized when returning to the main menu.
+       - Initially, I created a `Main` object `mainMenu` in the `LevelParent` and called `mainMenu.start()` when returning to the main menu, which caused the reinitialization.
+       - The issue is that I do not have access to the `stage` in the `LevelParent` class, preventing me from setting the scene to the main menu.
+       - I tried passing the `stage` as a parameter to the `LevelParent` class, but it caused numerous errors that I could not resolve
+
+This is considered a minor bug in the game, so it has been left as is since it does not affect the game's functionality.
 
 ## Features Not Implemented
 1. **Power-ups**: Randomly generated power-ups that increases the user's health, speed, or projectile damage when hit by the user's projectile.
@@ -259,8 +271,8 @@ These features were not implemented due to time constraints as we also had to al
         - Reduced the number of initialized warning images using third-party software, then tested the game again. The issue was resolved.
 
 5. **Pause Menu and Screen Blur**: The pause menu is blurred along with the game screen when the game is paused.
-- **Debugging Attempts**:
-    - Initially, the `Group` object, `root` contained all game elements. Adding the pause menu to `root` and blurring the game screen caused the issue.
-    - Created `upperRoot` for the pause menu and replaced `root` with `lowerRoot` for the game screen which contains all the in-game elements. Blurring `lowerRoot` while adding the pause menu to `upperRoot` resolved the issue.
-    - Resuming the game removes the pause menu from `upperRoot` and restores the game screen.
+   - **Debugging Attempts**:
+       - Initially, the `Group` object, `root` contained all game elements. Adding the pause menu to `root` and blurring the game screen caused the issue.
+       - Created `upperRoot` for the pause menu and replaced `root` with `lowerRoot` for the game screen which contains all the in-game elements. Blurring `lowerRoot` while adding the pause menu to `upperRoot` resolved the issue.
+       - Resuming the game removes the pause menu from `upperRoot` and restores the game screen.
     

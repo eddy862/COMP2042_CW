@@ -121,6 +121,7 @@ public class SoundEffect {
         Media warning = new Media(getClass().getResource(WARNING).toExternalForm());
         warningPlayer = new MediaPlayer(warning);
         warningPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        warningPlayer.setVolume(0.4);
     }
 
     /**
@@ -145,7 +146,7 @@ public class SoundEffect {
      */
     public void unmute() {
         isMuted = false;
-        warningPlayer.setVolume(1);
+        warningPlayer.setVolume(0.4);
     }
 
     /**
@@ -154,6 +155,7 @@ public class SoundEffect {
     public void playEnemyProjectileDestroyed() {
         if (isMuted) return;
         MediaPlayer enemyProjectileDestroyedPlayer = new MediaPlayer(enemyProjectileDestroyed);
+        enemyProjectileDestroyedPlayer.setVolume(0.4);
         enemyProjectileDestroyedPlayer.play();
     }
 
@@ -163,7 +165,7 @@ public class SoundEffect {
     public void playActivateShield() {
         if (isMuted) return;
         MediaPlayer activateShieldPlayer = new MediaPlayer(activateShield);
-        activateShieldPlayer.setVolume(1.2);
+        activateShieldPlayer.setVolume(0.6);
         activateShieldPlayer.play();
     }
 
@@ -176,6 +178,8 @@ public class SoundEffect {
         if (isMuted) return;
         MediaPlayer enemyHitPlayer = new MediaPlayer(enemyHit);
         MediaPlayer shieldHitPlayer = new MediaPlayer(shieldHit);
+        enemyHitPlayer.setVolume(0.4);
+        shieldHitPlayer.setVolume(0.4);
 
         if (enemy instanceof Boss && ((Boss) enemy).isShielded()) {
             shieldHitPlayer.play();
@@ -190,7 +194,7 @@ public class SoundEffect {
     public void playUserFire() {
         if (isMuted) return;
         MediaPlayer userFirePlayer = new MediaPlayer(userFire);
-        userFirePlayer.setVolume(0.5);
+        userFirePlayer.setVolume(0.1);
         userFirePlayer.play();
     }
 
@@ -200,6 +204,7 @@ public class SoundEffect {
     public void playGameOver() {
         if (isMuted) return;
         MediaPlayer gameOverPlayer = new MediaPlayer(gameOver);
+        gameOverPlayer.setVolume(0.4);
         gameOverPlayer.play();
     }
 
@@ -209,6 +214,7 @@ public class SoundEffect {
     public void playNextLevel() {
         if (isMuted) return;
         MediaPlayer nextLevelPlayer = new MediaPlayer(nextLevel);
+        nextLevelPlayer.setVolume(0.4);
         nextLevelPlayer.play();
     }
 
@@ -218,6 +224,7 @@ public class SoundEffect {
     public void playWin() {
         if (isMuted) return;
         MediaPlayer winPlayer = new MediaPlayer(win);
+        winPlayer.setVolume(0.4);
         winPlayer.play();
     }
 
@@ -227,6 +234,7 @@ public class SoundEffect {
     public void playUserHit() {
         if (isMuted) return;
         MediaPlayer userHitPlayer = new MediaPlayer(userHit);
+        userHitPlayer.setVolume(0.4);
         userHitPlayer.play();
     }
 
@@ -236,7 +244,7 @@ public class SoundEffect {
     public void playShieldDeactivate() {
         if (isMuted) return;
         MediaPlayer shieldDeactivatePlayer = new MediaPlayer(shieldDeactivate);
-        shieldDeactivatePlayer.setVolume(1.2);
+        shieldDeactivatePlayer.setVolume(0.6);
         shieldDeactivatePlayer.play();
     }
 

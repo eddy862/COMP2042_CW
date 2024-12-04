@@ -34,10 +34,11 @@ public class Music {
     public Music() {
         game_backgroundMusicPlayer = new MediaPlayer(new Media(getClass().getResource(GAME_BACKGROUND_MUSIC).toExternalForm()));
         game_backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        game_backgroundMusicPlayer.setVolume(0.6);
+        game_backgroundMusicPlayer.setVolume(0.2);
 
         mainMenuBackgroundMusicPlayer = new MediaPlayer(new Media(getClass().getResource(MAIN_MENU_BACKGROUND_MUSIC).toExternalForm()));
         mainMenuBackgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mainMenuBackgroundMusicPlayer.setVolume(0.2);
     }
 
     /**
@@ -62,8 +63,8 @@ public class Music {
      * Unmutes the background music.
      */
     public void unmute() {
-        game_backgroundMusicPlayer.setVolume(0.6);
-        mainMenuBackgroundMusicPlayer.setVolume(1);
+        game_backgroundMusicPlayer.setVolume(0.2);
+        mainMenuBackgroundMusicPlayer.setVolume(0.2);
         isMuted = false;
     }
 
