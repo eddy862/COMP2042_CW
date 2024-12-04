@@ -191,7 +191,7 @@ These features were not implemented due to time constraints as we also had to al
    - In `handleUserProjectileCollisions()` method, added sound effect when the user's projectile hits the enemy plane.
    - Added `handleUserAndEnemyProjectileCollisions()` to handle collisions between the user's and enemy's projectiles and play sound effects.
    - Changed the return type of `handleCollisions()` from `void` to `ActiveActorDestructible` to return the collided actor.
-   - Renamed `handleEnemyPenetration()` method to `handleActorPenetration()` to handle both enemy (play sound effect) and user projectiles (remove from scene) penetration.
+   - Renamed `handleEnemyPenetration()` method to `handleActorPenetration()` and handle both enemy (play sound effect) and user projectiles (remove from scene) penetration.
    - Added `updateWarningImage()` method to update the warning image's visibility based on the enemy plane's position and play or pause the warning sound effect. Added this method to `updateLevelView()`.
    - In `winGame()` and `loseGame()` methods, stopped the playing music, played the game over or win sound effect, displayed the game over or win screen, and displayed the post-level buttons.
    - Changed `getRoot()` to `getLowerRoot()` method to return the `lowerRoot` object which contains all game elements except the pause menu.
@@ -229,7 +229,7 @@ These features were not implemented due to time constraints as we also had to al
     - Added `getRoot()`, `getHeartDisplay()`, `getWinImage()`, `getGameOverImage()`, `getExplosionPool()`, and `getWarningImageMap()` methods to return the corresponding objects for testing purposes.
 
 12. **LevelViewLevelTwo.java**:
-    - Renamed `addImagesToRoot()` to `displayShield()` method to display the boss's shield.
+    - Renamed `addImagesToRoot()` to `displayShield()` method to specifically display the boss's shield.
     - Added `bossHealthDisplay` field, `showBossHealth()` method to add the boss's health bar to the scene, `updateBossHealth()` method to update the percentage of the boss's health, `updateBossHealthPosition()` method to update the boss's health bar position, and `hideBossHealth()` method to hide the boss's health bar.
     - Added `getBossHealthDisplay()` and `getShieldImage()` methods to return the corresponding objects for testing purposes.
     - Removed `SHIELD_X_POSITION` and `SHIELD_Y_POSITION` constants as they can be calculated based on the boss's position.
@@ -257,6 +257,8 @@ These features were not implemented due to time constraints as we also had to al
         - Printed the x and y coordinates of the scene in the stage using `getX()` and `getY()` to check if the scene is centered.
         - Found that the x and y coordinates remain the same when switching pages, but visually the scene is not centered like the initial scene.
         - Tried setting the width and height of the new scene to match the previous scene's dimensions instead of the stage's dimensions, but the issue persisted.
+        - Suspected it's due to my java sdk version, so I tried to run the game with the latest version, but the issue persisted.
+        - Tried to run the game on my friend's computer, and the issue was resolved. I suspect it's due to my computer's resolution settings.
 
 2. **User plane, projectile, enemy plane and boss dimensions**: The collision detection was triggered even when the projectile did not visually hit the user plane, enemy plane, or boss.
     - **Debugging Attempts**:
@@ -266,8 +268,8 @@ These features were not implemented due to time constraints as we also had to al
 3. **Main menu background video**: The background video in the main menu sometimes was not displayed after user returns from the levels.
     - **Debugging Attempts**:
         - Checked the code to ensure that the background video is set correctly when initializing the main menu scene.
-        - set add a listener to the MediaPlayer to print the status of the media player and found that the media player was not playing the video after returning from the levels.
-        - set the media player as a class variable and initialized it in the `start()` to ensure that the media player is not null when returning from the levels. However, the issue persisted.
+        - Set add a listener to the MediaPlayer to print the status of the media player and found that the media player was not playing the video after returning from the levels.
+        - Set the media player as a class variable and initialized it in the `start()` to ensure that the media player is not null when returning from the levels. However, the issue persisted.
 
 4. **Warning Sign**: Displaying multiple warning signs for approaching enemy planes caused frame rate drops significantly.
     - **Debugging Attempts**:
