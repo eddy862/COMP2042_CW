@@ -1,0 +1,47 @@
+.label {
+    -fx-font-size: 60px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+
+.button {
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+}
+
+.play-button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+}
+
+.play-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.tutorial-button {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+}
+
+.tutorial-button:hover {
+    -fx-background-color: #218838;
+}
+
+.quit-button {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+}
+
+.quit-button:hover {
+    -fx-background-color: #c82333;
+}
+
+.setting-button {
+    -fx-background-color: #ffc107;
+    -fx-text-fill: white;
+}
+
+.setting-button:hover {
+    -fx-background-color: #d39e00;
+}
